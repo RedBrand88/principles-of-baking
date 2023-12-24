@@ -1,0 +1,21 @@
+* {
+ box-sizing: border-box;
+ padding: 0;
+ margin: 0;
+}
+
+.card {
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.inputWithLabel {
+  display: flex;
+  gap: 10px;
+}
