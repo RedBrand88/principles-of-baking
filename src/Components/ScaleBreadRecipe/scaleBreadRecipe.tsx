@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import ReadOnlyInputWithLabel from "../ReadOnlyInputWithLabel/readOnlyInputWithLabel";
 import InputWithLabel from "../InputWithLabel/inputWithLabel";
 import DropDown from "../DropDown/DropDown";
@@ -123,10 +123,8 @@ const ScaleBreadRecipe = () => {
     };
 
 
-    const castTotalDoughToNumber = (value: string) => {
-        if (value) {
-            setTotalDoughInGrams(Number(value));
-        }
+    const castTotalDoughToNumber = (e: ChangeEvent<HTMLInputElement>) => {
+        setTotalDoughInGrams(Number(e.target.value));
     }
 
     const recipeInstructionsData = () => {
@@ -157,22 +155,67 @@ const ScaleBreadRecipe = () => {
                 onChange={(e) => onSelectRecipeInstructions(e.target.value)}
             />
             <div>
-                <InputWithLabel title="Total dough needed" value={totalDoughInGrams.toString()} setValue={castTotalDoughToNumber} />
+                <InputWithLabel 
+                    label="Total dough needed" 
+                    value={totalDoughInGrams.toString()} 
+                    onChange={castTotalDoughToNumber} 
+                    id="dough-needed"
+                />
                 <button onClick={setRecipeFields}>
                     prepare recipe
                 </button>
             </div>
             <div className="grid grid-cols-2 gap-4">
-                <ReadOnlyInputWithLabel title="Flour" value={scald ? getRemainingFlour().toString() : flour.toString()} placeholder="Flour in grams" />
-                <ReadOnlyInputWithLabel title="Water" value={water.toString()} placeholder="water in ml" />
-                <ReadOnlyInputWithLabel title="Milk" value={scaldLiquid ? getRemainingMilk().toString() : milk.toString()} placeholder="milk in ml" />
-                <ReadOnlyInputWithLabel title="Yeast" value={yeast.toString()} placeholder="yeast in grams" />
-                <ReadOnlyInputWithLabel title="Salt" value={salt.toString()} placeholder="salt in grams" />
-                <ReadOnlyInputWithLabel title="Sugar" value={sugar.toString()} placeholder="sugar in grams" />
-                <ReadOnlyInputWithLabel title="Butter" value={butter.toString()} placeholder="butter in grams" />
-                <ReadOnlyInputWithLabel title="Egg" value={egg.toString()} placeholder="eggs in grams" />
-                <ReadOnlyInputWithLabel title="Scald" value={scald.toString()} placeholder="flour to scald in grams" />
-                <ReadOnlyInputWithLabel title="Liquid for scald" value={scaldLiquid.toString()} placeholder="liquid to boil for scald" />
+                <ReadOnlyInputWithLabel 
+                    label="Flour" 
+                    value={scald ? getRemainingFlour().toString() : flour.toString()} 
+                    placeholder="Flour in grams" 
+                />
+                <ReadOnlyInputWithLabel 
+                    label="Water" 
+                    value={water.toString()} 
+                    placeholder="water in ml" 
+                />
+                <ReadOnlyInputWithLabel
+                    label="Milk" 
+                    value={scaldLiquid ? getRemainingMilk().toString() : milk.toString()} 
+                    placeholder="milk in ml"
+                />
+                <ReadOnlyInputWithLabel 
+                    label="Yeast" 
+                    value={yeast.toString()} 
+                    placeholder="yeast in grams" 
+                />
+                <ReadOnlyInputWithLabel 
+                    label="Salt" 
+                    value={salt.toString()} 
+                    placeholder="salt in grams" 
+                />
+                <ReadOnlyInputWithLabel 
+                    label="Sugar" 
+                    value={sugar.toString()} 
+                    placeholder="sugar in grams" 
+                />
+                <ReadOnlyInputWithLabel 
+                    label="Butter" 
+                    value={butter.toString()} 
+                    placeholder="butter in grams" 
+                />
+                <ReadOnlyInputWithLabel 
+                    label="Egg" 
+                    value={egg.toString()} 
+                    placeholder="eggs in grams" 
+                />
+                <ReadOnlyInputWithLabel 
+                    label="Scald" 
+                    value={scald.toString()} 
+                    placeholder="flour to scald in grams" 
+                />
+                <ReadOnlyInputWithLabel 
+                    label="Liquid for scald" 
+                    value={scaldLiquid.toString()} 
+                    placeholder="liquid to boil for scald" 
+                />
             </div>
         </div>
     );

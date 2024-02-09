@@ -19,15 +19,23 @@ const AddBreadRecipe = () => {
         }
     }
 
+    const onChangeRecipeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+        setRecipeTitle(e.target.value);
+    }
+
+    const onChangeRecipeDescription = (e: ChangeEvent<HTMLInputElement>) => {
+        setRecipeDescription(e.target.value);
+    }
+
     const onChangeIngredient = (e: ChangeEvent<HTMLInputElement>) => {
-        return () => setAddIngredient({
+        setAddIngredient({
             ...addIngredient,
             ingredient: e.target.value
         });
     }
 
     const onChangeMeasurement = (e: ChangeEvent<HTMLInputElement>) => {
-        return () => setAddIngredient({
+        setAddIngredient({
             ...addIngredient,
             measurement: Number(e.target.value)
         })
@@ -35,18 +43,30 @@ const AddBreadRecipe = () => {
 
     return (
         <div className="flex flex-col gap-4">
-            <InputWithLabel title="Title" value={recipeTitle} setValue={setRecipeTitle} />           
-            <InputWithLabel title="Description" value={recipeDescription} setValue={setRecipeDescription} />           
+            <InputWithLabel 
+                label="Title" 
+                value={recipeTitle} 
+                onChange={onChangeRecipeTitle} 
+                id="recipe-title-input"
+            />           
+            <InputWithLabel 
+                label="Description" 
+                value={recipeDescription} 
+                onChange={onChangeRecipeDescription} 
+                id="recipe-description-input"
+            />           
             <div className="flex">
                 <InputWithLabel 
-                    title="Add Ingredient" 
+                    label="Add Ingredient" 
                     value={addIngredient?.ingredient ? addIngredient.ingredient : ''} 
-                    setValue={onChangeIngredient} 
+                    onChange={onChangeIngredient} 
+                    id="ingredient-name"
                 />           
                 <InputWithLabel 
-                    title="measurement" 
+                    label="measurement" 
                     value={addIngredient?.measurement ? addIngredient.measurement.toString() : '0'} 
-                    setValue={onChangeMeasurement} 
+                    onChange={onChangeMeasurement} 
+                    id="ingredient-qty"
                 />           
                 <button 
                     className="h-47px p-1 bg-stone-500 self-end"
@@ -58,7 +78,7 @@ const AddBreadRecipe = () => {
             <div>
                 {
                     recipeIngredients.map(({ingredient, measurement}) => (
-                        <div className="flex">
+                        <div key={ingredient + measurement} className="flex">
                             <div>{ingredient}</div>
                             <div>{measurement}</div>
                         </div>

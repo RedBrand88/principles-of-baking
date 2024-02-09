@@ -1,15 +1,32 @@
 
 interface InputWithLabelProps {
     value: string;
-    title: string;
+    label?: string; 
+    name?: string; 
     placeholder?: string;
+    type?: string;
+    id?: string;
 }
 
-const ReadOnlyInputWithLabel = ({value, title, placeholder}: InputWithLabelProps) => {
+const ReadOnlyInputWithLabel = ({
+    label, 
+    value, 
+    placeholder, 
+    type, 
+    name,
+    id
+}: InputWithLabelProps) => {
     return (
         <div className="inputWithLabel">
-            <div>{title}</div>
-            <input placeholder={placeholder} value={value} readOnly />
+            {label && <label htmlFor={id}>{label}</label>}
+            <input 
+                placeholder={placeholder} 
+                value={value} 
+                readOnly 
+                id={id}
+                name={name}
+                type={type}
+            />
         </div>
     );
 };

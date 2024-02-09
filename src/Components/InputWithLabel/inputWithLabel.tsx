@@ -2,17 +2,35 @@ import { ChangeEvent } from "react";
 
 interface inputWithLabelProps {
     value: string;
-    setValue: () => void;
-    title: string;
+    label?: string; 
+    name?: string; 
     placeholder?: string;
+    type?: string;
+    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+    id?: string;
 }
 
-const InputWithLabel = ({title, value, setValue, placeholder}: inputWithLabelProps) => {
+const InputWithLabel = ({
+    label, 
+    value, 
+    onChange, 
+    placeholder, 
+    type, 
+    name,
+    id
+}: inputWithLabelProps) => {
 
     return (
         <div className="inputWithLabel">
-            <div>{title}</div>
-            <input placeholder={placeholder} onChange={setValue} value={value} />
+            {label && <label htmlFor={id}>{label}</label>}
+            <input 
+                placeholder={placeholder} 
+                onChange={onChange} 
+                value={value} 
+                type={type}
+                name={name}
+                id={id}
+            />
         </div>
     );
 };
