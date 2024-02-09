@@ -162,7 +162,7 @@ const ScaleBreadRecipe = () => {
                     prepare recipe
                 </button>
             </div>
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className="grid grid-cols-2 gap-4">
                 <ReadOnlyInputWithLabel title="Flour" value={scald ? getRemainingFlour().toString() : flour.toString()} placeholder="Flour in grams" />
                 <ReadOnlyInputWithLabel title="Water" value={water.toString()} placeholder="water in ml" />
                 <ReadOnlyInputWithLabel title="Milk" value={scaldLiquid ? getRemainingMilk().toString() : milk.toString()} placeholder="milk in ml" />

@@ -1,7 +1,8 @@
+import { ChangeEvent } from "react";
 
 interface inputWithLabelProps {
     value: string;
-    setValue: (value: string) => void;
+    setValue: () => void;
     title: string;
     placeholder?: string;
 }
@@ -11,7 +12,7 @@ const InputWithLabel = ({title, value, setValue, placeholder}: inputWithLabelPro
     return (
         <div className="inputWithLabel">
             <div>{title}</div>
-            <input placeholder={placeholder} onChange={(e) => setValue(e.target.value)} value={value} />
+            <input placeholder={placeholder} onChange={setValue} value={value} />
         </div>
     );
 };
