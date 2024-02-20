@@ -1,56 +1,47 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext } from 'react';
 import './App.css'
 import Tab from './Components/TabComponents/tab';
 import SignIn from './Components/SignIn/signin';
+import useFetchRecipes from './Hooks/UseFetchRecipes';
 
 interface Ingredient {
-    ingredientName: string;
-    quantity: number;
-    unit: string;
+  ingredientName: string;
+  quantity: number;
+  unit: string;
 }
 
 interface Percentage {
-    ingredientName: string;
-    percent: number;
+  ingredientName: string;
+  percent: number;
 }
 
 export interface Recipe {
-    id: string;
-    title: string;
-    description: string;
-    ingredients: Ingredient[];
-    instructions: string[];
-    percentages: Percentage[];
+  id: string;
+  title: string;
+  description: string;
+  ingredients: Ingredient[];
+  instructions: string[];
+  percentages: Percentage[];
 }
 
 export const RecipeContext = createContext<Recipe[] | null>(null);
 
 function App() {
-    const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const { recipes, loading, error } = useFetchRecipes();
 
-    useEffect(() => {
-        const fetchRecipes = async () => {
-            try {
-                const resp = await fetch('http://localhost:8080/recipes');
-                if (!resp.ok) {
-                    throw new Error("Error response was not ok");
-                }
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-                const data = await resp.json();
-                setRecipes(data);
-            } catch (e) {
-                console.error("Error fetching recipes: ", e.message);
-            }
-        };
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
-        fetchRecipes();
-    }, []);
-
-    return (
-        <RecipeContext.Provider value={recipes}>
-            <Tab />
-        </RecipeContext.Provider>
-    )
-}
+  return (
+    <RecipeContext.Provider value={recipes}>
+      <Tab />
+    </RecipeContext.Provider>
+  );
+};
 
 export default App
