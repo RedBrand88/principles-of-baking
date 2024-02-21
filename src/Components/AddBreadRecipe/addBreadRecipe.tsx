@@ -2,28 +2,22 @@ import { ChangeEvent, FormEvent, MouseEvent, useState } from "react";
 import InputWithLabel from "../InputWithLabel/inputWithLabel";
 import useCreateRecipe from "../../Hooks/UseCreateRecipe";
 import SelectInput from "../SelectInput/SelectInput";
-import { Recipe } from "../../App";
+import { Recipe, Percentage, Ingredient } from "../../App";
 import TextArea from "../TextArea/TextArea";
 
-type recipeIngredient = {
-  ingredientName: string;
-  quantity: number;
-  unit: string;
-}
-
 const AddBreadRecipe = () => {
-  //TODO: 1. create Recipe object to send in post method createRecipe
+  //TODO: 1. create Recipe object to send in post method createRecipe ✅
   //      2. create form for all input elements map readonly inputs for ingredients.
-  //      3. map readonly inputs for instructions.
-  //      4. run small calculation to figure out bakers precentage for the recipe.
-  //      5. add title input and descriptions textarea to create recipe form.
-  //      6. fix type errors.
+  //      3. map readonly inputs for instructions. ✅
+  //      4. run small calculation to figure out bakers precentage for the recipe. ✅
+  //      5. add title input and descriptions textarea to create recipe form. ✅
+  //      6. fix type errors. ✅
   const { createRecipe, loading, error } = useCreateRecipe();
   const units = ["g", "oz", "ml", "cups", "Tbls", "tsp"];
 
   const [instructionCount, setInstructionCount] = useState(1);
   const [unit, setUnit] = useState<string>(units[0]);
-  const [addIngredient, setAddIngredient] = useState<recipeIngredient>({ ingredientName: "", quantity: 0, unit: unit });
+  const [addIngredient, setAddIngredient] = useState<Ingredient>({ ingredientName: "", quantity: 0, unit: unit });
   const [addInstruction, setAddInstruction] = useState<string>("");
   const [newRecipe, setNewRecipe] = useState<Recipe>({
     id: "",
@@ -66,24 +60,17 @@ const AddBreadRecipe = () => {
   const calculateBakersPercent = () => {
     const flourObj = newRecipe.ingredients.find((ingredient) => ingredient.ingredientName.toUpperCase().includes("FLOUR"));
     const flourQuantity = flourObj?.quantity;
+    let newPercents: Percentage[] = [];
 
     for (let i = 0; i < newRecipe.ingredients.length; i++) {
-      let precentName = newRecipe.ingredients[i].ingredientName;
-      let percent = newRecipe.ingredients[i].quantity;
-      console.log(precentName, percent / flourQuantity);
+      let ingredientName = newRecipe.ingredients[i].ingredientName;
+      let quantity = newRecipe.ingredients[i].quantity;
       if (flourQuantity) {
-        setNewRecipe({
-          ...newRecipe,
-          percentages: [
-            ...newRecipe.percentages,
-            {
-              ingredientName: precentName,
-              percent: percent / flourQuantity
-            }
-          ]
-        })
+        let newPercentObj = { ingredientName: ingredientName, percent: quantity / flourQuantity };
+        newPercents = [...newPercents, newPercentObj];
       }
     }
+    setNewRecipe({ ...newRecipe, percentages: [...newPercents] });
   }
 
   const onSubmit = () => {

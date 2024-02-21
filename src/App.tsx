@@ -4,13 +4,13 @@ import Tab from './Components/TabComponents/tab';
 import SignIn from './Components/SignIn/signin';
 import useFetchRecipes from './Hooks/UseFetchRecipes';
 
-interface Ingredient {
+export interface Ingredient {
   ingredientName: string;
   quantity: number;
   unit: string;
 }
 
-interface Percentage {
+export interface Percentage {
   ingredientName: string;
   percent: number;
 }
