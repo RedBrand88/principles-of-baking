@@ -1,11 +1,14 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, MouseEvent, useState } from "react";
 import InputWithLabel from "../InputWithLabel/inputWithLabel";
 import useCreateRecipe from "../../Hooks/UseCreateRecipe";
 import SelectInput from "../SelectInput/SelectInput";
+import { Recipe } from "../../App";
+import TextArea from "../TextArea/TextArea";
 
 type recipeIngredient = {
-  ingredient: string;
-  measurement: number;
+  ingredientName: string;
+  quantity: number;
+  unit: string;
 }
 
 const AddBreadRecipe = () => {
@@ -16,80 +19,118 @@ const AddBreadRecipe = () => {
   //      5. add title input and descriptions textarea to create recipe form.
   //      6. fix type errors.
   const { createRecipe, loading, error } = useCreateRecipe();
-  const measurements = ["g", "oz", "ml", "cups", "Tbls", "tsp"];
+  const units = ["g", "oz", "ml", "cups", "Tbls", "tsp"];
 
-  const [recipeTitle, setRecipeTitle] = useState("");
-  const [recipeDescription, setRecipeDescription] = useState("");
-  const [addIngredient, setAddIngredient] = useState<recipeIngredient | null>({ ingredient: "", measurement: 0 });
-  const [recipeIngredients, setRecipeIngredients] = useState<recipeIngredient[]>([]);
-  const [measurement, setMeasurement] = useState<string>(measurements[0]);
-
+  const [instructionCount, setInstructionCount] = useState(1);
+  const [unit, setUnit] = useState<string>(units[0]);
+  const [addIngredient, setAddIngredient] = useState<recipeIngredient>({ ingredientName: "", quantity: 0, unit: unit });
+  const [addInstruction, setAddInstruction] = useState<string>("");
+  const [newRecipe, setNewRecipe] = useState<Recipe>({
+    id: "",
+    title: "",
+    description: "",
+    ingredients: [],
+    instructions: [],
+    percentages: [],
+  });
 
   const addIngredientOnClick = () => {
     if (addIngredient) {
-      setRecipeIngredients([...recipeIngredients, addIngredient]);
-      setAddIngredient({ ingredient: "", measurement: 0 });
+      setNewRecipe({ ...newRecipe, ingredients: [...newRecipe.ingredients, addIngredient] });
+      setAddIngredient({ ingredientName: "", quantity: 0, unit: unit });
     }
   }
 
   const onChangeRecipeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-    setRecipeTitle(e.target.value);
+    setNewRecipe({ ...newRecipe, title: e.target.value });
   }
 
   const onChangeRecipeDescription = (e: ChangeEvent<HTMLInputElement>) => {
-    setRecipeDescription(e.target.value);
+    setNewRecipe({ ...newRecipe, description: e.target.value });
   }
 
-  const onChangeIngredient = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeIngredientName = (e: ChangeEvent<HTMLInputElement>) => {
     setAddIngredient({
       ...addIngredient,
-      ingredient: e.target.value
+      ingredientName: e.target.value
     });
   }
 
   const onChangeMeasurement = (e: ChangeEvent<HTMLInputElement>) => {
     setAddIngredient({
       ...addIngredient,
-      measurement: Number(e.target.value)
+      quantity: Number(e.target.value)
     })
   }
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const calculateBakersPercent = () => {
+    const flourObj = newRecipe.ingredients.find((ingredient) => ingredient.ingredientName.toUpperCase().includes("FLOUR"));
+    const flourQuantity = flourObj?.quantity;
 
+    for (let i = 0; i < newRecipe.ingredients.length; i++) {
+      let precentName = newRecipe.ingredients[i].ingredientName;
+      let percent = newRecipe.ingredients[i].quantity;
+      console.log(precentName, percent / flourQuantity);
+      if (flourQuantity) {
+        setNewRecipe({
+          ...newRecipe,
+          percentages: [
+            ...newRecipe.percentages,
+            {
+              ingredientName: precentName,
+              percent: percent / flourQuantity
+            }
+          ]
+        })
+      }
+    }
+  }
+
+  const onSubmit = () => {
+    calculateBakersPercent();
+    console.log(newRecipe);
+  }
+
+  const addInstructionOnClick = () => {
+    setNewRecipe({ ...newRecipe, instructions: [...newRecipe.instructions, `${instructionCount}. ${addInstruction}`] });
+    setInstructionCount(instructionCount + 1);
+    setAddInstruction("");
   }
 
   return (
     <div className="flex flex-col gap-4">
       <InputWithLabel
         label="Title"
-        value={recipeTitle}
+        value={newRecipe?.title ? newRecipe.title : ""}
         onChange={onChangeRecipeTitle}
         id="recipe-title-input"
       />
       <InputWithLabel
         label="Description"
-        value={recipeDescription}
+        value={newRecipe?.description ? newRecipe.description : ""}
         onChange={onChangeRecipeDescription}
         id="recipe-description-input"
       />
       <div className="flex">
         <InputWithLabel
           label="Add Ingredient"
-          value={addIngredient?.ingredient ? addIngredient.ingredient : ''}
-          onChange={onChangeIngredient}
+          value={addIngredient?.ingredientName ? addIngredient.ingredientName : ""}
+          onChange={onChangeIngredientName}
           id="ingredient-name"
         />
         <InputWithLabel
           label="measurement"
-          value={addIngredient?.measurement ? addIngredient.measurement.toString() : '0'}
+          value={addIngredient.quantity ? addIngredient.quantity.toString() : '0'}
           onChange={onChangeMeasurement}
           id="ingredient-qty"
         />
         <SelectInput
-          options={measurements}
-          selectedOption={measurement}
-          setSelectedOption={setMeasurement}
+          options={units}
+          selectedOption={unit}
+          setSelectedOption={setUnit}
+          htmlFor="unit"
+          id="unit"
+          label="Select Unit: "
         />
         <button
           className="h-47px p-1 bg-stone-500 self-end"
@@ -99,19 +140,40 @@ const AddBreadRecipe = () => {
         </button>
       </div>
       <div>
+        <div>{`${instructionCount}.`}</div>
+        <TextArea
+          id="add-instruction"
+          htmlFor="add-instructions"
+          label="Add Instruction"
+          value={addInstruction}
+          setChange={setAddInstruction}
+        />
+        <button
+          onClick={addInstructionOnClick}
+        >
+          Add
+        </button>
+      </div>
+      <div>
         {
-          recipeIngredients.map(({ ingredient, measurement }) => (
-            <div key={ingredient + measurement} className="flex">
-              <div>{ingredient}</div>
-              <div>{measurement}</div>
+          newRecipe?.ingredients.map(({ ingredientName, quantity, unit }) => (
+            <div key={ingredientName + quantity} className="flex">
+              <div>{`${ingredientName}: ` + quantity.toString() + unit}</div>
+            </div>
+          ))
+        }
+        {
+          newRecipe?.instructions.map((instruction, index) => (
+            <div key={instruction + index} className="flex">
+              <div>{instruction}</div>
             </div>
           ))
         }
       </div>
-      <button onClick={() => console.log("submit new recipe")}>
+      <button onClick={onSubmit}>
         Submit
       </button>
-    </div>
+    </div >
   )
 }
 
