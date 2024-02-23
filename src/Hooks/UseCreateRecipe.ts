@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import { Recipe } from '../App';
 
 const useCreateRecipe = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const createRecipe = async (recipeData) => {
+  const createRecipe = async (recipeData: Recipe) => {
     setLoading(true);
     setError(null);
 

@@ -59,6 +59,7 @@ const AddBreadRecipe = () => {
 
   const onSubmit = () => {
     console.log(newRecipe);
+    createRecipe(newRecipe);
   }
 
   const addInstructionOnClick = () => {
