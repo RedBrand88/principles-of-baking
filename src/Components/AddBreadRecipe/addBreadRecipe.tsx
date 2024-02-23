@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, MouseEvent, useState } from "react";
 import InputWithLabel from "../InputWithLabel/inputWithLabel";
 import useCreateRecipe from "../../Hooks/UseCreateRecipe";
 import SelectInput from "../SelectInput/SelectInput";
-import { Recipe, Percentage, Ingredient } from "../../App";
+import { Recipe, Ingredient } from "../../App";
 import TextArea from "../TextArea/TextArea";
 
 const AddBreadRecipe = () => {
@@ -57,24 +57,7 @@ const AddBreadRecipe = () => {
     })
   }
 
-  const calculateBakersPercent = () => {
-    const flourObj = newRecipe.ingredients.find((ingredient) => ingredient.ingredientName.toUpperCase().includes("FLOUR"));
-    const flourQuantity = flourObj?.quantity;
-    let newPercents: Percentage[] = [];
-
-    for (let i = 0; i < newRecipe.ingredients.length; i++) {
-      let ingredientName = newRecipe.ingredients[i].ingredientName;
-      let quantity = newRecipe.ingredients[i].quantity;
-      if (flourQuantity) {
-        let newPercentObj = { ingredientName: ingredientName, percent: quantity / flourQuantity };
-        newPercents = [...newPercents, newPercentObj];
-      }
-    }
-    setNewRecipe({ ...newRecipe, percentages: [...newPercents] });
-  }
-
   const onSubmit = () => {
-    calculateBakersPercent();
     console.log(newRecipe);
   }
 
