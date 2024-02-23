@@ -27,7 +27,7 @@ const CalcDoughTemp = () => {
 
 
     return (
-        <div>
+        <div className="flex flex-col">
             <InputWithLabel 
                 label="Desired dough temp" 
                 value={desiredDoughTemp}
