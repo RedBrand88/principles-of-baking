@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, MouseEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import InputWithLabel from "../InputWithLabel/inputWithLabel";
 import useCreateRecipe from "../../Hooks/UseCreateRecipe";
 import SelectInput from "../SelectInput/SelectInput";
@@ -6,12 +6,8 @@ import { Recipe, Ingredient } from "../../App";
 import TextArea from "../TextArea/TextArea";
 
 const AddBreadRecipe = () => {
-  //TODO: 1. create Recipe object to send in post method createRecipe ✅
+  //      TODO
   //      2. create form for all input elements map readonly inputs for ingredients.
-  //      3. map readonly inputs for instructions. ✅
-  //      4. run small calculation to figure out bakers precentage for the recipe. ✅
-  //      5. add title input and descriptions textarea to create recipe form. ✅
-  //      6. fix type errors. ✅
   const { createRecipe, loading, error } = useCreateRecipe();
   const units = ["g", "oz", "ml", "cups", "Tbls", "tsp"];
 
