@@ -156,9 +156,6 @@ const ScaleBreadRecipe = () => {
   }
 
   const castTotalDoughToNumber = (e: ChangeEvent<HTMLInputElement>) => {
-    if (recipe && recipe.ingredients && recipe.ingredients.length > 0) {
-      console.log("recipes", recipe.ingredients);
-    }
     setTotalDoughInGrams(Number(e.target.value));
   }
 

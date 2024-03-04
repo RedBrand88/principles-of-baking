@@ -23,9 +23,7 @@ const useCreateRecipe = () => {
       }
 
       const data = await resp.json();
-      console.log('New recipe created:', data);
     } catch (error) {
-      console.error('Error creating recipe:', error);
       setError(error.message);
     } finally {
       setLoading(false);
