@@ -21,9 +21,10 @@ const InputWithLabel = ({
 }: inputWithLabelProps) => {
 
   return (
-    <>
+    <div className="flex flex-col">
       {label && <label htmlFor={id}>{label}</label>}
       <input
+        className="border border-[#CA965C] rounded-md p-1"
         placeholder={placeholder}
         onChange={onChange}
         value={value}
@@ -31,7 +32,7 @@ const InputWithLabel = ({
         name={name}
         id={id}
       />
-    </>
+    </div>
   );
 };
 

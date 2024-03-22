@@ -7,7 +7,7 @@ interface tabContentProps {
 
 const TabContent = ({id, activeTab, children}: PropsWithChildren<tabContentProps>) => {
     return (
-        activeTab === id ? <div className="text-[2rem] text-center">
+        activeTab === id ? <div>
             {children}
         </div>
             : null

@@ -17,7 +17,7 @@ const ReadOnlyInputWithLabel = ({
   id
 }: InputWithLabelProps) => {
   return (
-    <>
+    <div className="flex flex-col">
       {label && <label htmlFor={id}>{label}</label>}
       <input
         placeholder={placeholder}
@@ -26,8 +26,9 @@ const ReadOnlyInputWithLabel = ({
         id={id}
         name={name}
         type={type}
+        className="border border-[#CA965C] rounded-md p-1"
       />
-    </>
+    </div>
   );
 };
 

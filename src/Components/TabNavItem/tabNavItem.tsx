@@ -7,8 +7,8 @@ interface tabNavItemProps {
 }
 
 const TabNavItem = ({ id, title, activeTab, setActiveTab }: tabNavItemProps) => {
-    const inActive = "w-1/2 p-4 list-none text-center pointer transition-all duration-700 first:rounded-l-[2rem] last:rounded-r-[2rem] hover:bg-[#32e0c3]";
-    const active = `${inActive} bg-[#39A2DB]`
+    const inActive = "w-1/2 p-4 list-none text-center pointer transition-all duration-700 first:rounded-l-[10px] last:rounded-r-[10px] hover:bg-[#CA965C]";
+    const active = `${inActive} bg-[#CA965C]`
     const handleClick = () => {
         setActiveTab(id)
     }

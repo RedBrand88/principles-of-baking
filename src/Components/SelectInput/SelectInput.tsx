@@ -25,14 +25,14 @@ const SelectInput = (
   };
 
   return (
-    <>
+    <div className="flex flex-col">
       {label && <label htmlFor={htmlFor}>{label}</label>}
       <select id={id} value={selectedOption} onChange={handleChange}>
         {options.map((option, index) => (
           <option key={index} value={option}>{option}</option>
         ))}
       </select>
-    </>
+    </div>
   );
 };
 

@@ -179,24 +179,22 @@ const ScaleBreadRecipe = () => {
 
   //TODO: map through ingredients so readonly inputs are only displayed if relevent.
   return (
-    <div className="card">
+    <div className="flex flex-col mt-4 gap-4">
       <DropDown
         label="Recipe Selector"
         value={recipeInstructions}
         options={recipeInstructionsData()}
         onChange={(e) => onSelectRecipeInstructions(e.target.value)}
       />
-      <div>
-        <InputWithLabel
-          label="Total dough needed"
-          value={totalDoughInGrams.toString()}
-          onChange={castTotalDoughToNumber}
-          id="dough-needed"
-        />
-        <button onClick={setRecipeFields}>
-          prepare recipe
-        </button>
-      </div>
+      <InputWithLabel
+        label="Total dough needed"
+        value={totalDoughInGrams.toString()}
+        onChange={castTotalDoughToNumber}
+        id="dough-needed"
+      />
+      <button className="bg-[#876445] rounded-[10px] p-1.5" onClick={setRecipeFields}>
+        prepare recipe
+      </button>
       <div className="grid grid-cols-2 gap-4">
         {
           recipe && recipe.ingredients.length > 0 && recipe.ingredients.map((ingredient, index) => {
