@@ -4,6 +4,7 @@ import useCreateRecipe from "../../Hooks/UseCreateRecipe";
 import SelectInput from "../SelectInput/SelectInput";
 import { Recipe, Ingredient } from "../../App";
 import TextArea from "../TextArea/TextArea";
+import Button from "../Button/button";
 
 const AddBreadRecipe = () => {
   //      TODO
@@ -98,12 +99,11 @@ const AddBreadRecipe = () => {
           id="unit"
           label="Select Unit: "
         />
-        <button
-          className="h-47px p-1 bg-stone-500 self-end"
+        <Button
           onClick={addIngredientOnClick}
         >
           Add
-        </button>
+        </Button>
       </div>
       <div>
         <div>{`${instructionCount}.`}</div>
@@ -114,11 +114,11 @@ const AddBreadRecipe = () => {
           value={addInstruction}
           setChange={setAddInstruction}
         />
-        <button
+        <Button
           onClick={addInstructionOnClick}
         >
           Add
-        </button>
+        </Button>
       </div>
       <div>
         {
@@ -136,9 +136,9 @@ const AddBreadRecipe = () => {
           ))
         }
       </div>
-      <button onClick={onSubmit}>
+      <Button onClick={onSubmit}>
         Submit
-      </button>
+      </Button>
     </div >
   )
 }

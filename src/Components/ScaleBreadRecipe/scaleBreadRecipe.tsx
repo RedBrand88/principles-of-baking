@@ -3,6 +3,7 @@ import ReadOnlyInputWithLabel from "../ReadOnlyInputWithLabel/readOnlyInputWithL
 import InputWithLabel from "../InputWithLabel/inputWithLabel";
 import DropDown from "../DropDown/DropDown";
 import { Recipe, RecipeContext } from "../../App";
+import Button from "../Button/button";
 
 const ScaleBreadRecipe = () => {
   //TODO: round numbers to get as close to original dough quantity as possible.
@@ -192,9 +193,9 @@ const ScaleBreadRecipe = () => {
         onChange={castTotalDoughToNumber}
         id="dough-needed"
       />
-      <button className="bg-[#876445] rounded-[10px] p-1.5" onClick={setRecipeFields}>
+      <Button onClick={setRecipeFields}>
         prepare recipe
-      </button>
+      </Button>
       <div className="grid grid-cols-2 gap-4">
         {
           recipe && recipe.ingredients.length > 0 && recipe.ingredients.map((ingredient, index) => {
