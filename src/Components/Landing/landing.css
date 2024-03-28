@@ -1,0 +1,31 @@
+.glass {
+  background: linear-gradient(135deg, rgba(202, 150, 92, 0.1), rgba(202, 150, 92, 0));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.noticeContainer {
+  position: absolute;
+  top: 700px;
+  right: 90px;
+  height: 420px;
+  width: 320px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.noticeText {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.underViewContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #45484A;
+}

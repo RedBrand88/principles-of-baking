@@ -3,6 +3,8 @@ import './App.css'
 import Tab from './Components/TabComponents/tab';
 import SignIn from './Components/SignIn/signin';
 import useFetchRecipes from './Hooks/UseFetchRecipes';
+import Header from './Components/Header/header';
+import Landing from './Components/Landing/landing';
 
 export interface Ingredient {
   ingredientName: string;
@@ -33,13 +35,16 @@ function App() {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  // if (error) {
+  //   return <div>Error: {error}</div>;
+  // }
 
   return (
     <RecipeContext.Provider value={recipes}>
-      <Tab />
+      <>
+        <Header />
+        <Landing />
+      </>
     </RecipeContext.Provider>
   );
 };

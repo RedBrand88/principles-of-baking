@@ -1,0 +1,23 @@
+.headerContainer {
+  position: fixed;
+  height: 60px;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  z-index: 100;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+} 
+
+.navContainer {
+  display: flex;
+  gap: 2rem;
+}
+
+.navLinks {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
