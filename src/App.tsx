@@ -5,6 +5,7 @@ import SignIn from './Components/SignIn/signin';
 import useFetchRecipes from './Hooks/UseFetchRecipes';
 import Header from './Components/Header/header';
 import Landing from './Components/Landing/landing';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 export interface Ingredient {
   ingredientName: string;
@@ -41,10 +42,13 @@ function App() {
 
   return (
     <RecipeContext.Provider value={recipes}>
-      <>
-        <Header />
-        <Landing />
-      </>
+      <Header />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/tab" element={<Tab />} />
+        </Routes>
+      </Router>
     </RecipeContext.Provider>
   );
 };
