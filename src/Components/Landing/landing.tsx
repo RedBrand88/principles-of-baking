@@ -1,6 +1,6 @@
 import HeroImage from '../../assets/hero.jpg';
-import styles from './landing.css';
-//test margin top to position image within the screen height div
+import './landing.css';
+
 const Landing = () => {
   return (
     <div className="h-screen relative text-[#F4DFBA]">
@@ -13,7 +13,7 @@ const Landing = () => {
       }} />
       <div className="absolute top-[260px] left-[150px]">
         <h1 className="text-4xl font-bold w-[320px]">Learn to make your own bread</h1>
-        <h2 className="text-2xl w-[300px]">Making your own bread doesn’t have to be complicated</h2>
+        <h2 className="text-2xl w-[300px]">Making your own bread isn't as complicated as you might think.</h2>
       </div>
       <div className="glass noticeContainer">
         <div className='noticeText'>
