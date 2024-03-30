@@ -1,0 +1,63 @@
+.calendarContainer {
+  background: #053742;
+  color: white;
+  height: 100vh;
+  width: 100vh;
+  padding-top: 80px;
+}
+
+.calendar {
+  background: black;
+  border-radius: 10px;
+  height: 80%;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+}
+
+.leftButton {
+  padding-left: 8px;
+}
+
+.rightButton {
+  padding-right: 8px;
+}
+
+.monthTitle {
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.headers {
+  display: flex;
+}
+
+.headerCell {
+  text-align: center;
+  border: 1px solid white;
+  width: 16%;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-row: auto;
+  height: 80%;
+}
+
+.day {
+  border: 1px solid white;
+  border-right: none;
+}
+
+.saturday {
+  border: 1px solid white;
+}
+
+.dayNumber {
+  margin-left: 4px;
+  margin-top: 4px;
+}

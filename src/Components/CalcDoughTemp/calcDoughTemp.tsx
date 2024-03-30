@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from "react";
 import InputWithLabel from "../InputWithLabel/inputWithLabel";
 import ReadOnlyInputWithLabel from "../ReadOnlyInputWithLabel/readOnlyInputWithLabel";
 import Button from "../Button/button";
+import "./calcDoughTemp.css";
 
 const CalcDoughTemp = () => {
   const [desiredDoughTemp, setDesiredDoughTemp] = useState<string>("");
@@ -28,7 +29,7 @@ const CalcDoughTemp = () => {
 
 
   return (
-    <div className="flex flex-col">
+    <div className="componentContainer">
       <InputWithLabel
         label="Desired dough temp"
         value={desiredDoughTemp}

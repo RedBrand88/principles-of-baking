@@ -1,23 +1,23 @@
 import { ChangeEventHandler } from "react";
-import { Recipe } from "../../App";
+import "./DropDown.css";
 
 interface DropDownProps {
   id?: string;
   label: string;
   value: string;
-  options: Recipe[];
+  options: any[];
   onChange: ChangeEventHandler<HTMLSelectElement>;
 }
 
 const DropDown = ({ id, label, value, options, onChange }: DropDownProps) => {
   return (
-    <div className="flex flex-col">
+    <div className="dropDownContainer">
       {label && <label htmlFor={id}>{label}</label>}
       <select
         value={value}
         onChange={onChange}
         id={id}
-        className="border border-[#CA965C] rounded-md p-1"
+        className="dropDown"
       >
         {options.map((recipe) => (
           <option key={recipe.id} value={recipe.title}>{recipe.title}</option>

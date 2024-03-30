@@ -1,0 +1,10 @@
+.dropDownContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropDown {
+  border: 1px solid #CA965C;
+  border-radius: 6px;
+  padding: 4px
+}

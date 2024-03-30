@@ -1,4 +1,5 @@
 import { ChangeEvent } from "react";
+import "./inputWithLabel.css";
 
 interface inputWithLabelProps {
   value: string;
@@ -21,10 +22,10 @@ const InputWithLabel = ({
 }: inputWithLabelProps) => {
 
   return (
-    <div className="flex flex-col">
+    <div className="inputContainer">
       {label && <label htmlFor={id}>{label}</label>}
       <input
-        className="border border-[#CA965C] rounded-md p-1"
+        className="inputMain"
         placeholder={placeholder}
         onChange={onChange}
         value={value}

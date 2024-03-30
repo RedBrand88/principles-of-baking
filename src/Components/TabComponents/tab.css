@@ -1,0 +1,20 @@
+.tabContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+  background: #46484A;
+  padding: 0 16px;
+  color: #F4DFBA;
+  padding-top: 82px;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #876445;
+  border-radius: 10px;
+  width: 60%;
+}

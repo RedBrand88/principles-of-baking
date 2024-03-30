@@ -4,6 +4,7 @@ import InputWithLabel from "../InputWithLabel/inputWithLabel";
 import DropDown from "../DropDown/DropDown";
 import { Recipe, RecipeContext } from "../../App";
 import Button from "../Button/button";
+import "./scaleBreadRecipe.css";
 
 const ScaleBreadRecipe = () => {
   //TODO: round numbers to get as close to original dough quantity as possible.
@@ -180,7 +181,7 @@ const ScaleBreadRecipe = () => {
 
   //TODO: map through ingredients so readonly inputs are only displayed if relevent.
   return (
-    <div className="flex flex-col mt-4 gap-4">
+    <div className="scaleContainer">
       <DropDown
         label="Recipe Selector"
         value={recipeInstructions}
@@ -196,7 +197,7 @@ const ScaleBreadRecipe = () => {
       <Button onClick={setRecipeFields}>
         prepare recipe
       </Button>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="ingredientList">
         {
           recipe && recipe.ingredients.length > 0 && recipe.ingredients.map((ingredient, index) => {
             return (

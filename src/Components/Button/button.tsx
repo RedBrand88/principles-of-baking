@@ -1,3 +1,5 @@
+import './button.css';
+
 type ButtonProps = {
   children: React.ReactNode;
   onClick?: () => void;
@@ -7,11 +9,11 @@ type ButtonProps = {
 
 const Button = ({ children, onClick, type = "primary", disabled = false }: ButtonProps) => {
 
-  const buttonStyle = type === "primary" ? "bg-[#876445]" : "bg-[#CA965C]";
+  const buttonStyle = type === "primary" ? "primary" : "secondary";
 
   return (
     <button
-      className={`${buttonStyle} rounded-[10px] p-1.5`}
+      className={`${buttonStyle} button`}
       onClick={onClick}
       disabled={disabled}
     >

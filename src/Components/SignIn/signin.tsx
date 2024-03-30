@@ -1,5 +1,5 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import React from "react";
+import Button from "../Button/button";
 
 const SignIn = (auth) => {
     const signInWithGoogle = () => {
@@ -19,9 +19,9 @@ const SignIn = (auth) => {
             });
     }
     return (
-        <button onClick={signInWithGoogle}>
+        <Button onClick={signInWithGoogle}>
             Signin
-        </button>
+        </Button>
     );
 };
 

@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import InputWithLabel from "../InputWithLabel/inputWithLabel";
 import useCreateRecipe from "../../Hooks/UseCreateRecipe";
-import SelectInput from "../SelectInput/SelectInput";
+import Dropdown from "../Dropdown/Dropdown";
 import { Recipe, Ingredient } from "../../App";
 import TextArea from "../TextArea/TextArea";
 import Button from "../Button/button";
@@ -91,13 +91,12 @@ const AddBreadRecipe = () => {
           onChange={onChangeMeasurement}
           id="ingredient-qty"
         />
-        <SelectInput
-          options={units}
-          selectedOption={unit}
-          setSelectedOption={setUnit}
-          htmlFor="unit"
-          id="unit"
+        <Dropdown
           label="Select Unit: "
+          value={unit}
+          options={units}
+          onChange={(e) => setUnit(e.target.value)}
+          id="unit"
         />
         <Button
           onClick={addIngredientOnClick}

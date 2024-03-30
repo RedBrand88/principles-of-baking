@@ -1,0 +1,12 @@
+.primary {
+  background-color: #876445;
+}
+
+.secondary {
+  background-color: #CA965C;
+}
+
+.button {
+  border-radius: 10px;
+  padding: 0.375rem;
+}

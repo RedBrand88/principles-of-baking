@@ -21,3 +21,15 @@
   gap: 2rem;
   align-items: center;
 }
+
+.navLinks a {
+  text-decoration: none;
+  color: #F4DFBA;
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 1.5rem;
+}
+
+.navLinks a:hover {
+  color: #EEC373;
+}

@@ -1,0 +1,12 @@
+.scaleContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+  gap: 16px;
+}
+
+.ingredientList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
