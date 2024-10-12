@@ -1,0 +1,26 @@
+import { useParams } from "react-router-dom";
+import Step1 from "./Step1/step1";
+import "./learningStep.css";
+import LearningFooter from "../LearningFooter/learningFooter";
+import Step2 from "./Step2/step2";
+
+const components: { [key: string]: React.FC } = {
+  "1": Step1,
+  "2": Step2,
+};
+
+const LearningStep = () => {
+  const { step } = useParams<{ step: string }>();
+
+  //remove '1' if null return step not found
+  const StepComponent = components[step ?? '1'] ?? (() => <div>Step not found</div>);
+
+  return (
+    <div className="stepContainer">
+      <StepComponent />
+      <LearningFooter step={parseInt(step ?? '0')} />
+    </div>
+  );
+};
+
+export default LearningStep;

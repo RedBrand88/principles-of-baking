@@ -1,3 +1,4 @@
+import LearningFooter from '../LearningFooter/learningFooter';
 import WaveText from '../WaveText/waveText';
 import './getStarted.css';
 
@@ -53,6 +54,11 @@ const GetStarted = () => {
             <li> Remove the bread from the oven and let it cool before slicing.</li>
           </ol>
       </p>
+      <p>
+        Once you've mastered this recipe, you can start experimenting with different flours, adding seeds or nuts, 
+        and trying different baking techniques. If you are interested in learning more click next.
+      </p>
+      <LearningFooter step={0} />
     </div>
   );
 }
