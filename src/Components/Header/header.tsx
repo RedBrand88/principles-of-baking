@@ -1,16 +1,16 @@
 import './header.css';
 import Button from "../Button/button";
-import Logo from '../../assets/logo';
+import RoundLogo from '../../assets/roundLogo';
 
 const Header = () => {
   return (
     <div className="headerContainer">
       <div className="navContainer">
         <a href="/" className="logo">
-          <Logo height="38" width="38" />
+          <RoundLogo height="38" width="38" />
         </a>
         <nav className="navLinks">
-          <a href="#">Learn how to bake</a>
+          <a href="/learn">Learn how to bake</a>
           <a href="/tab">Bread calculator</a>
           <a href="#">About me</a>
         </nav>

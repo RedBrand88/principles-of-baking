@@ -3,7 +3,7 @@ import './landing.css';
 
 const Landing = () => {
   return (
-    <div className="h-screen relative text-[#F4DFBA]">
+    <div className="landingContainer">
       <div style={{
         backgroundImage: `url(${HeroImage})`,
         backgroundSize: 'cover',
@@ -11,9 +11,9 @@ const Landing = () => {
         height: '100vh',
         borderBottom: '10px solid #EEC373'
       }} />
-      <div className="absolute top-[260px] left-[150px]">
-        <h1 className="text-4xl font-bold w-[320px]">Learn to make your own bread</h1>
-        <h2 className="text-2xl w-[300px]">Making your own bread isn't as complicated as you might think.</h2>
+      <div className="heroText">
+        <h1>Learn to make your own bread</h1>
+        <h2>Making your own bread isn't as complicated as you might think.</h2>
       </div>
       <div className="glass noticeContainer">
         <div className='noticeText'>
