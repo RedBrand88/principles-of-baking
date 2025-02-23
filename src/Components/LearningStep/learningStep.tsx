@@ -1,12 +1,16 @@
 import { useParams } from "react-router-dom";
-import Step1 from "./Step1/step1";
 import "./learningStep.css";
 import LearningFooter from "../LearningFooter/learningFooter";
+import Step1 from "./Step1/step1";
 import Step2 from "./Step2/step2";
+import Step3 from "./Step3/step3";
+import Step4 from "./Step4/step4";
 
 const components: { [key: string]: React.FC } = {
   "1": Step1,
   "2": Step2,
+  "3": Step3,
+  "4": Step4,
 };
 
 const LearningStep = () => {
