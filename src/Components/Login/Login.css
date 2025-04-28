@@ -1,0 +1,130 @@
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes overlayFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 900;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: overlayFade 0.2s ease-out;
+}
+
+.modalContent {
+  background: rgba(244, 223, 186, 0.15);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-radius: 8px;
+  padding: 24px;
+  width: 320px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  color: #F4DFBA;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modalTitle {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 1rem;
+  color: #F4DFBA;
+}
+
+.submitButton {
+  background-color: #2563eb; /* Blue 600 */
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.submitButton:hover {
+  background-color: #1e40af; /* Blue 700 */
+}
+
+.signInButtonContainer {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.githubButton {
+  background-color: #24292e;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.githubButton:hover {
+  background-color: #1b1f23;
+}
+
+.googleButton {
+  background-color: #4285F4;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.googleButton:hover {
+  background-color: #357AE8;
+}
+
+.cancelButton {
+  margin-top: 8px;
+  font-size: 0.875rem;
+  color: #F4DFBA;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.cancelButton:hover {
+  color: #374151;
+}

@@ -1,0 +1,33 @@
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 0;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  z-index: 1001;
+  animation: slideFadeUp 3s forwards;
+}
+
+@keyframes slideFadeUp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 30px);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, 0px);
+  }
+  80% {
+    opacity: 1;
+    transform: translate(-50%, 0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+}

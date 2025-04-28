@@ -1,8 +1,25 @@
 import './header.css';
 import Button from "../Button/button";
 import RoundLogo from '../../assets/roundLogo';
+import { useAuth } from '../../Context/AuthContext';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase';
 
-const Header = () => {
+type HeaderProps = {
+  openLogin: () => void;
+}
+
+const Header = ({openLogin}: HeaderProps) => {
+  const { user } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("Logout error", error);
+    }
+  }
+
   return (
     <div className="headerContainer">
       <div className="navContainer">
@@ -15,7 +32,9 @@ const Header = () => {
           <a href="#">About me</a>
         </nav>
       </div>
-      <Button>Logout</Button>
+      <Button onClick={user ? handleLogout : openLogin}>
+        {user ? "Logout" : "Login"}
+      </Button>
     </div>
   )
 }
