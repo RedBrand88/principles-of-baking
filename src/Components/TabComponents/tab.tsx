@@ -6,17 +6,19 @@ import CalcDoughTemp from "../CalcDoughTemp/calcDoughTemp";
 import RecipeSchedule from "../RecipeSchedule/recipeSchedule";
 import AddBreadRecipe from "../AddBreadRecipe/addBreadRecipe";
 import "./tab.css";
+import { useAuth } from "../../Context/AuthContext";
 
 const Tab = () => {
   const [activeTab, setActiveTab] = useState<string>("tab1");
+  const { user } = useAuth();
 
   return (
     <div className="tabContainer" >
       <ul className="tabs">
         <TabNavItem id="tab1" title="Scale Bread Recipe" activeTab={activeTab} setActiveTab={setActiveTab} />
         <TabNavItem id="tab2" title="Calculate Water Temp" activeTab={activeTab} setActiveTab={setActiveTab} />
-        <TabNavItem id="tab3" title="Scheduler" activeTab={activeTab} setActiveTab={setActiveTab} />
-        <TabNavItem id="tab4" title="Add Recipe" activeTab={activeTab} setActiveTab={setActiveTab} />
+        {user && <TabNavItem id="tab3" title="Scheduler" activeTab={activeTab} setActiveTab={setActiveTab} />}
+        {user && <TabNavItem id="tab4" title="Add Recipe" activeTab={activeTab} setActiveTab={setActiveTab} />}
       </ul>
       <div className="outlet">
         <TabContent id="tab1" activeTab={activeTab}>
@@ -25,12 +27,16 @@ const Tab = () => {
         <TabContent id="tab2" activeTab={activeTab}>
           <CalcDoughTemp />
         </TabContent>
-        <TabContent id="tab3" activeTab={activeTab}>
-          <RecipeSchedule />
-        </TabContent>
-        <TabContent id="tab4" activeTab={activeTab}>
-          <AddBreadRecipe />
-        </TabContent>
+        { user && 
+          <TabContent id="tab3" activeTab={activeTab}>
+            <RecipeSchedule />
+          </TabContent>
+        }
+        {user &&
+          <TabContent id="tab4" activeTab={activeTab}>
+            <AddBreadRecipe />
+          </TabContent>
+        }
       </div>
     </div>
   );

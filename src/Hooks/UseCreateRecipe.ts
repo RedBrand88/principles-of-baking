@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Recipe } from '../App';
+import { auth } from '../firebase';
 
 const useCreateRecipe = () => {
   const [loading, setLoading] = useState(false);
@@ -10,10 +11,17 @@ const useCreateRecipe = () => {
     setError(null);
 
     try {
+      const idToken = await auth.currentUser?.getIdToken();
+
+      if (!idToken) {
+        throw new Error('User is not authenticated');
+      }
+
       const resp = await fetch('http://localhost:8080/recipes', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${idToken}`,
         },
         body: JSON.stringify(recipeData)
       });
@@ -23,7 +31,8 @@ const useCreateRecipe = () => {
       }
 
       const data = await resp.json();
-    } catch (error) {
+      return data;
+    } catch (error: any) {
       setError(error.message);
     } finally {
       setLoading(false);
