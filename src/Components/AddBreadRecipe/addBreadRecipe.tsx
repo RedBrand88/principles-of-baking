@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import InputWithLabel from "../InputWithLabel/inputWithLabel";
 import useCreateRecipe from "../../Hooks/UseCreateRecipe";
-import Dropdown from "../Dropdown/Dropdown";
+import Dropdown from "../DropDown/DropDown";
 import { Recipe, Ingredient } from "../../App";
 import TextArea from "../TextArea/TextArea";
 import Button from "../Button/button";
