@@ -90,13 +90,13 @@ const ScaleBreadRecipe = () => {
     }, 0) * 100;
   }
 
-  const getRemainingFlour = () => {
-    return flour - scald;
-  }
+  // const getRemainingFlour = () => {
+  //   return flour - scald;
+  // }
 
-  const getRemainingMilk = () => {
-    return milk - scaldLiquid;
-  }
+  // const getRemainingMilk = () => {
+  //   return milk - scaldLiquid;
+  // }
 
   const getOnePercent = () => {
     if (recipe && recipe.percentages.length > 0) {
@@ -204,7 +204,7 @@ const ScaleBreadRecipe = () => {
               <ReadOnlyInputWithLabel
                 key={ingredient.ingredientName + index}
                 label={ingredient.ingredientName}
-                value={selectIngredientState(ingredient.ingredientName).toString()}
+                value={selectIngredientState(ingredient.ingredientName)?.toString() ?? ""}
                 placeholder="ingredient in grams"
               />
             );

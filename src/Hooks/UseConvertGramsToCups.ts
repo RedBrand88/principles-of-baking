@@ -1,29 +1,27 @@
-import { densityMap } from "../Utility/constants";
-import { CUP_VOLUME } from "../Utility/constants";
+import { 
+  densityMap, 
+  IngredientDensityKey, 
+  CUP_VOLUME,
+  ingredientKeyMap,
+} from "../Utility/constants";
 
 const useConvertGramsToCups = () => {
-
-  const getGramsPerMeasurement = (ingredient: string) => {
+  const getGramsPerMeasurement = (ingredient: IngredientDensityKey) => {
     return CUP_VOLUME * densityMap[ingredient];
-  }
+  };
 
-  const convertGramsToCups = (grams: number, ingredient: string) => {
-    if (ingredient === "flour") {
-      return grams / getGramsPerMeasurement("whiteFlour");
-    } else if (ingredient === "wheat flour") {
-      return grams / getGramsPerMeasurement("wheatFlour");
-    } else if (ingredient === "water") {
-      return grams / getGramsPerMeasurement("water");
-    } else if (ingredient === "milk") {
-      return grams / getGramsPerMeasurement("wholeMilk");
-    } else if (ingredient === "scald") {
-      return grams / 240;
-    } else if (ingredient === "butter") {
-      return grams / getGramsPerMeasurement("butter");
-    } else {
-      return 0;
+  type IngredientName = keyof typeof ingredientKeyMap;
+
+  const convertGramsToCups = (grams: number, ingredient: IngredientName) => {
+    const mappedKey = ingredientKeyMap[ingredient];
+
+    if (mappedKey === "scald") {
+      return grams / CUP_VOLUME;
     }
-  }
+
+    return grams / getGramsPerMeasurement(mappedKey);
+  };
+
   return { convertGramsToCups };
 };
 

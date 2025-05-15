@@ -9,7 +9,7 @@ const Calendar = () => {
     nextSelectedMonth,
     prevSelectedMonth,
     selectedDay,
-    setSelectedDate
+    //setSelectedDate
   } = useSelectedMonth();
 
   const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -41,37 +41,37 @@ const Calendar = () => {
           {selectedMonth.map(week => {
             return (
               <>
-                <div onClick={dayOnClick} className="day" key={week[0]}>
+                <div onClick={dayOnClick} className="day" key={week[0].toISOString()}>
                   <div className="dayNumber">
                     {format(week[0], "d")}
                   </div>
                 </div>
-                <div onClick={dayOnClick} className="day" key={week[1]}>
+                <div onClick={dayOnClick} className="day" key={week[1].toISOString()}>
                   <div className="dayNumber">
                     {format(week[1], "d")}
                   </div>
                 </div>
-                <div onClick={dayOnClick} className="day" key={week[2]}>
+                <div onClick={dayOnClick} className="day" key={week[2].toISOString()}>
                   <div className="dayNumber">
                     {format(week[2], "d")}
                   </div>
                 </div>
-                <div onClick={dayOnClick} className="day" key={week[3]}>
+                <div onClick={dayOnClick} className="day" key={week[3].toISOString()}>
                   <div className="dayNumber">
                     {format(week[3], "d")}
                   </div>
                 </div>
-                <div onClick={dayOnClick} className="day" key={week[4]}>
+                <div onClick={dayOnClick} className="day" key={week[4].toISOString()}>
                   <div className="dayNumber">
                     {format(week[4], "d")}
                   </div>
                 </div>
-                <div onClick={dayOnClick} className="day" key={week[5]}>
+                <div onClick={dayOnClick} className="day" key={week[5].toISOString()}>
                   <div className="dayNumber">
                     {format(week[5], "d")}
                   </div>
                 </div>
-                <div onClick={dayOnClick} className="saturday" key={week[6]}>
+                <div onClick={dayOnClick} className="saturday" key={week[6].toISOString()}>
                   <div className="dayNumber">
                     {format(week[6], "d")}
                   </div>

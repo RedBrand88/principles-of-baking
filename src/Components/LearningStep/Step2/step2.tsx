@@ -19,7 +19,7 @@ const Step2 = () => {
         hydration dough.
       </p>
       <p>
-        Some breads like focaccia and ciabatta have very high hydration levels. While other breads like bagels and pretzels have very low.
+        Some breads like focaccia and ciabatta have very high hydration levels. While other breads like bagels and pretzels have very low hydration.
         Pay attention to the hydration levels in the recipe and adjust as needed when you want to make your own recipes.
       </p>
     </div>

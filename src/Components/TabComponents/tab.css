@@ -7,7 +7,7 @@
   background: #46484A;
   padding: 0 16px;
   color: #F4DFBA;
-  padding-top: 82px;
+  padding-top: 150px;
 }
 
 .tabs {
@@ -17,4 +17,8 @@
   background: #876445;
   border-radius: 10px;
   width: 60%;
+}
+
+.layout {
+  padding-top: 24px;
 }

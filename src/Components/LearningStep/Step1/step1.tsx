@@ -21,8 +21,8 @@ const Step1 = () => {
         For example, if a recipe calls for 500g of flour, 300g of water, and 10g of salt, the bakers percentages would be:
         <ul>
           <li>Flour: 100%</li>
-          <li>Water: 60%</li>
-          <li>Salt: 2%</li>
+          <li>Water: 60% → 300 / 500 = 0.6 * 100 = 60</li>
+          <li>Salt: 2% → 10 / 500 = 0.02 * 100 = 2</li>
         </ul>
       </p>
       <p>

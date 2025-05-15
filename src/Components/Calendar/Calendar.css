@@ -1,13 +1,11 @@
 .calendarContainer {
-  background: #053742;
-  color: white;
-  height: 100vh;
+  color: #F4DFBA;
+  height: 700px;
   width: 100vh;
-  padding-top: 80px;
 }
 
 .calendar {
-  background: black;
+  background: #876445;
   border-radius: 10px;
   height: 80%;
 }
@@ -37,7 +35,7 @@
 
 .headerCell {
   text-align: center;
-  border: 1px solid white;
+  border: 1px solid #CA965C;
   width: 16%;
 }
 
@@ -49,12 +47,12 @@
 }
 
 .day {
-  border: 1px solid white;
+  border: 1px solid #CA965C;
   border-right: none;
 }
 
 .saturday {
-  border: 1px solid white;
+  border: 1px solid #CA965C;
 }
 
 .dayNumber {

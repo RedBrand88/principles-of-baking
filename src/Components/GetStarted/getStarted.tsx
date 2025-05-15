@@ -40,12 +40,12 @@ const GetStarted = () => {
       <p>
         Instructions:
           <ol>
-            <li> Start but add the water, yeast, and salt to a bowl and mix until the yeast is dissolved.</li>
+            <li> Start by adding the water, yeast, and salt to a bowl and mix until the yeast is dissolved.</li>
             <li> Add the flour and mix until the dough comes together.</li>
             <li> Cover the bowl with a towel and let it rest for 12-18 min.</li>
             <li> After the dough has rested, fold the dough over itself a few times.</li>
-            <li> Cover the bowl again and let it rise for until the dough has doubled this may take 1 to 2 hours.</li>
-            <li> Preheat your oven to 450 degrees.</li>
+            <li> Cover the bowl again and let it rise until the dough has doubled. This may take 1 to 2 hours.</li>
+            <li> Preheat your oven to 450 degrees Ferinheit or 232 Celcius.</li>
             <li> Place your baking vessel in the oven to heat up.</li>
             <li> Once the oven is preheated and the dough has risen, carefully remove the baking vessel from the oven.</li>
             <li> Place the dough in the baking vessel and spray with water if you have a spray bottle and cover with the lid.</li>
@@ -55,8 +55,8 @@ const GetStarted = () => {
           </ol>
       </p>
       <p>
-        Once you've mastered this recipe, you can start experimenting with different flours, adding seeds or nuts, 
-        and trying different baking techniques. If you are interested in learning more click next.
+        Once you've mastered this recipe, you can start experimenting with different flours, adding seeds, nuts, other
+        ingredients, and trying different baking techniques. If you are interested in learning more click next.
       </p>
       <LearningFooter step={0} />
     </div>

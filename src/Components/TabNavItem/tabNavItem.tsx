@@ -1,22 +1,26 @@
 import "./tabNavItem.css";
 
 interface tabNavItemProps {
-    id: string;
-    title: string;
-    activeTab: string;
-    setActiveTab: (id: string) => void;
+  id: string;
+  title: string;
+  activeTab: string;
+  setActiveTab: (id: string) => void;
 }
 
 const TabNavItem = ({ id, title, activeTab, setActiveTab }: tabNavItemProps) => {
-    const handleClick = () => {
-        setActiveTab(id)
-    }
+  const handleClick = () => {
+    setActiveTab(id)
+  }
 
-    return (
-        <li onClick={handleClick} className={activeTab === id ? "active selector" : "inactive selector"}>
-            { title }
-        </li >
-    );
+  return (
+    <button
+      onClick={handleClick}
+      className={activeTab === id ? "active selector" : "inactive selector"}
+      role="tab"
+    >
+      {title}
+    </button>
+  );
 };
 
 export default TabNavItem;

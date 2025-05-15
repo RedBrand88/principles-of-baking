@@ -17,7 +17,11 @@ const useFetchRecipes = () => {
         setRecipes(data);
       } catch (error) {
         console.error('Error fetching recipes:', error);
-        setError(error.message);
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError('An unknown error occurred.');
+        }
       } finally {
         setLoading(false);
       }
@@ -30,4 +34,3 @@ const useFetchRecipes = () => {
 };
 
 export default useFetchRecipes;
-

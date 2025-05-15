@@ -42,7 +42,7 @@ const Step4 = () => {
             the dough.</li>
           <li>Lift the dough off your work surface so it folds over your hands</li>
           <li>Then slap the side closest to you onto the counter</li>
-          <li>Then turning your hands 90 degrees relative to the dough repeat all the steps</li>
+          <li>Then turning your hands 90 degrees relative to the dough repeat all steps</li>
         </ol>
 
         This method is good for wet doughs because it requires less direct contact with the dough. If you are
@@ -62,9 +62,9 @@ const Step4 = () => {
       <p>
         This process is called autolyse. Autolyse is a rest period that allows the flour to fully hydrate and the gluten
         to develop without kneading. This can take anywhere from 30 minutes to 4 hours. The longer the rest, the less
-        kneading is required. I have mixed together the flour, salt and water in a bowl. Then I let it rest covered at room
-        temperature overnight. The next day I add the levain whether it be a sourdough starter or a poolish. Then I mix
-        the dough until the levain is fully incorporated. Then I do the final fermentation and shaping. This method is
+        kneading is required. Mix together the flour, salt and water in a bowl. Then let it rest covered at room
+        temperature overnight. The next day add the levain whether it be a sourdough starter or a poolish or instant dry yeast. 
+        Then mix the dough until the levain is fully incorporated. Then do the final fermentation and shaping. This method is
         great for beginners because it is less hands-on and requires less skill. But it does require more time and
         planning ahead.
       </p>

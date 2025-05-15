@@ -1,9 +1,10 @@
 .headerContainer {
   position: fixed;
-  height: 60px;
+  height: 120px;
   width: 100vw;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 10px;
   z-index: 100;
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));

@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { LoginModal } from './Components/Login/Login';
 import { Toast } from './Components/Toast/Toast';
 import { useAuth } from './Context/AuthContext';
+import { useToast } from './Hooks/useToast';
 
 export interface Ingredient {
   ingredientName: string;
@@ -34,31 +35,29 @@ export interface Recipe {
 export const RecipeContext = createContext<Recipe[] | null>(null);
 
 function App() {
-  const { recipes, loading, error } = useFetchRecipes();
+  const { recipes, error } = useFetchRecipes();
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const { user } = useAuth();
+  const { toasts, addToast, removeToast } = useToast();
 
   useEffect(() => {
     if (user) {
-      setToastMessage(`Welcome, ${user.displayName || "friend"}!`);
+      addToast(`Welcome, ${user.displayName || "friend"}!`);
       setIsLoginOpen(false);
     } else {
-      setToastMessage("You have logged out.");
+      addToast("You have logged out.");
     }
   }, [user]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  // if (error) {
-  //   return <div>Error: {error}</div>;
-  // }
+  useEffect(() => {
+    if (error) {
+      addToast(`Error fetching recipes: ${error}`, "error");
+    }
+  }, [error]);
 
   return (
     <RecipeContext.Provider value={recipes}>
-      <Header openLogin={() => setIsLoginOpen(true)}/>
+      <Header openLogin={() => setIsLoginOpen(true)} />
       <Router>
         <Routes>
           <Route path="/" element={<Landing />} />
@@ -68,12 +67,16 @@ function App() {
         </Routes>
       </Router>
       <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
-      {toastMessage && (
-        <Toast
-        message={toastMessage}
-        onClose={() => setToastMessage(null)}
-        />
-      )}
+      <div className="toastContainer">
+        {toasts.map((toast, idx) => (
+          <Toast
+            key={idx}
+            message={toast.message}
+            type={toast.type}
+            onClose={() => removeToast(idx)}
+          />
+        ))}
+      </div>
     </RecipeContext.Provider>
   );
 };

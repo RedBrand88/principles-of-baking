@@ -5,11 +5,12 @@ import Dropdown from "../DropDown/DropDown";
 import { Recipe, Ingredient } from "../../App";
 import TextArea from "../TextArea/TextArea";
 import Button from "../Button/button";
+import { useToast } from "../../Hooks/useToast";
+import "./addBreadRecipe.css";
 
 const AddBreadRecipe = () => {
-  //      TODO
-  //      2. create form for all input elements map readonly inputs for ingredients.
-  const { createRecipe, loading, error } = useCreateRecipe();
+  const { createRecipe, loading } = useCreateRecipe();
+  const { addToast } = useToast();
   const units = ["g", "oz", "ml", "cups", "Tbls", "tsp"];
 
   const [instructionCount, setInstructionCount] = useState(1);
@@ -54,8 +55,13 @@ const AddBreadRecipe = () => {
     })
   }
 
-  const onSubmit = () => {
-    createRecipe(newRecipe);
+  const onSubmit = async () => {
+    const success = await createRecipe(newRecipe);
+    if (success) {
+      addToast("Recipe created successfully!", "success");
+    } else {
+      addToast("Failed to create recipe. Please try again.", "error");
+    }
   }
 
   const addInstructionOnClick = () => {
@@ -65,7 +71,7 @@ const AddBreadRecipe = () => {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="addRecipeContainer">
       <InputWithLabel
         label="Title"
         value={newRecipe?.title ? newRecipe.title : ""}
@@ -104,16 +110,19 @@ const AddBreadRecipe = () => {
           Add
         </Button>
       </div>
-      <div>
-        <div>{`${instructionCount}.`}</div>
+      <div className="flex">
+        <div className="alignSelfFlexStart">{`${instructionCount}.`}</div>
         <TextArea
           id="add-instruction"
           htmlFor="add-instructions"
           label="Add Instruction"
           value={addInstruction}
           setChange={setAddInstruction}
+          labelStyle={{ alignSelf: "flex-start"}}
+          style={{width: "490px", height: "180px"}}
         />
         <Button
+          style={{ alignSelf: "flex-start"}}
           onClick={addInstructionOnClick}
         >
           Add
@@ -135,8 +144,8 @@ const AddBreadRecipe = () => {
           ))
         }
       </div>
-      <Button onClick={onSubmit}>
-        Submit
+      <Button style={{alignSelf: "flex-start"}} onClick={onSubmit} disabled={loading}>
+        { loading ? "Sending" : "Submit" }
       </Button>
     </div >
   )

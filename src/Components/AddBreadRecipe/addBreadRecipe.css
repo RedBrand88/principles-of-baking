@@ -1,0 +1,15 @@
+.addRecipeContainer {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.flex {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.alignSelfFlexStart {
+  align-self: flex-start;
+}

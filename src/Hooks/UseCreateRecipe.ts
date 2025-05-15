@@ -4,9 +4,9 @@ import { auth } from '../firebase';
 
 const useCreateRecipe = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const createRecipe = async (recipeData: Recipe) => {
+  const createRecipe = async (recipeData: Recipe): Promise<boolean> => {
     setLoading(true);
     setError(null);
 
@@ -30,10 +30,12 @@ const useCreateRecipe = () => {
         throw new Error('Network response was not ok');
       }
 
-      const data = await resp.json();
-      return data;
+      await resp.json();
+
+      return true;
     } catch (error: any) {
       setError(error.message);
+      return false;
     } finally {
       setLoading(false);
     }
@@ -43,4 +45,3 @@ const useCreateRecipe = () => {
 };
 
 export default useCreateRecipe;
-

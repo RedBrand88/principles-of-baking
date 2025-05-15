@@ -1,4 +1,5 @@
-import React, { ChangeEvent, Dispatch } from "react"
+import React, { CSSProperties, ChangeEvent, Dispatch } from "react"
+import "./TextArea.css";
 
 type TextAreaProps = {
   htmlFor?: string;
@@ -6,6 +7,8 @@ type TextAreaProps = {
   id?: string;
   value?: string;
   setChange: Dispatch<React.SetStateAction<string>>;
+  style?: CSSProperties;
+  labelStyle?: CSSProperties;
 }
 
 const TextArea = (
@@ -14,7 +17,9 @@ const TextArea = (
     label,
     id,
     value,
-    setChange
+    setChange,
+    style,
+    labelStyle
   }: TextAreaProps
 ) => {
 
@@ -24,11 +29,13 @@ const TextArea = (
 
   return (
     <>
-      {label && <label htmlFor={htmlFor}>{label}</label >}
+      {label && <label style={labelStyle} htmlFor={htmlFor}>{label}</label >}
       <textarea
         id={id}
         value={value}
         onChange={handleChange}
+        style={style}
+        className="textArea"
       />
     </>
   );

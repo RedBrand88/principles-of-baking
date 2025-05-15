@@ -1,28 +1,27 @@
-import { TBLS_VOLUME } from "../Utility/constants";
-import { densityMap } from "../Utility/constants";
+import { 
+  densityMap, 
+  IngredientDensityKey, 
+  TBLS_VOLUME, 
+  ingredientKeyMap 
+} from "../Utility/constants";
 
 const useConvertGramsToTBLS = () => {
-
-  const getGramsPerMeasurement = (ingredient: string) => {
+  const getGramsPerMeasurement = (ingredient: IngredientDensityKey) => {
     return TBLS_VOLUME * densityMap[ingredient];
   }
 
   const convertGramsToTBLS = (grams: number, ingredient: string) => {
-    if (ingredient === "flour") {
-      return grams / getGramsPerMeasurement("whiteFlour");
-    } else if (ingredient === "wheat flour") {
-      return grams / getGramsPerMeasurement("wheatFlour");
-    } else if (ingredient === "water") {
-      return grams / getGramsPerMeasurement("water");
-    } else if (ingredient === "milk") {
-      return grams / getGramsPerMeasurement("wholeMilk");
-    } else if (ingredient === "scald") {
-      return grams / TBLS_VOLUME;
-    } else if (ingredient === "butter") {
-      return grams / getGramsPerMeasurement("butter");
-    } else {
-      return 0;
+    const mappedKey = ingredientKeyMap[ingredient];
+
+    if (!mappedKey) {
+      return 0; // unknown ingredient
     }
+
+    if (mappedKey === "scald") {
+      return grams / TBLS_VOLUME;
+    }
+
+    return grams / getGramsPerMeasurement(mappedKey);
   }
 
   return { convertGramsToTBLS };

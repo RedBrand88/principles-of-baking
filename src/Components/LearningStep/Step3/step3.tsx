@@ -48,7 +48,7 @@ const Step3 = () => {
         rises to the final size before baking. This can take 1 to 2 hours depending on the temperature of the dough.
       </p>
       <p>
-        A very common patter I use is to mix the dough in the evening and let it bulk ferment in the refrigerator
+        A very common pattern I use is to mix the dough in the evening and let it bulk ferment in the refrigerator
         overnight. I wake up follow my normal morning routine and go to work. When I get home from work I shape the
         dough and let it rise while I make dinner. Then I bake the bread after dinner to enjoy a nice homemade loaf
         during the week.

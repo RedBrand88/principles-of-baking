@@ -52,7 +52,7 @@ const CalcDoughTemp = () => {
         id="flour-temp-input"
       />
       <Button disabled={(desiredDoughTemp && kitchenTemp && flourTemp ? false : true)} onClick={calcWaterTemp}>
-        Get required water temp
+        Calculate
       </Button>
       <ReadOnlyInputWithLabel
         label="Water temp"

@@ -14,20 +14,20 @@ const Tab = () => {
 
   return (
     <div className="tabContainer" >
-      <ul className="tabs">
+      <div role="tablist" aria-label="Bread recipe tools" className="tabs">
         <TabNavItem id="tab1" title="Scale Bread Recipe" activeTab={activeTab} setActiveTab={setActiveTab} />
         <TabNavItem id="tab2" title="Calculate Water Temp" activeTab={activeTab} setActiveTab={setActiveTab} />
         {user && <TabNavItem id="tab3" title="Scheduler" activeTab={activeTab} setActiveTab={setActiveTab} />}
         {user && <TabNavItem id="tab4" title="Add Recipe" activeTab={activeTab} setActiveTab={setActiveTab} />}
-      </ul>
-      <div className="outlet">
+      </div>
+      <div className="layout">
         <TabContent id="tab1" activeTab={activeTab}>
           <ScaleBreadRecipe />
         </TabContent>
         <TabContent id="tab2" activeTab={activeTab}>
           <CalcDoughTemp />
         </TabContent>
-        { user && 
+        {user && 
           <TabContent id="tab3" activeTab={activeTab}>
             <RecipeSchedule />
           </TabContent>

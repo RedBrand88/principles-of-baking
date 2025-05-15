@@ -1,17 +1,18 @@
 import { PropsWithChildren } from "react";
 
 interface tabContentProps {
-    id: string;
-    activeTab: string;
+  id: string;
+  activeTab: string;
 }
 
-const TabContent = ({id, activeTab, children}: PropsWithChildren<tabContentProps>) => {
-    return (
-        activeTab === id ? <div>
-            {children}
-        </div>
-            : null
-    );
+const TabContent = ({ id, activeTab, children }: PropsWithChildren<tabContentProps>) => {
+  return (
+    activeTab === id ?
+      <>
+        {children}
+      </>
+      : null
+  );
 };
 
 export default TabContent;
