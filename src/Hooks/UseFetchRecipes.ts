@@ -9,7 +9,7 @@ const useFetchRecipes = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resp = await fetch('http://localhost:8080/recipes');
+        const resp = await fetch('/recipes');
         if (!resp.ok) {
           throw new Error('Network response was not ok');
         }

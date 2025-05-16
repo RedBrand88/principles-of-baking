@@ -15,12 +15,14 @@ const Button = ({ children, onClick, type = "primary", disabled = false, style }
 
   return (
     <button
-      className={`${buttonStyle} button`}
+      className={`${type === "primary" ? "secondary" : "primary"} bottom`}
       onClick={onClick}
       disabled={disabled}
       style={style}
     >
-      {children}
+      <span className={`${buttonStyle} top`}>
+        {children}
+      </span>
     </button>
   )
 }

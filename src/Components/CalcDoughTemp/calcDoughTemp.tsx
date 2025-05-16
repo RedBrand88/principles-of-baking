@@ -51,7 +51,10 @@ const CalcDoughTemp = () => {
         placeholder="flour temp"
         id="flour-temp-input"
       />
-      <Button disabled={(desiredDoughTemp && kitchenTemp && flourTemp ? false : true)} onClick={calcWaterTemp}>
+      <Button 
+        disabled={(desiredDoughTemp && kitchenTemp && flourTemp ? false : true)} 
+        onClick={calcWaterTemp}
+      >
         Calculate
       </Button>
       <ReadOnlyInputWithLabel

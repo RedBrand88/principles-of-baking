@@ -183,7 +183,7 @@ const ScaleBreadRecipe = () => {
   return (
     <div className="scaleContainer">
       <DropDown
-        label="Recipe Selector"
+        label={"Recipe Selector"}
         value={recipeInstructions}
         options={recipeInstructionsData()}
         onChange={(e) => onSelectRecipeInstructions(e.target.value)}
