@@ -24,7 +24,7 @@ const Header = ({openLogin}: HeaderProps) => {
     <div className="headerContainer">
       <div className="navContainer">
         <a href="/" className="logo">
-          <RoundLogo height="100" width="100" />
+          <RoundLogo height="75" width="75" />
         </a>
         <nav className="navLinks">
           <a href="/learn">Learn how to bake</a>

@@ -20,7 +20,7 @@ const DropDown = ({ id, label, value, options, onChange }: DropDownProps) => {
         className="dropDown"
       >
         {options.map((recipe) => (
-          <option key={recipe.id} value={recipe.title}>{recipe.title}</option>
+          <option key={recipe.title + recipe.description} value={recipe.id}>{recipe.title}</option>
         ))}
       </select>
     </div>

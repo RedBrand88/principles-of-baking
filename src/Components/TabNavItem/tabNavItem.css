@@ -2,16 +2,22 @@
   cursor: pointer;
   padding: 16px;
   background: #CA965C;
+  transform: translateY(-4px);
+  transition: transform 500ms;
 }
 
 .inactive {
   cursor: pointer;
   padding: 16px;
   background: #876445;
+  transform: translateY(-4px);
+  transition: transform 500ms;
 }
 
 .inactive:hover {
   background: #CA965C;
+  transform: translateY(-6px);
+  transition: transform 250ms;
 }
 
 .selector {
@@ -19,6 +25,11 @@
   border: none;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   font-size: inherit;
+}
+
+.selector:active {
+  transform: translateY(-2px);
+  transition: transform 50ms;
 }
 
 .selector:first-child {

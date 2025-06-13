@@ -1,4 +1,4 @@
-import logo from '../assets/bread_logo.png';
+import logo from '../assets/breadmachinelogo.svg';
 
 type LogoProps = {
   height: string;

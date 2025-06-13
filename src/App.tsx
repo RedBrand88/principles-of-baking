@@ -13,14 +13,20 @@ import { useAuth } from './Context/AuthContext';
 import { useToast } from './Hooks/useToast';
 
 export interface Ingredient {
+  id: string;
   ingredientName: string;
+  bakerPercentage: number;
   quantity: number;
   unit: string;
+  phase: "dough" | "scald" | "soak" | "autolyse";
+  densityGPerMl: number;
 }
 
-export interface Percentage {
-  ingredientName: string;
-  percent: number;
+export interface Meta {
+  yeildGrams: number;
+  createdAt: string;
+  updatedAt: string;
+  tags: string[];
 }
 
 export interface Recipe {
@@ -29,10 +35,11 @@ export interface Recipe {
   description: string;
   ingredients: Ingredient[];
   instructions: string[];
-  percentages: Percentage[];
+  Meta: Meta;
+  userID: string;
 }
 
-export const RecipeContext = createContext<Recipe[] | null>(null);
+export const RecipeContext = createContext<Recipe[]>([]);
 
 function App() {
   const { recipes, error } = useFetchRecipes();
