@@ -2,28 +2,39 @@ import { ChangeEvent, useState } from "react";
 import InputWithLabel from "../InputWithLabel/inputWithLabel";
 import useCreateRecipe from "../../Hooks/UseCreateRecipe";
 import Dropdown from "../DropDown/DropDown";
-import { Recipe, Ingredient } from "../../App";
 import TextArea from "../TextArea/TextArea";
 import Button from "../Button/button";
 import { useToast } from "../../Hooks/useToast";
 import "./addBreadRecipe.css";
 
+const UNITS = ["g", "oz", "ml", "cups", "Tbls", "tsp"];
+export type Unit = typeof UNITS[number];
+
+export type IngredientDraft = {
+  ingredientName: string;
+  quantity: number;
+  unit: Unit;
+};
+export type RecipeRequest = {
+  title: string;
+  description: string;
+  ingredients: IngredientDraft[];
+  instructions: string[];
+};
+
 const AddBreadRecipe = () => {
   const { createRecipe, loading } = useCreateRecipe();
   const { addToast } = useToast();
-  const units = ["g", "oz", "ml", "cups", "Tbls", "tsp"];
 
   const [instructionCount, setInstructionCount] = useState(1);
-  const [unit, setUnit] = useState<string>(units[0]);
-  const [addIngredient, setAddIngredient] = useState<Ingredient>({ ingredientName: "", quantity: 0, unit: unit });
+  const [unit, setUnit] = useState<Unit>(UNITS[0]);
+  const [addIngredient, setAddIngredient] = useState<IngredientDraft>({ ingredientName: "", quantity: 0, unit: unit });
   const [addInstruction, setAddInstruction] = useState<string>("");
-  const [newRecipe, setNewRecipe] = useState<Recipe>({
-    id: "",
+  const [newRecipe, setNewRecipe] = useState<RecipeRequest>({
     title: "",
     description: "",
     ingredients: [],
     instructions: [],
-    percentages: [],
   });
 
   const addIngredientOnClick = () => {
@@ -100,7 +111,7 @@ const AddBreadRecipe = () => {
         <Dropdown
           label="Select Unit: "
           value={unit}
-          options={units}
+          options={UNITS}
           onChange={(e) => setUnit(e.target.value)}
           id="unit"
         />

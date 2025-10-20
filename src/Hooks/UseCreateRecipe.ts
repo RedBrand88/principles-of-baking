@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Recipe } from '../App';
 import { auth } from '../firebase';
+import { RecipeRequest } from '../Components/AddBreadRecipe/addBreadRecipe';
 
 const useCreateRecipe = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const createRecipe = async (recipeData: Recipe): Promise<boolean> => {
+  const createRecipe = async (recipeData: RecipeRequest): Promise<boolean> => {
     setLoading(true);
     setError(null);
 
