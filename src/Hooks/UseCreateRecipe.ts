@@ -1,12 +1,19 @@
 import { useState } from 'react';
 import { auth } from '../firebase';
-import { RecipeRequest } from '../Components/AddBreadRecipe/addBreadRecipe';
+import { type RecipeRequest } from '../types/dto';
+import { type Recipe } from '../types/models';
+
+type CreateRecipeResult =
+  | { ok: true; data: Recipe }
+  | { ok: false; error: string }
 
 const useCreateRecipe = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const join = (a = "", b = "") =>
+    `${a.replace(/\/$/, "")}/${b.replace(/^\//, "")}`;
 
-  const createRecipe = async (recipeData: RecipeRequest): Promise<boolean> => {
+  const createRecipe = async (recipeData: RecipeRequest): Promise<CreateRecipeResult> => {
     setLoading(true);
     setError(null);
 
@@ -17,7 +24,10 @@ const useCreateRecipe = () => {
         throw new Error('User is not authenticated');
       }
 
-      const resp = await fetch('http://localhost:8080/recipes', {
+      const base = import.meta.env.VITE_API_BASE?.trim();
+      const url = base ? join(base, "recipes") : "/recipes";
+
+      const resp = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,15 +37,17 @@ const useCreateRecipe = () => {
       });
 
       if (!resp.ok) {
-        throw new Error('Network response was not ok');
+        const msg = (await resp.text().catch(() => "")) || `Request failed: ${resp.status}`;
+        throw new Error(msg);
       }
 
-      await resp.json();
+      const created: Recipe = await resp.json();
 
-      return true;
+      return { ok: true, data: created };
     } catch (error: any) {
-      setError(error.message);
-      return false;
+      const msg = error?.message ?? "Unknown Error";
+      setError(msg);
+      return { ok: false, error: msg };
     } finally {
       setLoading(false);
     }

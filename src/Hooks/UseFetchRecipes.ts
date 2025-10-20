@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Recipe } from '../App';
+import { Recipe } from '../types/models';
 
 const useFetchRecipes = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);

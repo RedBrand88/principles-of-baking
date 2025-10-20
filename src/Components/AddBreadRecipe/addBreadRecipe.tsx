@@ -6,21 +6,12 @@ import TextArea from "../TextArea/TextArea";
 import Button from "../Button/button";
 import { useToast } from "../../Hooks/useToast";
 import "./addBreadRecipe.css";
-
-const UNITS = ["g", "oz", "ml", "cups", "Tbls", "tsp"];
-export type Unit = typeof UNITS[number];
-
-export type IngredientDraft = {
-  ingredientName: string;
-  quantity: number;
-  unit: Unit;
-};
-export type RecipeRequest = {
-  title: string;
-  description: string;
-  ingredients: IngredientDraft[];
-  instructions: string[];
-};
+import { 
+  UNITS, 
+  type Unit, 
+  type IngredientDraft, 
+  type RecipeRequest 
+} from "../../types/dto";
 
 const AddBreadRecipe = () => {
   const { createRecipe, loading } = useCreateRecipe();

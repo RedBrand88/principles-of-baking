@@ -1,4 +1,4 @@
-import type { Ingredient } from "../App";
+import type { Ingredient } from "../types/models";
 
 /**
  * ScaledIngredient is the output type: each ingredient's name and its computed gram amount.
