@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { MouseEvent } from "react";
 import useSelectedMonth from "../../Hooks/UseSelectedMonth";
-import "./calendar.css";
+import "./Calendar.css";
 
 const Calendar = () => {
   const {

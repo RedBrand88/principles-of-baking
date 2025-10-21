@@ -6,6 +6,7 @@ import {
   GithubAuthProvider,
   GoogleAuthProvider,
   signInWithPopup,
+  linkWithCredential,
 } from "firebase/auth";
 
 interface LoginModalProps {
@@ -57,13 +58,32 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     try {
       await signInWithPopup(auth, provider);
       onClose();
-    } catch (error) {
-      console.error("GitHub login error: ", error);
+    } catch (error: any) {
+      if (error.code === "auth/account-exists-with-different-credential") {
+        const existingEmail = error.customData?.email;
+        const pendingCred = GithubAuthProvider.credentialFromError(error);
+
+        if (!existingEmail || !pendingCred) {
+          console.error("Missing email or credential info for merge.");
+          return;
+        }
+
+        const googleProvider = new GoogleAuthProvider();
+        try {
+          const result = await signInWithPopup(auth, googleProvider);
+          await linkWithCredential(result.user, pendingCred);
+          onClose();
+        } catch (linkError) {
+          console.log("Failed to link accounts: ", linkError);
+        }
+      } else {
+        console.error("GitHub login error: ", error);
+      }
     }
   };
 
   const handleGoogleLogin = async () => {
-    const provider = new GoogleAuthProvider;
+    const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
       onClose();
