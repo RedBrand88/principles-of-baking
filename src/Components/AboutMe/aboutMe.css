@@ -1,5 +1,5 @@
 .aboutMeContainer {
-  padding-top: 125px;
+  padding: 125px 10px 0px;
 }
 
 .avatar {
@@ -14,6 +14,10 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.experience > * {
+  color: #F4DFBA;
 }
 
 .upperContainer {

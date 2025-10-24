@@ -20,6 +20,12 @@
   transition: transform 250ms;
 }
 
+.inactive:focus-visible {
+  background: #CA965C;
+  transform: translateY(-6px);
+  transition: transform 250ms;
+}
+
 .selector {
   width: 100%;
   border: none;

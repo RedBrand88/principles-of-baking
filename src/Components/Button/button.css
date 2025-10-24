@@ -41,3 +41,8 @@
   transform: translateY(-2px);
   transition: transform 50ms;
 }
+
+.bottom:focus-visible .top {
+  transform: translateY(-6px);
+  transition: transform 250ms;
+}
