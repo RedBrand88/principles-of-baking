@@ -11,8 +11,13 @@ export default defineConfig({
       '/recipes': {
         target: 'http://localhost:8080',
         changeOrigin: true,
-      }
-    }
+      },
+      '/static': {
+        target: 'https://bread-machine.dev',
+        changeOrigin: true,
+        secure: true,
+      },
+    },
   },
   test: {
     globals: true,

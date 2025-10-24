@@ -1,0 +1,23 @@
+.aboutMeContainer {
+  padding-top: 125px;
+}
+
+.avatar {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  border: 1px solid #F4DFBA;
+  border-radius: 50%;
+}
+
+.experience {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #F4DFBA;
+}
+
+.upperContainer {
+  display: flex;
+  justify-content: center;
+  align-items: self-start;
+}

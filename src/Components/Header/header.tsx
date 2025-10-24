@@ -29,7 +29,7 @@ const Header = ({openLogin}: HeaderProps) => {
         <nav className="navLinks">
           <a href="/learn">Learn how to bake</a>
           <a href="/tab">Bread calculator</a>
-          <a href="#">About me</a>
+          <a href="about-me">About me</a>
         </nav>
       </div>
       <Button onClick={user ? handleLogout : openLogin}>

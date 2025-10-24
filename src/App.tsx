@@ -6,6 +6,7 @@ import Header from './Components/Header/header';
 import Landing from './Components/Landing/landing';
 import GetStarted from './Components/GetStarted/getStarted';
 import LearningStep from './Components/LearningStep/learningStep';
+import AboutMe from './Components/AboutMe/aboutMe';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { LoginModal } from './Components/Login/Login';
 import { Toast } from './Components/Toast/Toast';
@@ -45,6 +46,7 @@ function App() {
           <Route path="/tab" element={<Tab />} />
           <Route path="/learn" element={<GetStarted />} />
           <Route path="/learning/step/:step" element={<LearningStep />} />
+          <Route path="/about-me" element={<AboutMe />} />
         </Routes>
       </Router>
       <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
