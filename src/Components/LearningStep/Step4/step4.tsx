@@ -1,7 +1,7 @@
 
 const Step4 = () => {
   return (
-    <div>
+    <div className="stepContent">
       <p>
         This next lesson will go over kneading. Or if you are interested in no-knead techniques, skip to the bottom
         of the page and read the no-knead section.

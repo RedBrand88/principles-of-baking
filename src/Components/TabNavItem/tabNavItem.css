@@ -1,41 +1,37 @@
-.active {
+.active,
+.inactive {
   cursor: pointer;
-  padding: 16px;
-  background: #CA965C;
+  padding: 16px 24px;
+  border: none;
+  color: var(--text-color, #f4dfba);
+  font-family: inherit;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   transform: translateY(-4px);
-  transition: transform 500ms;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.active {
+  background: #CA965C;
 }
 
 .inactive {
-  cursor: pointer;
-  padding: 16px;
   background: #876445;
-  transform: translateY(-4px);
-  transition: transform 500ms;
 }
 
-.inactive:hover {
-  background: #CA965C;
-  transform: translateY(-6px);
-  transition: transform 250ms;
-}
-
+.inactive:hover,
 .inactive:focus-visible {
   background: #CA965C;
   transform: translateY(-6px);
-  transition: transform 250ms;
 }
 
 .selector {
-  width: 100%;
   border: none;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-  font-size: inherit;
-}
-
-.selector:active {
-  transform: translateY(-2px);
-  transition: transform 50ms;
+  border-radius: 0;
+  flex: 1 1 auto;
+  margin: 0;
+  text-align: center;
 }
 
 .selector:first-child {
@@ -44,4 +40,22 @@
 
 .selector:last-child {
   border-radius: 0 10px 10px 0;
+}
+
+.selector:active {
+  transform: translateY(-2px);
+}
+
+/* --- MOBILE --- */
+@media (max-width: 480px) {
+  .active,
+  .inactive {
+    font-size: 0.95rem;
+    padding: 10px 16px;
+    transform: none;
+  }
+
+  .selector {
+    flex: 1 1 auto;
+  }
 }

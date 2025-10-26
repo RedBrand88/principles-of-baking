@@ -128,3 +128,56 @@
 .cancelButton:hover {
   color: #374151;
 }
+
+/* ------ mobile styles ------ */
+@media (max-width: 480px) {
+  .modalOverlay {
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 80px;
+  }
+
+  .modalContent {
+    width: 90%;
+    max-width: 340px;
+    padding: 16px 20px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modalTitle {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .form {
+    gap: 10px;
+  }
+
+  .input {
+    font-size: 1rem;
+    padding: 8px 10px;
+    width: 100%;
+  }
+
+  .submitButton,
+  .githubButton,
+  .googleButton {
+    font-size: 1rem;
+    padding: 0.75rem;
+    width: 100%;
+  }
+
+  .signInButtonContainer {
+    gap: 10px;
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+  .cancelButton {
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+  }
+}

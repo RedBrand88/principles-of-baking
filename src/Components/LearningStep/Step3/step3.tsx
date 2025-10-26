@@ -1,7 +1,7 @@
 
 const Step3 = () => {
   return (
-    <div>
+    <div className="stepContent">
       <p>
         The next lesson will cover fermentation. Fermentation is the process of yeast consuming sugars and producing
         carbon dioxide and alcohol.

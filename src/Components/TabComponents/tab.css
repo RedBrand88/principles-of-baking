@@ -1,36 +1,60 @@
 .tabContainer {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100vh;
   align-items: center;
+  width: 100%;
+  min-height: 100vh;
   background: #46484A;
-  padding: 0 16px;
   color: #F4DFBA;
-  padding-top: 150px;
+  padding: 150px 16px 2rem;
+  box-sizing: border-box;
 }
 
+/* --- TAB BAR --- */
 .tabs {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   background: #876445;
   border-radius: 10px;
   width: 60%;
 }
 
-@media screen and (min-width: 601px) and (max-width: 1800px) {
+@media screen and (max-width: 1200px) {
   .tabs {
-    width: 70%;
+    width: 80%;
   }
 }
 
-@media screen and (min-width: 601px) and (max-width: 1500px) {
+@media screen and (max-width: 900px) {
   .tabs {
     width: 95%;
   }
 }
 
+/* --- MOBILE --- */
+@media screen and (max-width: 480px) {
+  .tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .layout {
+    padding-top: 1rem;
+    width: 100%;
+  }
+}
+
+/* --- LAYOUT CONTENT --- */
 .layout {
   padding-top: 24px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
 }

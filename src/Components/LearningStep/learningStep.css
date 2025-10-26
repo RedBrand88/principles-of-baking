@@ -3,10 +3,52 @@
   flex-direction: column;
   align-items: center;
   padding-top: 150px;
-  height: 100vh;
   width: 100%;
+  box-sizing: border-box;
 }
 
-.stepContainer p {
-  width: 665px;
+.stepContent {
+  max-width: 665px;
+  width: 90%;
+  color: #f4dfba;
+  line-height: 1.6;
+}
+
+.stepContent p {
+  margin-bottom: 1rem;
+}
+
+.stepContent ul {
+  margin: 0.5rem 0 1.5rem 1.5rem;
+}
+
+/* breakpoints */
+@media (max-width: 768px) {
+  .stepContainer {
+    padding-top: 120px;
+  }
+  .stepContent {
+    max-width: 600px;
+    width: 90%;
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stepContainer {
+    padding-top: 100px;
+    padding-bottom: 2rem;
+  }
+
+  .stepContent {
+    max-width: 360px;
+    width: 90%;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: left;
+  }
+
+  .stepContent ul {
+    margin-left: 1rem;
+  }
 }

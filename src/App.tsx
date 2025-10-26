@@ -13,6 +13,8 @@ import { Toast } from './Components/Toast/Toast';
 import { useAuth } from './Context/AuthContext';
 import { useToast } from './Hooks/useToast';
 import { type Recipe } from './types/models';
+import { DrawerProvider } from './Context/DrawerContext';
+import SideDrawer from './Components/SideDrawer/sideDrawer';
 
 export const RecipeContext = createContext<Recipe[]>([]);
 
@@ -39,27 +41,30 @@ function App() {
 
   return (
     <RecipeContext.Provider value={recipes}>
-      <Header openLogin={() => setIsLoginOpen(true)} />
-      <Router>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/tab" element={<Tab />} />
-          <Route path="/learn" element={<GetStarted />} />
-          <Route path="/learning/step/:step" element={<LearningStep />} />
-          <Route path="/about-me" element={<AboutMe />} />
-        </Routes>
-      </Router>
-      <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
-      <div className="toastContainer">
-        {toasts.map((toast, idx) => (
-          <Toast
-            key={idx}
-            message={toast.message}
-            type={toast.type}
-            onClose={() => removeToast(idx)}
-          />
-        ))}
-      </div>
+      <DrawerProvider>
+        <Header openLogin={() => setIsLoginOpen(true)} />
+        <SideDrawer openLogin={() => setIsLoginOpen(true)} />
+        <Router>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/tab" element={<Tab />} />
+            <Route path="/learn" element={<GetStarted />} />
+            <Route path="/learning/step/:step" element={<LearningStep />} />
+            <Route path="/about-me" element={<AboutMe />} />
+          </Routes>
+        </Router>
+        <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
+        <div className="toastContainer">
+          {toasts.map((toast, idx) => (
+            <Toast
+              key={idx}
+              message={toast.message}
+              type={toast.type}
+              onClose={() => removeToast(idx)}
+            />
+          ))}
+        </div>
+      </DrawerProvider>
     </RecipeContext.Provider>
   );
 };

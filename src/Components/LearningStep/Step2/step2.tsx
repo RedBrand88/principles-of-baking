@@ -1,7 +1,7 @@
 
 const Step2 = () => {
   return (
-    <div>
+    <div className="stepContent">
       <p>
         The next lesson will cover dough hydration. Dough hydration is the ratio of liquid to flour in a recipe.
       </p>

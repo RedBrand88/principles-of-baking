@@ -1,0 +1,92 @@
+.sideDrawer {
+  position: fixed;
+  top: 0;
+  right: -260px;
+  height: 100vh;
+  width: 260px;
+  background: linear-gradient(135deg, rgba(202, 150, 92, 0.10), rgba(202, 150, 92, 0));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4rem 1.5rem 2rem;
+  gap: 1.5rem;
+  transition: right 0.3s ease;
+  z-index: 150;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.drawerContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.closeDrawerButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  background: rgba(202, 150, 92, 0.3);
+  border: 1px solid rgba(244, 223, 186, 0.5);
+  color: #f4dfba;
+  font-size: 1.5rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.closeDrawerButton:active {
+  transform: scale(0.95);
+}
+
+.sideDrawer.open {
+  right: 0;
+}
+
+.sideDrawer a {
+  color: #f4dfba;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.sideDrawer a:hover {
+  color: #eec373;
+}
+
+/* Backdrop overlay */
+.drawerOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.0);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 149;
+}
+
+.drawerOverlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* --- RESPONSIVE BREAKPOINT --- */
+@media (max-width: 480px) {
+  .sideDrawer {
+    width: 220px;
+    padding: 3rem 1rem;
+  }
+
+  .sideDrawer a {
+    font-size: 1rem;
+  }
+}

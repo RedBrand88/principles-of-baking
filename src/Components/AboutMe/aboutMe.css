@@ -31,3 +31,48 @@
   display: inline-block;
 }
 
+/* --- MOBILE BREAKPOINT --- */
+@media (max-width: 480px) {
+  .aboutMeContainer {
+    padding: 100px 1rem 2rem;
+  }
+
+  .upperContainer {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .experience {
+    width: 100%;
+    max-width: 90vw;
+    text-align: left;
+    gap: 0.75rem;
+  }
+
+  .experience h1 {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  .experience p {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .avatarContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .avatar {
+    width: 250px;
+    height: 250px;
+    border-width: 2px;
+  }
+
+  .avatarContainer .social-link {
+    transform: scale(0.9);
+  }
+}

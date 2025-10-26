@@ -7,15 +7,23 @@ type ButtonProps = {
   type?: "primary" | "secondary";
   disabled?: boolean;
   style?: CSSProperties;
+  className?: string;
 }
 
-const Button = ({ children, onClick, type = "primary", disabled = false, style }: ButtonProps) => {
+const Button = ({ 
+  children, 
+  onClick, 
+  type = "primary", 
+  disabled = false,
+  style,
+  className
+}: ButtonProps) => {
 
   const buttonStyle = type === "primary" ? "primary" : "secondary";
 
   return (
     <button
-      className={`${type === "primary" ? "secondary" : "primary"} bottom`}
+      className={`${type === "primary" ? "secondary" : "primary"} bottom ${className}`}
       onClick={onClick}
       disabled={disabled}
       style={style}

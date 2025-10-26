@@ -1,11 +1,61 @@
 .scaleContainer {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 16px;
+  padding: 2rem 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .ingredientList {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
+  width: 100%;
+  max-width: 800px;
+  box-sizing: border-box;
+}
+
+.ingredientList > * {
+  width: 100%;
+}
+
+/* --- Mobile styles --- */
+@media (max-width: 768px) {
+  .scaleContainer {
+    padding: 1.5rem 1rem;
+  }
+
+  .ingredientList {
+    grid-template-columns: 1fr; /* single column on tablet */
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 480px) {
+  .scaleContainer {
+    gap: 12px;
+    padding: 1rem;
+  }
+
+  .ingredientList {
+    grid-template-columns: 1fr; /* single column */
+    gap: 12px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .scaleContainer label,
+  .scaleContainer input,
+  .scaleContainer select,
+  .scaleContainer button {
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  /* tighten up spacing for dropdown + button */
+  .scaleContainer button {
+    align-self: stretch;
+  }
 }

@@ -3,11 +3,49 @@
   flex-direction: column;
   align-items: center;
   padding-top: 150px;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .learnContainer p {
-  width: 600px;
+  max-width: 600px;
+  width: 90%;
   font-size: inherit;
+  line-height: 1.6;
+}
+
+/* --- mobile styles --- */
+@media (max-width: 768px) {
+  .learnContainer {
+    padding-top: 120px;
+  }
+
+  .learnContainer p {
+    max-width: 500px;
+    width: 90%;
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .learnContainer {
+    padding-top: 100px;
+    padding-bottom: 2rem;
+    overflow-x: hidden;
+  }
+
+  .learnContainer p {
+    max-width: 360px;
+    width: 90%;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: left;
+    word-break: break-word;
+  }
+
+  .learnContainer ul,
+  .learnContainer ol {
+    margin-left: 1rem;
+  }
 }

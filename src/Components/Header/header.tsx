@@ -4,13 +4,15 @@ import RoundLogo from '../../assets/roundLogo';
 import { useAuth } from '../../Context/AuthContext';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
+import { useDrawer } from '../../Context/DrawerContext';
 
 type HeaderProps = {
   openLogin: () => void;
 }
 
-const Header = ({openLogin}: HeaderProps) => {
+const Header = ({ openLogin }: HeaderProps) => {
   const { user } = useAuth();
+  const { openDrawer, closeDrawer } = useDrawer();
 
   const handleLogout = async () => {
     try {
@@ -21,7 +23,7 @@ const Header = ({openLogin}: HeaderProps) => {
   }
 
   return (
-    <div className="headerContainer">
+    <header className="headerContainer">
       <div className="navContainer">
         <a href="/" className="logo">
           <RoundLogo height="75" width="75" />
@@ -31,11 +33,24 @@ const Header = ({openLogin}: HeaderProps) => {
           <a href="/tab">Bread calculator</a>
           <a href="about-me">About me</a>
         </nav>
+        <Button
+          className="loginButton"
+          onClick={() => {
+            closeDrawer();
+            user ? handleLogout() : openLogin();
+          }}
+        >
+          {user ? "Logout" : "Login"}
+        </Button>
+        <button
+          className="hamburgerButton"
+          onClick={openDrawer}
+          aria-label="Toggle menu"
+        >
+          ☰
+        </button>
       </div>
-      <Button onClick={user ? handleLogout : openLogin}>
-        {user ? "Logout" : "Login"}
-      </Button>
-    </div>
+    </header>
   )
 }
 

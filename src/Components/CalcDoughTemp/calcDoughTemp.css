@@ -4,4 +4,23 @@
   gap: 1rem;
 }
 
+/* --- Responsive adjustments --- */
+@media (max-width: 480px) {
+  .componentContainer {
+    gap: 0.75rem;
+    padding: 0 0.5rem;
+  }
 
+  .componentContainer input {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+
+  .componentContainer button {
+    font-size: 1rem;
+  }
+
+  .componentContainer label {
+    font-size: 0.95rem;
+  }
+}
