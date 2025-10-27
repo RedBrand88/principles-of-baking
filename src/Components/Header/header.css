@@ -14,7 +14,15 @@
 
 .navContainer {
   display: flex;
-  gap: 2rem;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 1em;
+}
+
+.logoAndNav {
+  display: flex;
+  gap: 20px;
 }
 
 .navLinks {

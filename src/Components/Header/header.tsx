@@ -25,16 +25,19 @@ const Header = ({ openLogin }: HeaderProps) => {
   return (
     <header className="headerContainer">
       <div className="navContainer">
-        <a href="/" className="logo">
-          <RoundLogo height="75" width="75" />
-        </a>
-        <nav className="navLinks">
-          <a href="/learn">Learn how to bake</a>
-          <a href="/tab">Bread calculator</a>
-          <a href="about-me">About me</a>
-        </nav>
+        <div className="logoAndNav">
+          <a href="/" className="logo">
+            <RoundLogo height="75" width="75" />
+          </a>
+          <nav className="navLinks">
+            <a href="/learn">Learn how to bake</a>
+            <a href="/tab">Bread calculator</a>
+            <a href="about-me">About me</a>
+          </nav>
+        </div>
         <Button
           className="loginButton"
+          style={{ justifySelf: "flex-end" }}
           onClick={() => {
             closeDrawer();
             user ? handleLogout() : openLogin();
