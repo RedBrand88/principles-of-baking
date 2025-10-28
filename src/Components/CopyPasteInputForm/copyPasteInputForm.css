@@ -1,0 +1,10 @@
+.copyPasteForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.textAreaStyles {
+  height: 700px;
+  width: 650px;
+}

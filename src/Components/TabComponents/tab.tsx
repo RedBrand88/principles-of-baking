@@ -4,9 +4,10 @@ import TabContent from "../TabContent/tabContent";
 import ScaleBreadRecipe from "../ScaleBreadRecipe/scaleBreadRecipe";
 import CalcDoughTemp from "../CalcDoughTemp/calcDoughTemp";
 import RecipeSchedule from "../RecipeSchedule/recipeSchedule";
-import AddBreadRecipe from "../AddBreadRecipe/addBreadRecipe";
+// import AddBreadRecipe from "../AddBreadRecipe/addBreadRecipe";
 import "./tab.css";
 import { useAuth } from "../../Context/AuthContext";
+import CopyPasteInputForm from "../CopyPasteInputForm/copyPasteInputForm";
 
 const Tab = () => {
   const [activeTab, setActiveTab] = useState<string>("tab1");
@@ -34,7 +35,7 @@ const Tab = () => {
         }
         {user &&
           <TabContent id="tab4" activeTab={activeTab}>
-            <AddBreadRecipe />
+            <CopyPasteInputForm />
           </TabContent>
         }
       </div>
