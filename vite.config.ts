@@ -12,6 +12,10 @@ export default defineConfig({
         target: 'http://localhost:8080',
         changeOrigin: true,
       },
+      '/parse': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      },
       '/static': {
         target: 'https://bread-machine.dev',
         changeOrigin: true,

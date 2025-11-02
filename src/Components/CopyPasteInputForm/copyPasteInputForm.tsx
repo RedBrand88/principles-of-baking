@@ -1,20 +1,25 @@
 import { useState } from "react";
 import Button from "../Button/button";
 import "./copyPasteInputForm.css"
+import ValidationError from "../ValidationError/validationError";
+import { useParseRecipe } from "../../Hooks/useParseRecipe";
 
 type CopyPasteInputFormProps = {
   //add props here
 };
 const CopyPasteInputForm = ({ }: CopyPasteInputFormProps) => {
   const [text, setText] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string[] | null>(null);
+
+  const { recipe, loading, parseRecipe } = useParseRecipe();
 
   const validateText = (text: string) => {
-    if (!text.includes("# Title")) return "Missing # Title header";
-    if (!text.includes("# Description")) return "Missing # Description header";
-    if (!text.includes("# Ingredients")) return "Missing # Ingredients header";
-    if (!text.includes("# Instructions")) return "Missing # Instructions header";
-    return null;
+    const recipeError = [];
+    if (!text.includes("# Title")) recipeError.push("Missing # Title header");
+    if (!text.includes("# Description")) recipeError.push("Missing # Description header");
+    if (!text.includes("# Ingredients")) recipeError.push("Missing # Ingredients header");
+    if (!text.includes("# Instructions")) recipeError.push("Missing # Instructions header");
+    return recipeError;
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -22,6 +27,10 @@ const CopyPasteInputForm = ({ }: CopyPasteInputFormProps) => {
     setText(value);
     setError(validateText(value))
   };
+
+  const handleParse = () => {
+    parseRecipe(text);
+  }
 
   return (
     <div className="copyPasteForm">
@@ -31,13 +40,18 @@ const CopyPasteInputForm = ({ }: CopyPasteInputFormProps) => {
         onChange={handleChange}
         placeholder="Paste your recipe here..."
       ></textarea>
-      {error && <p className="errorText">{error}</p>}
-      <Button 
-        onClick={() => console.log("clicked")}
-        disabled={!!error || !text.trim()}
+      <ValidationError errors={error} />
+      <Button
+        onClick={handleParse}
+        disabled={(error && error.length > 0) || !text.trim() || loading}
       >
-        Parse
+        {loading ? "Parsing..." : "Parse"}
       </Button>
+      {recipe && (
+        <pre className="parsedJson">
+          {JSON.stringify(recipe, null, 2)}
+        </pre>
+      )}
     </div>
   );
 };

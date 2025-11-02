@@ -4,6 +4,7 @@ export interface Ingredient {
   bakerPercentage: number;
   quantity: number;
   unit: string;
+  Grams: number;
   phase: "dough" | "scald" | "soak" | "autolyse";
   densityGPerMl: number;
 }
