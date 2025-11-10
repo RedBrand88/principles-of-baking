@@ -1,0 +1,49 @@
+.recipeCard {
+  background: linear-gradient(135deg, rgba(202, 150, 92, 0.45), rgba(202, 150, 92, 0));
+  /* background: var(--text-color); */
+  backdrop-filter: blur(10px);
+  /* color: #46484A; */
+  color: var(--text-color);
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.recipeCard:hover {
+  transform: translateY(-2px);
+}
+
+.recipeCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+  120deg, 
+  transparent, 
+  rgba(202, 150, 92, 0.35), 
+  transparent
+  );
+  transform: skewX(-20deg);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.recipeCard:hover::before {
+  opacity: 0.2;
+  animation: shimmer 1.2s ease-out forwards;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 125%;
+  }
+}
