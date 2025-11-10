@@ -3,13 +3,12 @@ import Button from "../Button/button";
 import "./copyPasteInputForm.css"
 import ValidationError from "../ValidationError/validationError";
 import { useParseRecipe } from "../../Hooks/useParseRecipe";
+import RecipePreviewModal from "../RecipePreviewModal/recipePreviewModal";
 
-type CopyPasteInputFormProps = {
-  //add props here
-};
-const CopyPasteInputForm = ({ }: CopyPasteInputFormProps) => {
+const CopyPasteInputForm = () => {
   const [text, setText] = useState<string>("");
   const [error, setError] = useState<string[] | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
 
   const { recipe, loading, parseRecipe } = useParseRecipe();
 
@@ -28,9 +27,12 @@ const CopyPasteInputForm = ({ }: CopyPasteInputFormProps) => {
     setError(validateText(value))
   };
 
-  const handleParse = () => {
-    parseRecipe(text);
+  const handleParse = async () => {
+    await parseRecipe(text);
+    setShowPreview(true);
   }
+
+  const handleClose = () => setShowPreview(false);
 
   return (
     <div className="copyPasteForm">
@@ -47,10 +49,12 @@ const CopyPasteInputForm = ({ }: CopyPasteInputFormProps) => {
       >
         {loading ? "Parsing..." : "Parse"}
       </Button>
-      {recipe && (
-        <pre className="parsedJson">
-          {JSON.stringify(recipe, null, 2)}
-        </pre>
+
+      {showPreview && recipe && (
+        <RecipePreviewModal
+          recipe={recipe}
+          onClose={handleClose}
+        />
       )}
     </div>
   );
