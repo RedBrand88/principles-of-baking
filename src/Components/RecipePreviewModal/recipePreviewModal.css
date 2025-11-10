@@ -1,0 +1,98 @@
+@keyframes overlayFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Backdrop */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 900;
+  background-color: rgba(0, 0, 0, 0.6);
+  animation: overlayFade 0.2s ease-out;
+  backdrop-filter: blur(4px);
+}
+
+/* Modal Container */
+.modalContent {
+  background: rgba(202, 150, 92, 0.1);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  color: var(--text-color);
+  border: 1px solid rgba(202, 150, 90, 0.5);
+  border-radius: 12px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 640px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  animation: modalPop 0.25s ease-out;
+}
+
+/* Headings */
+.modalContent h1 {
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.modalContent h2 {
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Description Text */
+.recipeDescription {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+/* Ingredient & Instruction Lists */
+.modalContent ul,
+.modalContent ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.modalContent li {
+  margin-bottom: 0.25rem;
+  line-height: 1.4;
+}
+
+/* Action Buttons */
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Scrollbar for long recipes */
+.modalContent::-webkit-scrollbar {
+  width: 8px;
+}
+.modalContent::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+.modalContent::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.35);
+}
