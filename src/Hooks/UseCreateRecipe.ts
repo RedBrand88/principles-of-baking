@@ -25,7 +25,7 @@ const useCreateRecipe = () => {
       }
 
       const base = import.meta.env.VITE_API_BASE?.trim();
-      const url = base ? join(base, "recipes") : "/recipes";
+      const url = base ? join(base, "api/recipes") : "/api/recipes";
 
       const resp = await fetch(url, {
         method: 'POST',
