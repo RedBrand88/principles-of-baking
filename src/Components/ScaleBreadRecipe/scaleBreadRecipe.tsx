@@ -9,7 +9,7 @@ import "./scaleBreadRecipe.css";
 
 const ScaleBreadRecipe = () => {
   const recipes = useContext(RecipeContext);
-  const [selectedId, setSelectedId] = useState<string>("");
+  const [selectedId, setSelectedId] = useState<string>(recipes[0].id);
   const [totalDough, setTotalDough] = useState<number>(0);
 
   // state to hold the last‑clicked scaling result
