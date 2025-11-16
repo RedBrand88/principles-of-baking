@@ -8,11 +8,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/recipes': {
-        target: 'http://localhost:8080',
-        changeOrigin: true,
-      },
-      '/parse': {
+      '/api': {
         target: 'http://localhost:8080',
         changeOrigin: true,
       },
