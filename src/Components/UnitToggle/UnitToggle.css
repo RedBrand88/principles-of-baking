@@ -1,0 +1,64 @@
+.toggleWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.toggle {
+  position: relative;
+  width: 56px;
+  height: 28px;
+}
+
+.toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.slider {
+  position: absolute;
+  inset: 0;
+  background-color: #3a2e24;
+  border-radius: 4px;
+  transition: background-color 300ms ease;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  left: 3px;
+  top: 3px;
+  background-color: #876445;
+  border-radius: 2px;
+  transition: transform 300ms ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.toggle input:checked + .slider::before {
+  transform: translateX(28px);
+}
+
+.toggle input:focus-visible + .slider {
+  outline: 2px solid var(--text-color);
+  outline-offset: 2px;
+}
+
+.toggleLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b5a4a;
+  transition: color 300ms ease;
+  user-select: none;
+}
+
+.toggleLabel.toggleActive {
+  color: var(--text-color);
+}
