@@ -37,6 +37,7 @@ const CopyPasteInputForm = () => {
   return (
     <div className="copyPasteForm">
       <textarea
+        id="copyPasteTextArea"
         className="textAreaStyles"
         value={text}
         onChange={handleChange}

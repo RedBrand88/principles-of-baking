@@ -17,7 +17,7 @@ const Tab = () => {
   return (
     <div className="tabContainer" >
       <div role="tablist" aria-label="Bread recipe tools" className="tabs">
-        <TabNavItem id="tab1" title="Explore Recipes" activeTab={activeTab} setActiveTab={setActiveTab} />
+        <TabNavItem id="tab1" title="Recipe view" activeTab={activeTab} setActiveTab={setActiveTab} />
         <TabNavItem id="tab2" title="Scale Bread Recipe" activeTab={activeTab} setActiveTab={setActiveTab} />
         <TabNavItem id="tab3" title="Calculate Water Temp" activeTab={activeTab} setActiveTab={setActiveTab} />
         {user && <TabNavItem id="tab4" title="Scheduler" activeTab={activeTab} setActiveTab={setActiveTab} />}

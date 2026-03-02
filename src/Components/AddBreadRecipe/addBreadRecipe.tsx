@@ -121,7 +121,6 @@ const AddBreadRecipe = () => {
           value={addInstruction}
           setChange={setAddInstruction}
           labelStyle={{ alignSelf: "flex-start"}}
-          style={{width: "490px", height: "180px"}}
         />
         <Button
           style={{ alignSelf: "flex-start"}}
