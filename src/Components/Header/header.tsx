@@ -5,6 +5,8 @@ import { useAuth } from '../../Context/AuthContext';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useDrawer } from '../../Context/DrawerContext';
+import BreadIcon from '../../assets/breadIcon';
+import { useLocation } from 'react-router-dom';
 
 type HeaderProps = {
   openLogin: () => void;
@@ -12,7 +14,9 @@ type HeaderProps = {
 
 const Header = ({ openLogin }: HeaderProps) => {
   const { user } = useAuth();
-  const { openDrawer, closeDrawer } = useDrawer();
+  const { openDrawer, closeDrawer, openRecipeDrawer, selectedId, activeTab } = useDrawer();
+  const location = useLocation();
+  const isTabPage = location.pathname === "/tab";
 
   const handleLogout = async () => {
     try {
@@ -45,13 +49,26 @@ const Header = ({ openLogin }: HeaderProps) => {
         >
           {user ? "Logout" : "Login"}
         </Button>
-        <button
-          className="hamburgerButton"
-          onClick={openDrawer}
-          aria-label="Toggle menu"
-        >
-          ☰
-        </button>
+        <div className="mobileButtons">
+          <button
+            className={`
+              recipesButton 
+              ${isTabPage && activeTab === "tab1" ? "visible" : ""} 
+              ${isTabPage && activeTab === "tab1" && !selectedId ? "pulse" : ""}`
+            }
+            onClick={openRecipeDrawer}
+            aria-label="Toggle recipe list"
+          >
+            <BreadIcon />
+          </button>
+          <button
+            className="hamburgerButton"
+            onClick={openDrawer}
+            aria-label="Toggle menu"
+          >
+            ☰
+          </button>
+        </div>
       </div>
     </header>
   )

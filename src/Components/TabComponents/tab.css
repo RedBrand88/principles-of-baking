@@ -29,6 +29,7 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     width: 100%;
+    justify-content: flex-start;
   }
 
   .tabs::-webkit-scrollbar {

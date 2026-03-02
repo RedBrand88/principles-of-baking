@@ -42,9 +42,9 @@ function App() {
   return (
     <RecipeContext.Provider value={recipes}>
       <DrawerProvider>
+      <Router>
         <Header openLogin={() => setIsLoginOpen(true)} />
         <SideDrawer openLogin={() => setIsLoginOpen(true)} />
-        <Router>
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/tab" element={<Tab />} />

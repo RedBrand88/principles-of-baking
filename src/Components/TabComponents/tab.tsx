@@ -1,4 +1,3 @@
-import { useState } from "react";
 import TabNavItem from "../TabNavItem/tabNavItem";
 import TabContent from "../TabContent/tabContent";
 import ScaleBreadRecipe from "../ScaleBreadRecipe/scaleBreadRecipe";
@@ -9,9 +8,10 @@ import "./tab.css";
 import { useAuth } from "../../Context/AuthContext";
 import CopyPasteInputForm from "../CopyPasteInputForm/copyPasteInputForm";
 import RecipeExplorer from "../RecipeExplorer/recipeExplorer";
+import { useDrawer } from "../../Context/DrawerContext";
 
 const Tab = () => {
-  const [activeTab, setActiveTab] = useState<string>("tab1");
+  const { activeTab, setActiveTab } = useDrawer();
   const { user } = useAuth();
 
   return (
