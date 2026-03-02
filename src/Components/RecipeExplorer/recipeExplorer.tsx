@@ -5,6 +5,7 @@ import RecipeDetailView from "../RecipeDetailView/recipeDetailView";
 import "./recipeExplorer.css";
 import RecipeDrawer from "../RecipeDrawer/recipeDrawer";
 import { useDrawer } from "../../Context/DrawerContext";
+import WaveText from "../WaveText/waveText";
 
 const RecipeExplorer = () => {
   const recipes = useContext(RecipeContext);
@@ -31,7 +32,7 @@ const RecipeExplorer = () => {
         ) : (
           <div>
             <p className="desktopPrompt">Select a recipe to view details</p>
-            <p className="mobilePrompt">Click the bread icon to see a list of recipes</p>
+            <p className="mobilePrompt">Click the <WaveText text="bread icon" /> to see a list of recipes</p>
           </div>
         )}
       </main>
