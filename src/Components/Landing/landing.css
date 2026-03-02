@@ -4,6 +4,14 @@
   color: #F4DFBA;
 }
 
+.heroImage {
+  background-image: url('../../assets/hero.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  border-bottom: 10px solid #EEC373;
+}
+
 .heroText {
   position: absolute;
   top: 25%;
@@ -54,4 +62,45 @@
   justify-content: center;
   height: 100vh;
   background: #45484A;
+  padding: 1rem;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .heroImage {
+    height: 60vh;
+  }
+
+  .heroText {
+    top: 120px;
+    left: 5%;
+    right: 5%;
+  }
+
+  .heroText h1 {
+    font-size: 1.75rem;
+    width: auto;
+    line-height: 2rem;
+  }
+
+  .heroText h2 {
+    font-size: 1.2rem;
+    width: auto;
+    line-height: 1.6rem;
+  }
+
+  .noticeContainer {
+    position: relative;
+    top: -60px;
+    right: auto;
+    width: auto;
+    height: auto;
+    margin: 1rem;
+  }
+
+  .landingContainer {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
 }

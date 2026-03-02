@@ -1,16 +1,9 @@
-import HeroImage from '../../assets/hero.jpg';
 import './landing.css';
 
 const Landing = () => {
   return (
     <div className="landingContainer">
-      <div style={{
-        backgroundImage: `url(${HeroImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        height: '100vh',
-        borderBottom: '10px solid #EEC373'
-      }} />
+      <div className="heroImage" />
       <div className="heroText">
         <h1>Learn to make your own bread</h1>
         <h2>Making your own bread isn't as complicated as you might think.</h2>

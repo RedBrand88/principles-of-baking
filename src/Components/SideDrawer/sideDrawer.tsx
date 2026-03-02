@@ -36,13 +36,13 @@ const SideDrawer = ({ openLogin }: SideDrawerProps) => {
             Learn how to bake
           </a>
           <a href="/tab" onClick={closeDrawer}>
-            Bread calculator
+            Recipes and more
           </a>
           <a href="/about-me" onClick={closeDrawer}>
             About me
           </a>
           <Button
-            style={{alignSelf: "flex-start"}}
+            style={{ alignSelf: "flex-start" }}
             onClick={() => {
               closeDrawer();
               user ? handleLogout() : openLogin();

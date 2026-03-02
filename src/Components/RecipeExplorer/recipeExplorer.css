@@ -29,6 +29,14 @@
   display: none;
 }
 
+.desktopPrompt {
+  display: block;
+}
+
+.mobilePrompt {
+  display: none;
+}
+
 @media screen and (max-width: 480px) {
   .drawerToggle {
     display: block;
@@ -70,5 +78,13 @@
 
   .recipeCards {
     display: none;
+  }
+
+  .desktopPrompt {
+    display: none;
+  }
+
+  .mobilePrompt {
+    display: block;
   }
 }
