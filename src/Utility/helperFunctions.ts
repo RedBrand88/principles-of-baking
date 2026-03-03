@@ -2,9 +2,7 @@ export const toFraction = (decimal: number): string => {
   const fractions = [
     {value: 1/8, display: "⅛"},
     {value: 1/4, display: "¼"},
-    {value: 1/3, display: "⅓"},
     {value: 1/2, display: "½"},
-    {value: 2/3, display: "⅔"},
     {value: 3/4, display: "¾"},
     {value: 1, display: "1"},
   ];
@@ -20,17 +18,24 @@ export const toFraction = (decimal: number): string => {
       closest = f;
     }
   }
+  if (closest.value === 1) {
+    return `${whole + 1}`
+  }
 
   const leftover = remainder - closest.value;
   let secondFraction = null;
-  if (Math.abs(leftover) >= 0.1) {
+  if (Math.abs(leftover) >= 0.07) {
     let closestLeftover = fractions[0];
     for (const f of fractions) {
       if (Math.abs(f.value - Math.abs(leftover)) < Math.abs(closestLeftover.value - Math.abs(leftover))) {
         closestLeftover = f;
       }
     }
-    secondFraction = closestLeftover;
+    if (closestLeftover.value === 1) {
+      secondFraction = null;
+    } else {
+      secondFraction = closestLeftover;
+    }
   }
 
   const fractionStr = secondFraction
