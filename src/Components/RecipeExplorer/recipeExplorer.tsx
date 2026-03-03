@@ -30,7 +30,7 @@ const RecipeExplorer = () => {
         {selectedRecipe() ? (
           <RecipeDetailView recipe={selectedRecipe()} />
         ) : (
-          <div>
+          <div className="promptContainer">
             <p className="desktopPrompt">Select a recipe to view details</p>
             <p className="mobilePrompt">Click the <WaveText text="bread icon" /> to see a list of recipes</p>
           </div>
