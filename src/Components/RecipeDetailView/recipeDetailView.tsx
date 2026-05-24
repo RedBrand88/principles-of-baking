@@ -3,6 +3,7 @@ import { Recipe } from "../../types/models";
 import UnitToggle from "../UnitToggle/UnitToggle";
 import YeastToggle from "../YeastToggle/YeastToggle";
 import useConvertYeast, { YeastType } from "../../Hooks/useConvertYeast";
+import { isStarter } from "../../Utility/ingredientMatchers";
 import "./recipeDetailView.css";
 import { CONVERSION_THRESHOLD, CUP_VOLUME, TBLS_VOLUME, TSP_VOLUME } from "../../Utility/constants";
 import { tbspToFraction, toFraction } from "../../Utility/helperFunctions";
@@ -13,7 +14,9 @@ type RecipeDetailViewProps = {
 
 const RecipeDetailView = ({ recipe }: RecipeDetailViewProps) => {
   const [unit, setUnit] = useState("g")
-  const [yeastType, setYeastType] = useState<YeastType>(recipe?.yeastType ?? "dry");
+  const [yeastType, setYeastType] = useState<YeastType>(
+    recipe?.yeastType ?? (recipe?.ingredients.some(i => isStarter(i.ingredientName)) ? "sourdough" : "dry")
+  );
   const { convertYeast } = useConvertYeast();
 
   if (!recipe) return null;
@@ -56,7 +59,7 @@ const RecipeDetailView = ({ recipe }: RecipeDetailViewProps) => {
     return `${ing.quantity} ${abbreviateUnit(ing.unit)}: ${ing.ingredientName}`;
   };
 
-  const baseYeastType = recipe.yeastType ?? "dry";
+  const baseYeastType: YeastType = recipe.yeastType ?? (recipe.ingredients.some(i => isStarter(i.ingredientName)) ? "sourdough" : "dry");
   const displayIngredients = yeastType !== baseYeastType
     ? convertYeast(recipe.ingredients, baseYeastType)
     : recipe.ingredients;

@@ -1,14 +1,7 @@
 import { Ingredient, YeastType } from "../types/models";
+import { isFlour, isWater, isYeast, isStarter } from "../Utility/ingredientMatchers";
 
 export type { YeastType };
-
-const isFlour = (name: string): boolean => name.toLowerCase().includes("flour");
-const isWater = (name: string): boolean => name.toLowerCase().includes("water");
-const isYeast = (name: string): boolean => name.toLowerCase().includes("yeast");
-const isStarter = (name: string): boolean => {
-  const lower = name.toLowerCase();
-  return lower.includes("starter") || lower.includes("levain") || lower.includes("sourdough");
-};
 
 const useConvertYeast = () => {
   const convertYeast = (ingredients: Ingredient[], from: YeastType): Ingredient[] => {
