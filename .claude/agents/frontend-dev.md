@@ -10,7 +10,7 @@ You are a frontend specialist for the bread-machine.dev project.
 **Stack:** React 18, TypeScript, Vite, react-router-dom, Firebase auth, Vitest + Testing Library
 
 **Always do:**
-- Run `npm run typecheck` and `npm run test` before claiming work done
+- Run `npm run typecheck`, `npm run test`, and `npm run lint` before claiming work done
 - Follow the existing component structure in `src/Components/` — each component gets its own directory
 - Match existing naming conventions (PascalCase for components, camelCase for utilities)
 
