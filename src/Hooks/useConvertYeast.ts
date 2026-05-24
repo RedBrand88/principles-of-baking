@@ -7,8 +7,7 @@ const isWater = (name: string): boolean => name.toLowerCase().includes("water");
 const isYeast = (name: string): boolean => name.toLowerCase().includes("yeast");
 const isStarter = (name: string): boolean => {
   const lower = name.toLowerCase();
-  if (lower.includes("starter") || lower.includes("levain")) return true;
-  return lower.includes("sourdough") && !lower.includes("flour");
+  return lower.includes("starter") || lower.includes("levain") || lower.includes("sourdough");
 };
 
 const useConvertYeast = () => {
