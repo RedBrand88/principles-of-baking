@@ -24,4 +24,5 @@ export interface Recipe {
   instructions: string[];
   Meta: Meta;
   userID: string;
+  yeastType?: "dry" | "sourdough";
 }
