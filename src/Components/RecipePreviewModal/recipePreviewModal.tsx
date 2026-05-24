@@ -15,7 +15,7 @@ const RecipePreviewModal = ({ recipe, onClose }: RecipePreviewModalProps) => {
   const [saved, setSaved] = useState(false);
 
   const handleSave = async () => {
-    const result = await createRecipe(recipe);
+    const result = await createRecipe({ ...recipe, yeastType: recipe.yeastType ?? "dry" });
 
     if (result.ok) {
       setSaved(true);
