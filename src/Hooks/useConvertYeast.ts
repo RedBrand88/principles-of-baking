@@ -23,7 +23,7 @@ const useConvertYeast = () => {
 
       if (totalFlourGrams === 0) return ingredients;
 
-      const starterGrams = totalFlourGrams * 0.2;
+      const starterGrams = Math.round(totalFlourGrams * 0.2);
       const half = starterGrams / 2;
 
       return [
@@ -36,7 +36,8 @@ const useConvertYeast = () => {
               return { ...i, Grams: Math.round(i.Grams - subtract), quantity: Math.round(i.quantity - subtract) };
             }
             if (isWater(i.ingredientName)) {
-              return { ...i, Grams: Math.max(0, i.Grams - half), quantity: Math.max(0, i.quantity - half) };
+              // water density ≈ 1 g/ml in bread recipes; Grams and quantity track the same value
+              return { ...i, Grams: Math.max(0, Math.round(i.Grams - half)), quantity: Math.max(0, Math.round(i.quantity - half)) };
             }
             return i;
           }),
@@ -62,10 +63,11 @@ const useConvertYeast = () => {
         .filter(i => !isStarter(i.ingredientName))
         .map(i => {
           if (isFlour(i.ingredientName)) {
-            return { ...i, Grams: i.Grams + half, quantity: i.quantity + half };
+            return { ...i, Grams: Math.round(i.Grams + half), quantity: Math.round(i.quantity + half) };
           }
           if (isWater(i.ingredientName)) {
-            return { ...i, Grams: i.Grams + half, quantity: i.quantity + half };
+            // water density ≈ 1 g/ml in bread recipes; Grams and quantity track the same value
+            return { ...i, Grams: Math.round(i.Grams + half), quantity: Math.round(i.quantity + half) };
           }
           return i;
         });
@@ -74,7 +76,7 @@ const useConvertYeast = () => {
         .filter(i => isFlour(i.ingredientName))
         .reduce((sum, i) => sum + i.Grams, 0);
 
-      const yeastGrams = restoredFlourGrams * 0.01;
+      const yeastGrams = Math.round(restoredFlourGrams * 0.01);
 
       return [
         ...restoredIngredients,
