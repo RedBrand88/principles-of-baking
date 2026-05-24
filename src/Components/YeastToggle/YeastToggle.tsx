@@ -1,5 +1,5 @@
 import { YeastType } from "../../Hooks/useConvertYeast";
-import "./YeastToggle.css";
+import "../UnitToggle/UnitToggle.css";
 
 type YeastToggleProps = {
   yeastType: YeastType;

@@ -12,10 +12,11 @@ type RecipeDetailViewProps = {
 };
 
 const RecipeDetailView = ({ recipe }: RecipeDetailViewProps) => {
-  if (!recipe) return null;
   const [unit, setUnit] = useState("g")
-  const [yeastType, setYeastType] = useState<YeastType>(recipe.yeastType ?? "dry");
+  const [yeastType, setYeastType] = useState<YeastType>(recipe?.yeastType ?? "dry");
   const { convertYeast } = useConvertYeast();
+
+  if (!recipe) return null;
 
   const toggleUnit = () => {
     setUnit(previous => previous === "g" ? "cups" : "g")
