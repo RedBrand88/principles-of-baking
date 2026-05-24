@@ -33,3 +33,21 @@
     flex-direction: column;
   }
 }
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.toggleRow .toggleWrapper {
+  margin-bottom: 0;
+}
+
+.toggleDivider {
+  width: 1px;
+  height: 28px;
+  background-color: #3a2e24;
+  flex-shrink: 0;
+}

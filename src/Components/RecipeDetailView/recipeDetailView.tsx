@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Recipe } from "../../types/models";
 import UnitToggle from "../UnitToggle/UnitToggle";
+import YeastToggle from "../YeastToggle/YeastToggle";
+import useConvertYeast, { YeastType } from "../../Hooks/useConvertYeast";
 import "./recipeDetailView.css";
 import { CONVERSION_THRESHOLD, CUP_VOLUME, TBLS_VOLUME, TSP_VOLUME } from "../../Utility/constants";
 import { tbspToFraction, toFraction } from "../../Utility/helperFunctions";
@@ -12,10 +14,16 @@ type RecipeDetailViewProps = {
 const RecipeDetailView = ({ recipe }: RecipeDetailViewProps) => {
   if (!recipe) return null;
   const [unit, setUnit] = useState("g")
+  const [yeastType, setYeastType] = useState<YeastType>(recipe.yeastType ?? "dry");
+  const { convertYeast } = useConvertYeast();
 
   const toggleUnit = () => {
     setUnit(previous => previous === "g" ? "cups" : "g")
   }
+
+  const toggleYeast = () => {
+    setYeastType(previous => previous === "dry" ? "sourdough" : "dry");
+  };
 
   const abbreviateUnit = (unit: string) => {
     switch (unit.toLowerCase()) {
@@ -47,14 +55,23 @@ const RecipeDetailView = ({ recipe }: RecipeDetailViewProps) => {
     return `${ing.quantity} ${abbreviateUnit(ing.unit)}: ${ing.ingredientName}`;
   };
 
+  const baseYeastType = recipe.yeastType ?? "dry";
+  const displayIngredients = yeastType !== baseYeastType
+    ? convertYeast(recipe.ingredients, baseYeastType)
+    : recipe.ingredients;
+
   return (
     <div className="recipeDetailView">
-      <UnitToggle unit={unit} onChange={toggleUnit} />
+      <div className="toggleRow">
+        <UnitToggle unit={unit} onChange={toggleUnit} />
+        <span className="toggleDivider" />
+        <YeastToggle yeastType={yeastType} onChange={toggleYeast} />
+      </div>
       <h2>{recipe.title}</h2>
       <h5>{recipe.description}</h5>
       <div className="body">
         <ul className="ingredients">
-          {recipe.ingredients.map(ing => (
+          {displayIngredients.map(ing => (
             <li key={ing.ingredientName}>
               {displayIngredient(ing)}
             </li>
