@@ -14,6 +14,9 @@ const isStarter = (name: string): boolean => {
 const useConvertYeast = () => {
   const convertYeast = (ingredients: Ingredient[], from: YeastType): Ingredient[] => {
     if (from === "dry") {
+      const hasYeast = ingredients.some(i => isYeast(i.ingredientName));
+      if (!hasYeast) return ingredients;
+
       const totalFlourGrams = ingredients
         .filter(i => isFlour(i.ingredientName))
         .reduce((sum, i) => sum + i.Grams, 0);
