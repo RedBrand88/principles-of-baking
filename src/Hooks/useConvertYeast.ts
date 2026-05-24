@@ -1,13 +1,14 @@
-import { Ingredient } from "../types/models";
+import { Ingredient, YeastType } from "../types/models";
 
-export type YeastType = "dry" | "sourdough";
+export type { YeastType };
 
 const isFlour = (name: string): boolean => name.toLowerCase().includes("flour");
-const isWater = (name: string): boolean => name.toLowerCase() === "water";
+const isWater = (name: string): boolean => name.toLowerCase().includes("water");
 const isYeast = (name: string): boolean => name.toLowerCase().includes("yeast");
 const isStarter = (name: string): boolean => {
   const lower = name.toLowerCase();
-  return lower.includes("starter") || lower.includes("levain") || lower.includes("sourdough");
+  if (lower.includes("starter") || lower.includes("levain")) return true;
+  return lower.includes("sourdough") && !lower.includes("flour");
 };
 
 const useConvertYeast = () => {
@@ -29,15 +30,15 @@ const useConvertYeast = () => {
             if (isFlour(i.ingredientName)) {
               const ratio = i.Grams / totalFlourGrams;
               const subtract = half * ratio;
-              return { ...i, Grams: i.Grams - subtract, quantity: i.quantity - subtract };
+              return { ...i, Grams: Math.round(i.Grams - subtract), quantity: Math.round(i.quantity - subtract) };
             }
             if (isWater(i.ingredientName)) {
-              return { ...i, Grams: i.Grams - half, quantity: i.quantity - half };
+              return { ...i, Grams: Math.max(0, i.Grams - half), quantity: Math.max(0, i.quantity - half) };
             }
             return i;
           }),
         {
-          id: "converted-starter",
+          id: crypto.randomUUID(),
           ingredientName: "sourdough starter",
           quantity: starterGrams,
           unit: "g",
@@ -75,7 +76,7 @@ const useConvertYeast = () => {
       return [
         ...restoredIngredients,
         {
-          id: "converted-yeast",
+          id: crypto.randomUUID(),
           ingredientName: "active dry yeast",
           quantity: yeastGrams,
           unit: "g",

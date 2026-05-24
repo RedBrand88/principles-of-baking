@@ -26,6 +26,7 @@ const AddBreadRecipe = () => {
     description: "",
     ingredients: [],
     instructions: [],
+    yeastType: "dry",
   });
 
   const addIngredientOnClick = () => {
