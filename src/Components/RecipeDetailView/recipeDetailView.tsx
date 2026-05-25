@@ -3,7 +3,7 @@ import { Recipe } from "../../types/models";
 import UnitToggle from "../UnitToggle/UnitToggle";
 import YeastToggle from "../YeastToggle/YeastToggle";
 import useConvertYeast, { YeastType } from "../../Hooks/useConvertYeast";
-import { isStarter } from "../../Utility/ingredientMatchers";
+import { isStarter, isWater } from "../../Utility/ingredientMatchers";
 import "./recipeDetailView.css";
 import { CONVERSION_THRESHOLD, CUP_VOLUME, TBLS_VOLUME, TSP_VOLUME } from "../../Utility/constants";
 import { tbspToFraction, toFraction } from "../../Utility/helperFunctions";
@@ -25,6 +25,8 @@ const RecipeDetailView = ({ recipe }: RecipeDetailViewProps) => {
   }, [recipe?.id]);
 
   if (!recipe) return null;
+
+  const hasWater = recipe.ingredients.some(i => isWater(i.ingredientName));
 
   const toggleUnit = () => {
     setUnit(previous => previous === "g" ? "cups" : "g")
@@ -73,8 +75,12 @@ const RecipeDetailView = ({ recipe }: RecipeDetailViewProps) => {
     <div className="recipeDetailView">
       <div className="toggleRow">
         <UnitToggle unit={unit} onChange={toggleUnit} />
-        <span className="toggleDivider" />
-        <YeastToggle yeastType={yeastType} onChange={toggleYeast} />
+        {hasWater && (
+          <>
+            <span className="toggleDivider" />
+            <YeastToggle yeastType={yeastType} onChange={toggleYeast} />
+          </>
+        )}
       </div>
       <h2>{recipe.title}</h2>
       <h5>{recipe.description}</h5>

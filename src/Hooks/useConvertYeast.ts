@@ -3,6 +3,9 @@ import { isFlour, isWater, isYeast, isStarter } from "../Utility/ingredientMatch
 
 export type { YeastType };
 
+// Older Firestore documents may not have Grams set; fall back to quantity
+const g = (ing: Ingredient): number => ing.Grams || ing.quantity;
+
 const useConvertYeast = () => {
   const convertYeast = (ingredients: Ingredient[], from: YeastType): Ingredient[] => {
     if (from === "dry") {
@@ -11,25 +14,31 @@ const useConvertYeast = () => {
 
       const totalFlourGrams = ingredients
         .filter(i => isFlour(i.ingredientName))
-        .reduce((sum, i) => sum + i.Grams, 0);
+        .reduce((sum, i) => sum + g(i), 0);
 
       if (totalFlourGrams === 0) return ingredients;
 
       const starterGrams = Math.round(totalFlourGrams * 0.2);
       const half = starterGrams / 2;
 
+      const totalWaterGrams = ingredients
+        .filter(i => isWater(i.ingredientName))
+        .reduce((sum, i) => sum + g(i), 0);
+
       return [
         ...ingredients
           .filter(i => !isYeast(i.ingredientName))
           .map(i => {
             if (isFlour(i.ingredientName)) {
-              const ratio = i.Grams / totalFlourGrams;
+              const ratio = g(i) / totalFlourGrams;
               const subtract = half * ratio;
-              return { ...i, Grams: Math.round(i.Grams - subtract), quantity: Math.round(i.quantity - subtract) };
+              return { ...i, Grams: Math.round(g(i) - subtract), quantity: Math.round(i.quantity - subtract) };
             }
             if (isWater(i.ingredientName)) {
               // water density ≈ 1 g/ml in bread recipes; Grams and quantity track the same value
-              return { ...i, Grams: Math.max(0, Math.round(i.Grams - half)), quantity: Math.max(0, Math.round(i.quantity - half)) };
+              const ratio = g(i) / totalWaterGrams;
+              const subtract = half * ratio;
+              return { ...i, Grams: Math.max(0, Math.round(g(i) - subtract)), quantity: Math.max(0, Math.round(i.quantity - subtract)) };
             }
             return i;
           }),
@@ -48,25 +57,37 @@ const useConvertYeast = () => {
       const starterIngredient = ingredients.find(i => isStarter(i.ingredientName));
       if (!starterIngredient) return ingredients;
 
-      const starterGrams = starterIngredient.Grams;
+      const starterGrams = g(starterIngredient);
       const half = starterGrams / 2;
 
-      const restoredIngredients = ingredients
-        .filter(i => !isStarter(i.ingredientName))
-        .map(i => {
+      const nonStarter = ingredients.filter(i => !isStarter(i.ingredientName));
+
+      const totalFlourGrams = nonStarter
+        .filter(i => isFlour(i.ingredientName))
+        .reduce((sum, i) => sum + g(i), 0);
+
+      const totalWaterGrams = nonStarter
+        .filter(i => isWater(i.ingredientName))
+        .reduce((sum, i) => sum + g(i), 0);
+
+      const restoredIngredients = nonStarter.map(i => {
           if (isFlour(i.ingredientName)) {
-            return { ...i, Grams: Math.round(i.Grams + half), quantity: Math.round(i.quantity + half) };
+            const ratio = totalFlourGrams > 0 ? g(i) / totalFlourGrams : 1;
+            const add = half * ratio;
+            return { ...i, Grams: Math.round(g(i) + add), quantity: Math.round(i.quantity + add) };
           }
           if (isWater(i.ingredientName)) {
             // water density ≈ 1 g/ml in bread recipes; Grams and quantity track the same value
-            return { ...i, Grams: Math.round(i.Grams + half), quantity: Math.round(i.quantity + half) };
+            const ratio = totalWaterGrams > 0 ? g(i) / totalWaterGrams : 1;
+            const add = half * ratio;
+            return { ...i, Grams: Math.round(g(i) + add), quantity: Math.round(i.quantity + add) };
           }
           return i;
         });
 
       const restoredFlourGrams = restoredIngredients
         .filter(i => isFlour(i.ingredientName))
-        .reduce((sum, i) => sum + i.Grams, 0);
+        .reduce((sum, i) => sum + g(i), 0);
 
       const yeastGrams = Math.round(restoredFlourGrams * 0.01);
 
