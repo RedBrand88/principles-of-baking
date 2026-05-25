@@ -5,6 +5,7 @@ import Dropdown from "../DropDown/DropDown";
 import TextArea from "../TextArea/TextArea";
 import Button from "../Button/button";
 import { useToast } from "../../Hooks/useToast";
+import YeastToggle from "../YeastToggle/YeastToggle";
 import "./addBreadRecipe.css";
 import { 
   UNITS, 
@@ -26,6 +27,7 @@ const AddBreadRecipe = () => {
     description: "",
     ingredients: [],
     instructions: [],
+    yeastType: "dry",
   });
 
   const addIngredientOnClick = () => {
@@ -71,6 +73,10 @@ const AddBreadRecipe = () => {
     setInstructionCount(instructionCount + 1);
     setAddInstruction("");
   }
+
+  const toggleYeastType = () => {
+    setNewRecipe(prev => ({ ...prev, yeastType: prev.yeastType === "dry" ? "sourdough" : "dry" }));
+  };
 
   return (
     <div className="addRecipeContainer">
@@ -145,6 +151,7 @@ const AddBreadRecipe = () => {
           ))
         }
       </div>
+      <YeastToggle yeastType={newRecipe.yeastType} onChange={toggleYeastType} />
       <Button style={{alignSelf: "flex-start"}} onClick={onSubmit} disabled={loading}>
         { loading ? "Sending" : "Submit" }
       </Button>

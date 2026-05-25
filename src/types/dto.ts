@@ -11,4 +11,5 @@ export type RecipeRequest = {
   description: string;
   ingredients: IngredientDraft[];
   instructions: string[];
+  yeastType: "dry" | "sourdough";
 };

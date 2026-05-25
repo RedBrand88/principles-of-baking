@@ -16,6 +16,8 @@ export interface Meta {
   tags: string[];
 }
 
+export type YeastType = "dry" | "sourdough";
+
 export interface Recipe {
   id: string;
   title: string;
@@ -24,4 +26,5 @@ export interface Recipe {
   instructions: string[];
   Meta: Meta;
   userID: string;
+  yeastType?: YeastType;
 }
