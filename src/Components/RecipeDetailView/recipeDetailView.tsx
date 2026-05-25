@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Recipe } from "../../types/models";
 import UnitToggle from "../UnitToggle/UnitToggle";
 import YeastToggle from "../YeastToggle/YeastToggle";
@@ -14,10 +14,15 @@ type RecipeDetailViewProps = {
 
 const RecipeDetailView = ({ recipe }: RecipeDetailViewProps) => {
   const [unit, setUnit] = useState("g")
-  const [yeastType, setYeastType] = useState<YeastType>(
-    recipe?.yeastType ?? (recipe?.ingredients.some(i => isStarter(i.ingredientName)) ? "sourdough" : "dry")
-  );
+  const [yeastType, setYeastType] = useState<YeastType>("dry");
   const { convertYeast } = useConvertYeast();
+
+  useEffect(() => {
+    if (!recipe) return;
+    setYeastType(
+      recipe.yeastType ?? (recipe.ingredients.some(i => isStarter(i.ingredientName)) ? "sourdough" : "dry")
+    );
+  }, [recipe?.id]);
 
   if (!recipe) return null;
 
