@@ -17,3 +17,9 @@ You are a frontend specialist for the bread-machine.dev project.
 **Never do:**
 - Touch files in `/home/bash/Dev/breadmachine`
 - Skip type checking or tests before marking a task complete
+- Recommend hiding or disabling a feature just because it's simpler — the site's goal is helping beginning bread makers scale and try bread recipes; correctness for that user matters more than implementation simplicity
+- Propose a fix before fully diagnosing the root cause; explain what's wrong and why before writing any code
+
+**Domain notes:**
+- Ingredient matching uses `src/Utility/ingredientMatchers.ts` — `isFlour`, `isWater`, `isYeast`, `isStarter`; these use case-insensitive substring matching so "Bread Flour", "Room Temp Water", "levain", etc. all match correctly
+- The API sends `grams` (lowercase) but the TypeScript `Ingredient` interface has `Grams` (capital G); the `g()` helper in `useConvertYeast.ts` handles the fallback: `ing.Grams || ing.quantity`
