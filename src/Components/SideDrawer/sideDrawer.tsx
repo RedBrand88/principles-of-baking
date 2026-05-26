@@ -27,7 +27,7 @@ const SideDrawer = ({ openLogin }: SideDrawerProps) => {
         className={`drawerOverlay ${isDrawerOpen ? "open" : ""}`}
         onClick={closeDrawer}
       />
-      <div className={`sideDrawer ${isDrawerOpen ? "open" : ""}`}>
+      <div className={`sideDrawer ${isDrawerOpen ? "open" : ""}`} inert={isDrawerOpen ? undefined : ""}>
         <div className="drawerContent">
           <a href="/" onClick={closeDrawer}>
             Home
