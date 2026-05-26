@@ -10,6 +10,7 @@
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  overflow: visible;
 }
 
 .navContainer {
@@ -41,6 +42,19 @@
 
 .navLinks a:hover {
   color: #EEC373;
+}
+
+.navLinks a:focus-visible,
+.logo:focus-visible {
+  outline: 2px solid #98BCE8;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.hamburgerButton:focus-visible,
+.recipesButton:focus-visible {
+  outline: 2px solid #98BCE8;
+  outline-offset: 4px;
 }
 
 .recipesButton {

@@ -15,7 +15,8 @@ describe("AboutMe", () => {
 
   it("renders role subtitle in hero zone", () => {
     render(<AboutMe />);
-    expect(screen.getByText(/senior frontend developer/i)).toBeInTheDocument();
+    const container = screen.getByRole("heading", { name: /brandon bashein/i }).closest(".heroZone");
+    expect(container?.querySelector(".heroRole")).toHaveTextContent(/senior frontend developer/i);
   });
 
   it("renders GitHub social pill", () => {
@@ -39,7 +40,7 @@ describe("AboutMe", () => {
 
   it("renders Baking & background section label", () => {
     render(<AboutMe />);
-    expect(screen.getByText(/baking/i)).toBeInTheDocument();
+    expect(screen.getByText(/baking & background/i)).toBeInTheDocument();
   });
 
   it("renders CV download link", () => {

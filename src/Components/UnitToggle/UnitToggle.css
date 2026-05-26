@@ -47,7 +47,7 @@
 }
 
 .toggle input:focus-visible + .slider {
-  outline: 2px solid var(--text-color);
+  outline: 2px solid #98BCE8;
   outline-offset: 2px;
 }
 

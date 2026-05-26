@@ -29,7 +29,7 @@ const RecipeCard = ({ recipe, isActive, onClick }: RecipeCardProps) => {
       )}
       <div className="cardMeta">
         {yieldDisplay && <span className="yieldLabel">{yieldDisplay}</span>}
-        <span className="yeastBadge">{yeastLabel}</span>
+        <span className={`yeastBadge${yeastLabel === "dry yeast" ? " yeastBadgeDry" : ""}`}>{yeastLabel}</span>
       </div>
     </button>
   );

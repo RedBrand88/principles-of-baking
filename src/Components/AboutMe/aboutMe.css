@@ -15,12 +15,43 @@
   gap: 0.75rem;
 }
 
-.heroAvatar {
+.avatarWrapper {
+  position: relative;
   width: 200px;
   height: 200px;
+}
+
+.heroAvatar {
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid rgba(238, 195, 115, 0.4);
+}
+
+.avatarIcon {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  bottom: 4px;
+  transition: opacity 0.2s ease;
+}
+
+.avatarIcon:hover {
+  opacity: 0.75;
+}
+
+.avatarIcon img {
+  width: 100%;
+  height: 100%;
+}
+
+.avatarIconGithub {
+  left: 10%;
+}
+
+.avatarIconLinkedin {
+  left: 30%;
 }
 
 .heroName {
@@ -35,44 +66,21 @@
   opacity: 0.9;
 }
 
-.heroPills {
-  display: flex;
-  gap: 10px;
-  margin-top: 0.25rem;
-}
-
-.socialPill {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(202, 150, 92, 0.15);
-  border: 1px solid rgba(202, 150, 92, 0.3);
-  border-radius: 20px;
-  padding: 4px 14px;
-  color: #EEC373;
-  text-decoration: none;
-  font-size: 0.85rem;
-  transition: background 0.2s ease;
-}
-
-.socialPill:hover {
-  background: rgba(202, 150, 92, 0.28);
-}
-
-.socialPill img {
-  width: 16px;
-  height: 16px;
-}
-
 /* ── Content zone ── */
 .contentZone {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   gap: 24px;
   padding: 2.5rem 3rem;
   max-width: var(--max-width-content);
   margin: 0 auto;
   box-sizing: border-box;
+}
+
+.textPanels {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .contentPanel {
@@ -81,8 +89,14 @@
   gap: 1rem;
 }
 
+.cvPanel {
+  display: flex;
+  justify-content: center;
+  padding-top: 1.75rem;
+}
+
 .sectionLabel {
-  font-size: 0.68rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: #EEC373;
@@ -110,9 +124,14 @@
     padding: 2rem 1rem;
   }
 
-  .heroAvatar {
+  .avatarWrapper {
     width: 130px;
     height: 130px;
+  }
+
+  .avatarIcon {
+    width: 28px;
+    height: 28px;
   }
 
   .heroName {
@@ -122,5 +141,9 @@
   .contentZone {
     grid-template-columns: 1fr;
     padding: 2rem 1rem;
+  }
+
+  .cvPanel {
+    padding-top: 0;
   }
 }

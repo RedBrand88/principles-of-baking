@@ -53,6 +53,11 @@ button:disabled {
   transition: transform 50ms;
 }
 
+.bottom:focus-visible {
+  outline: 2px solid #98BCE8;
+  outline-offset: 4px;
+}
+
 .bottom:focus-visible .top {
   transform: translateY(-6px);
   transition: transform 250ms;
