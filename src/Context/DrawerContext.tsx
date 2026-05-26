@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 type DrawerContextType = {
   isDrawerOpen: boolean;
@@ -22,6 +22,18 @@ export const DrawerProvider = ({ children }: {children: ReactNode }) => {
   const [isRecipeDrawerOpen, setIsRecipeDrawerOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<string>("tab1");
+
+  useEffect(() => {
+    const mql = window.matchMedia("(min-width: 481px)");
+    const handler = (e: MediaQueryListEvent) => {
+      if (e.matches) {
+        setIsDrawerOpen(false);
+        setIsRecipeDrawerOpen(false);
+      }
+    };
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
 
   const openDrawer = () => {
     setIsRecipeDrawerOpen(false);

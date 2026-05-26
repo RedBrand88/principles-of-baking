@@ -28,3 +28,11 @@ dist-ssr
 
 #creds
 *serviceAccountKey.json
+
+# superpowers internal files
+docs/superpowers/
+.superpowers/
+
+# local planning and agent config
+docs/
+.claude/

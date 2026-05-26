@@ -85,18 +85,24 @@ const RecipeDetailView = ({ recipe }: RecipeDetailViewProps) => {
       <h2>{recipe.title}</h2>
       <h5>{recipe.description}</h5>
       <div className="body">
-        <ul className="ingredients">
-          {displayIngredients.map(ing => (
-            <li key={ing.ingredientName}>
-              {displayIngredient(ing)}
-            </li>
-          ))}
-        </ul>
-        <ol className="instructions">
-          {recipe.instructions.map(inst => (
-            <li key={inst}>{inst}</li>
-          ))}
-        </ol>
+        <div>
+          <div className="sectionLabel">Ingredients</div>
+          <ul className="ingredients" role="list">
+            {displayIngredients.map(ing => (
+              <li key={ing.ingredientName}>
+                {displayIngredient(ing)}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <div className="sectionLabel">Instructions</div>
+          <ol className="instructions" role="list">
+            {recipe.instructions.map(inst => (
+              <li key={inst}>{inst}</li>
+            ))}
+          </ol>
+        </div>
       </div>
     </div>
   )

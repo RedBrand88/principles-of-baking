@@ -10,7 +10,7 @@ export interface Ingredient {
 }
 
 export interface Meta {
-  yeildGrams: number;
+  yieldGrams: number;
   createdAt: string;
   updatedAt: string;
   tags: string[];
@@ -24,7 +24,7 @@ export interface Recipe {
   description: string;
   ingredients: Ingredient[];
   instructions: string[];
-  Meta: Meta;
-  userID: string;
+  meta: Meta;
+  userId: string;
   yeastType?: YeastType;
 }

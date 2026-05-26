@@ -1,78 +1,149 @@
 .aboutMeContainer {
-  padding: 125px 10px 0px;
+  padding-top: 125px;
+  color: var(--text-color);
 }
 
-.avatar {
-  width: 400px;
-  height: 400px;
-  object-fit: cover;
-  border: 1px solid #F4DFBA;
-  border-radius: 50%;
-}
-
-.experience {
+/* ── Hero zone ── */
+.heroZone {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 1.5rem 2.5rem;
+  background: linear-gradient(180deg, rgba(202, 150, 92, 0.12) 0%, transparent 100%);
+  border-bottom: 1px solid rgba(238, 195, 115, 0.15);
+  gap: 0.75rem;
 }
 
-.experience > * {
-  color: #F4DFBA;
+.avatarWrapper {
+  position: relative;
+  width: 200px;
+  height: 200px;
 }
 
-.upperContainer {
+.heroAvatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(238, 195, 115, 0.4);
+}
+
+.avatarIcon {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  bottom: 4px;
+  transition: opacity 0.2s ease;
+}
+
+.avatarIcon:hover {
+  opacity: 0.75;
+}
+
+.avatarIcon img {
+  width: 100%;
+  height: 100%;
+}
+
+.avatarIconGithub {
+  left: 10%;
+}
+
+.avatarIconLinkedin {
+  left: 30%;
+}
+
+.heroName {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.heroRole {
+  font-size: 0.95rem;
+  color: #EEC373;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* ── Content zone ── */
+.contentZone {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  padding: 2.5rem 3rem;
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.textPanels {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.contentPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cvPanel {
   display: flex;
   justify-content: center;
-  align-items: self-start;
+  padding-top: 1.75rem;
 }
 
-.avatarContainer {
-  position: relative;
-  display: inline-block;
+.sectionLabel {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #EEC373;
+  opacity: 0.85;
 }
 
-/* --- MOBILE BREAKPOINT --- */
+.panelDivider {
+  height: 1px;
+  background: rgba(238, 195, 115, 0.25);
+}
+
+.contentPanel p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Mobile ── */
 @media (max-width: 480px) {
   .aboutMeContainer {
-    padding: 100px 1rem 2rem;
+    padding-top: 100px;
   }
 
-  .upperContainer {
-    flex-direction: column-reverse;
-    align-items: center;
-    gap: 2rem;
+  .heroZone {
+    padding: 2rem 1rem;
   }
 
-  .experience {
-    width: 100%;
-    max-width: 90vw;
-    text-align: left;
-    gap: 0.75rem;
+  .avatarWrapper {
+    width: 130px;
+    height: 130px;
   }
 
-  .experience h1 {
-    text-align: center;
+  .avatarIcon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .heroName {
     font-size: 1.5rem;
   }
 
-  .experience p {
-    font-size: 1rem;
-    line-height: 1.5;
+  .contentZone {
+    grid-template-columns: 1fr;
+    padding: 2rem 1rem;
   }
 
-  .avatarContainer {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .avatar {
-    width: 250px;
-    height: 250px;
-    border-width: 2px;
-  }
-
-  .avatarContainer .social-link {
-    transform: scale(0.9);
+  .cvPanel {
+    padding-top: 0;
   }
 }
