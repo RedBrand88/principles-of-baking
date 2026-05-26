@@ -6,9 +6,6 @@
 .wave span {
   display: inline-block;
   position: relative;
-  animation: wave 2s ease-in-out infinite,
-  colors 5s ease-in-out infinite;
-  animation-delay: calc(var(--i) * 0.3s);
   background: linear-gradient(135deg, hsla(12, 89%, 89%, 1) 0%, hsla(329, 82%, 76%, 1) 50%, hsla(342, 95%, 78%, 1) 100%);
   background-size: 500%;
   -webkit-background-clip: text;
@@ -16,20 +13,20 @@
   -webkit-text-fill-color: transparent;
 }
 
-@keyframes wave {
-  0%, 100% {
-    transform: translateY(0);
+@media (prefers-reduced-motion: no-preference) {
+  .wave span {
+    animation: wave 2s ease-in-out infinite,
+      colors 5s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.3s);
   }
-  50% {
-    transform: translateY(-3px);
-  }
-}
 
-@keyframes colors {
-  0%, 100% {
-    background-position: 0% 50%;
+  @keyframes wave {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
   }
-  50% {
-    background-position: 100% 50%;
+
+  @keyframes colors {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
   }
 }
