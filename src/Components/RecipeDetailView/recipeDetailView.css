@@ -10,27 +10,91 @@
 .recipeDetailView h2 {
   font-size: 2rem;
   line-height: 1.3;
-  border-bottom: 1px solid var(--text-color);
-  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(238, 195, 115, 0.25);
+  margin-bottom: 0.25rem;
+}
+
+.recipeDetailView h5 {
+  font-size: 0.9rem;
+  font-weight: 400;
+  opacity: 0.7;
+  margin-bottom: 0;
 }
 
 .body {
   display: grid;
   grid-template-columns: 1fr 1.25fr;
-  margin-top: 40px;
+  margin-top: 32px;
+  gap: 24px;
+}
+
+.sectionLabel {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #EEC373;
+  opacity: 0.85;
+  margin-bottom: 10px;
 }
 
 .ingredients {
   font-size: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ingredients li {
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(244, 223, 186, 0.07);
+}
+
+.ingredients li:last-child {
+  border-bottom: none;
 }
 
 .instructions {
   font-size: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: steps;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
+
+.instructions li {
+  counter-increment: steps;
+  display: flex;
+  gap: 10px;
+  line-height: 1.5;
+}
+
+.instructions li::before {
+  content: counter(steps);
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(202, 150, 92, 0.2);
+  border: 1px solid rgba(202, 150, 92, 0.35);
+  color: #EEC373;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
 @media screen and (max-width: 480px) {
   .body {
     display: flex;
     flex-direction: column;
+  }
+
+  .recipeDetailView {
+    padding: 0 16px;
   }
 }
 
