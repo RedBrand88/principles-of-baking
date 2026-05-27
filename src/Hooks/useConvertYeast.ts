@@ -3,8 +3,8 @@ import { isFlour, isWater, isYeast, isStarter } from "../Utility/ingredientMatch
 
 export type { YeastType };
 
-// Older Firestore documents may not have Grams set; fall back to quantity
-const g = (ing: Ingredient): number => ing.Grams || ing.quantity;
+// Parsed recipes may not have grams computed yet; fall back to quantity
+const g = (ing: Ingredient): number => ing.grams || ing.quantity;
 
 const useConvertYeast = () => {
   const convertYeast = (ingredients: Ingredient[], from: YeastType): Ingredient[] => {
@@ -32,13 +32,13 @@ const useConvertYeast = () => {
             if (isFlour(i.ingredientName)) {
               const ratio = g(i) / totalFlourGrams;
               const subtract = half * ratio;
-              return { ...i, Grams: Math.round(g(i) - subtract), quantity: Math.round(i.quantity - subtract) };
+              return { ...i, grams: Math.round(g(i) - subtract), quantity: Math.round(i.quantity - subtract) };
             }
             if (isWater(i.ingredientName)) {
               // water density ≈ 1 g/ml in bread recipes; Grams and quantity track the same value
               const ratio = g(i) / totalWaterGrams;
               const subtract = half * ratio;
-              return { ...i, Grams: Math.max(0, Math.round(g(i) - subtract)), quantity: Math.max(0, Math.round(i.quantity - subtract)) };
+              return { ...i, grams: Math.max(0, Math.round(g(i) - subtract)), quantity: Math.max(0, Math.round(i.quantity - subtract)) };
             }
             return i;
           }),
@@ -47,7 +47,7 @@ const useConvertYeast = () => {
           ingredientName: "sourdough starter",
           quantity: starterGrams,
           unit: "g",
-          Grams: starterGrams,
+          grams: starterGrams,
           phase: "dough" as const,
           bakerPercentage: 0,
           densityGPerMl: 0,
@@ -74,13 +74,13 @@ const useConvertYeast = () => {
           if (isFlour(i.ingredientName)) {
             const ratio = totalFlourGrams > 0 ? g(i) / totalFlourGrams : 1;
             const add = half * ratio;
-            return { ...i, Grams: Math.round(g(i) + add), quantity: Math.round(i.quantity + add) };
+            return { ...i, grams: Math.round(g(i) + add), quantity: Math.round(i.quantity + add) };
           }
           if (isWater(i.ingredientName)) {
             // water density ≈ 1 g/ml in bread recipes; Grams and quantity track the same value
             const ratio = totalWaterGrams > 0 ? g(i) / totalWaterGrams : 1;
             const add = half * ratio;
-            return { ...i, Grams: Math.round(g(i) + add), quantity: Math.round(i.quantity + add) };
+            return { ...i, grams: Math.round(g(i) + add), quantity: Math.round(i.quantity + add) };
           }
           return i;
         });
@@ -98,7 +98,7 @@ const useConvertYeast = () => {
           ingredientName: "active dry yeast",
           quantity: yeastGrams,
           unit: "g",
-          Grams: yeastGrams,
+          grams: yeastGrams,
           phase: "dough" as const,
           bakerPercentage: 0,
           densityGPerMl: 0,

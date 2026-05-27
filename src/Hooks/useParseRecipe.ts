@@ -1,31 +1,41 @@
 import { useState, useCallback } from "react";
-import { Recipe } from "../types/models";
+import { RecipeDTO } from "../types/dto";
+import { auth } from "../firebase";
 
 interface ParseResult {
-  recipe: Recipe | null;
+  recipe: RecipeDTO | null;
   loading: boolean;
   error: string | null;
-  parseRecipe: (text: string) => Promise<void>;
+  parseRecipe: (text: string) => Promise<boolean>;
 }
 
 export function useParseRecipe(): ParseResult {
-  const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const [recipe, setRecipe] = useState<RecipeDTO | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const parseRecipe = useCallback(async (text: string) => {
+  const parseRecipe = useCallback(async (text: string): Promise<boolean> => {
     if (!text.trim()) {
       setError("Recipe text cannot be empty.");
-      return;
+      return false;
     }
 
     setLoading(true);
     setError(null);
 
     try {
-      const response = await fetch("/api/parse", {
+      const idToken = await auth.currentUser?.getIdToken();
+      if (!idToken) throw new Error("Not authenticated");
+
+      const base = import.meta.env.VITE_API_BASE?.trim();
+      const url = base ? `${base.replace(/\/$/, "")}/api/recipes/parse` : "/api/recipes/parse";
+
+      const response = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${idToken}`,
+        },
         body: JSON.stringify({ text }),
       });
 
@@ -34,12 +44,14 @@ export function useParseRecipe(): ParseResult {
         throw new Error(msg || `Server returned ${response.status}`);
       }
 
-      const data: Recipe = await response.json();
-      setRecipe(data)
+      const data: RecipeDTO = await response.json();
+      setRecipe(data);
+      return true;
     } catch (err: any) {
       console.log("Parse failed:", err);
       setError(err.message || "Failed to parse recipe.");
       setRecipe(null);
+      return false;
     } finally {
       setLoading(false);
     }

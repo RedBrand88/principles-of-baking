@@ -85,6 +85,52 @@
   border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
+/* Confidence section */
+.confidenceSection {
+  margin: 1.25rem 0;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(202, 150, 90, 0.25);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.confidenceSectionLabel {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.6;
+  margin-bottom: 0.5rem;
+}
+
+.confidenceRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  padding: 0.2rem 0;
+}
+
+.confidenceBadge {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* Metadata row (servings, times) */
+.parsedMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.85rem;
+  opacity: 0.75;
+  margin-bottom: 0.5rem;
+}
+
+/* Ingredients that failed to parse */
+.parseWarning {
+  opacity: 0.65;
+  font-style: italic;
+}
+
 /* Scrollbar for long recipes */
 .parseModalContent::-webkit-scrollbar {
   width: 8px;

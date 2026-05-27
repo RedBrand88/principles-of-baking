@@ -27,7 +27,7 @@ const RecipeDrawer = ({ onSelectRecipe, selectedId }: RecipeDrawerProps) => {
       <div className={`recipeDrawer ${isRecipeDrawerOpen ? "open" : ""}`} inert={isRecipeDrawerOpen ? undefined : ""}>
         <div className="recipeDrawerContent">
           {recipes.map(recipe => {
-            const yeastLabel = recipe.ingredients.some(i => isStarter(i.ingredientName))
+            const yeastLabel = recipe.doughIngredients.some(i => isStarter(i.ingredientName))
               ? "sourdough"
               : "dry yeast";
             return (

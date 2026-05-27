@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Recipe } from "../../types/models";
+import { Recipe, Ingredient } from "../../types/models";
 import UnitToggle from "../UnitToggle/UnitToggle";
 import YeastToggle from "../YeastToggle/YeastToggle";
 import useConvertYeast, { YeastType } from "../../Hooks/useConvertYeast";
@@ -20,13 +20,13 @@ const RecipeDetailView = ({ recipe }: RecipeDetailViewProps) => {
   useEffect(() => {
     if (!recipe) return;
     setYeastType(
-      recipe.yeastType ?? (recipe.ingredients.some(i => isStarter(i.ingredientName)) ? "sourdough" : "dry")
+      recipe.yeastType ?? (recipe.doughIngredients.some(i => isStarter(i.ingredientName)) ? "sourdough" : "dry")
     );
   }, [recipe?.id]);
 
   if (!recipe) return null;
 
-  const hasWater = recipe.ingredients.some(i => isWater(i.ingredientName));
+  const hasWater = recipe.doughIngredients.some(i => isWater(i.ingredientName));
 
   const toggleUnit = () => {
     setUnit(previous => previous === "g" ? "cups" : "g")
@@ -47,7 +47,7 @@ const RecipeDetailView = ({ recipe }: RecipeDetailViewProps) => {
     }
   }
 
-  const displayIngredient = (ing: Recipe["ingredients"][number]) => {
+  const displayIngredient = (ing: Ingredient) => {
     const isGrams = ing.unit.toLowerCase() === "grams" || ing.unit.toLowerCase() === "g";
     if (unit === "cups" && isGrams && ing.densityGPerMl && ing.densityGPerMl > 0) {
       const ml = ing.quantity / ing.densityGPerMl;
@@ -66,10 +66,11 @@ const RecipeDetailView = ({ recipe }: RecipeDetailViewProps) => {
     return `${ing.quantity} ${abbreviateUnit(ing.unit)}: ${ing.ingredientName}`;
   };
 
-  const baseYeastType: YeastType = recipe.yeastType ?? (recipe.ingredients.some(i => isStarter(i.ingredientName)) ? "sourdough" : "dry");
-  const displayIngredients = yeastType !== baseYeastType
-    ? convertYeast(recipe.ingredients, baseYeastType)
-    : recipe.ingredients;
+  const baseYeastType: YeastType = recipe.yeastType ?? (recipe.doughIngredients.some(i => isStarter(i.ingredientName)) ? "sourdough" : "dry");
+  const displayDoughIngredients = yeastType !== baseYeastType
+    ? convertYeast(recipe.doughIngredients, baseYeastType)
+    : recipe.doughIngredients;
+  const displayIngredients = [...displayDoughIngredients, ...(recipe.otherIngredients ?? [])];
 
   return (
     <div className="recipeDetailView">
