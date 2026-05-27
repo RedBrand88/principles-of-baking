@@ -15,8 +15,11 @@ const CopyPasteInputForm = () => {
   };
 
   const handleParse = async () => {
-    await parseRecipe(text);
-    setShowPreview(true);
+    const ok = await parseRecipe(text);
+    if (ok) {
+      setText("");
+      setShowPreview(true);
+    }
   }
 
   const handleClose = () => setShowPreview(false);

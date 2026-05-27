@@ -6,7 +6,7 @@ interface ParseResult {
   recipe: RecipeDTO | null;
   loading: boolean;
   error: string | null;
-  parseRecipe: (text: string) => Promise<void>;
+  parseRecipe: (text: string) => Promise<boolean>;
 }
 
 export function useParseRecipe(): ParseResult {
@@ -14,10 +14,10 @@ export function useParseRecipe(): ParseResult {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const parseRecipe = useCallback(async (text: string) => {
+  const parseRecipe = useCallback(async (text: string): Promise<boolean> => {
     if (!text.trim()) {
       setError("Recipe text cannot be empty.");
-      return;
+      return false;
     }
 
     setLoading(true);
@@ -45,11 +45,13 @@ export function useParseRecipe(): ParseResult {
       }
 
       const data: RecipeDTO = await response.json();
-      setRecipe(data)
+      setRecipe(data);
+      return true;
     } catch (err: any) {
       console.log("Parse failed:", err);
       setError(err.message || "Failed to parse recipe.");
       setRecipe(null);
+      return false;
     } finally {
       setLoading(false);
     }
