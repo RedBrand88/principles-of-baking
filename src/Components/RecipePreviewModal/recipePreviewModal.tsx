@@ -30,7 +30,7 @@ const RecipePreviewModal = ({ recipe, onClose }: RecipePreviewModalProps) => {
         <p>{recipe.description}</p>
         <h2>Ingredients</h2>
         <ul>
-          {recipe.ingredients.map(ing => (
+          {[...(recipe.doughIngredients ?? []), ...(recipe.otherIngredients ?? [])].map(ing => (
             <li key={ing.ingredientName}>
               {`${ing.quantity}${ing.unit} ${ing.ingredientName}`}
             </li>

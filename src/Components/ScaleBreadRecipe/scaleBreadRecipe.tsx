@@ -35,7 +35,7 @@ const ScaleBreadRecipe = () => {
 
   const handlePrepare = () => {
     if (!recipe) return;
-    const result = scaleRecipe(recipe.ingredients, totalDough);
+    const result = scaleRecipe(recipe.doughIngredients, totalDough);
     setScaled(result);
   };
 

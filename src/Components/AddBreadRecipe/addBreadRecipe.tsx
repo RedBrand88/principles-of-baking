@@ -25,14 +25,14 @@ const AddBreadRecipe = () => {
   const [newRecipe, setNewRecipe] = useState<RecipeRequest>({
     title: "",
     description: "",
-    ingredients: [],
+    doughIngredients: [],
     instructions: [],
     yeastType: "dry",
   });
 
   const addIngredientOnClick = () => {
     if (addIngredient) {
-      setNewRecipe({ ...newRecipe, ingredients: [...newRecipe.ingredients, addIngredient] });
+      setNewRecipe({ ...newRecipe, doughIngredients: [...newRecipe.doughIngredients, addIngredient] });
       setAddIngredient({ ingredientName: "", quantity: 0, unit: unit });
     }
   }
@@ -137,7 +137,7 @@ const AddBreadRecipe = () => {
       </div>
       <div>
         {
-          newRecipe?.ingredients.map(({ ingredientName, quantity, unit }) => (
+          newRecipe?.doughIngredients.map(({ ingredientName, quantity, unit }) => (
             <div key={ingredientName + quantity} className="flex">
               <div>{`${ingredientName}: ` + quantity.toString() + unit}</div>
             </div>

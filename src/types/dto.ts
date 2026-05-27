@@ -9,7 +9,8 @@ export type IngredientDraft = {
 export type RecipeRequest = {
   title: string;
   description: string;
-  ingredients: IngredientDraft[];
+  doughIngredients: IngredientDraft[];
+  otherIngredients?: IngredientDraft[];
   instructions: string[];
   yeastType: "dry" | "sourdough";
 };

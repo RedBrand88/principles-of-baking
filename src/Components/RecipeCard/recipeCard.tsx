@@ -9,7 +9,7 @@ type RecipeCardProps = {
 };
 
 const RecipeCard = ({ recipe, isActive, onClick }: RecipeCardProps) => {
-  const yeastLabel = recipe.ingredients.some(i => isStarter(i.ingredientName))
+  const yeastLabel = recipe.doughIngredients.some(i => isStarter(i.ingredientName))
     ? "sourdough"
     : "dry yeast";
 
