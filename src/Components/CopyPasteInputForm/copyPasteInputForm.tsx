@@ -1,30 +1,17 @@
 import { useState } from "react";
 import Button from "../Button/button";
 import "./copyPasteInputForm.css"
-import ValidationError from "../ValidationError/validationError";
 import { useParseRecipe } from "../../Hooks/useParseRecipe";
 import RecipePreviewModal from "../RecipePreviewModal/recipePreviewModal";
 
 const CopyPasteInputForm = () => {
   const [text, setText] = useState<string>("");
-  const [error, setError] = useState<string[] | null>(null);
   const [showPreview, setShowPreview] = useState(false);
 
   const { recipe, loading, parseRecipe } = useParseRecipe();
 
-  const validateText = (text: string) => {
-    const recipeError = [];
-    if (!text.includes("# Title")) recipeError.push("Missing # Title header");
-    if (!text.includes("# Description")) recipeError.push("Missing # Description header");
-    if (!text.includes("# Ingredients")) recipeError.push("Missing # Ingredients header");
-    if (!text.includes("# Instructions")) recipeError.push("Missing # Instructions header");
-    return recipeError;
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value;
-    setText(value);
-    setError(validateText(value))
+    setText(e.target.value);
   };
 
   const handleParse = async () => {
@@ -43,10 +30,9 @@ const CopyPasteInputForm = () => {
         onChange={handleChange}
         placeholder="Paste your recipe here..."
       ></textarea>
-      <ValidationError errors={error} />
       <Button
         onClick={handleParse}
-        disabled={(error && error.length > 0) || !text.trim() || loading}
+        disabled={!text.trim() || loading}
       >
         {loading ? "Parsing..." : "Parse"}
       </Button>

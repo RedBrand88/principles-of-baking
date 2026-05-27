@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { Recipe } from "../types/models";
+import { auth } from "../firebase";
 
 interface ParseResult {
   recipe: Recipe | null;
@@ -23,9 +24,18 @@ export function useParseRecipe(): ParseResult {
     setError(null);
 
     try {
-      const response = await fetch("/api/parse", {
+      const idToken = await auth.currentUser?.getIdToken();
+      if (!idToken) throw new Error("Not authenticated");
+
+      const base = import.meta.env.VITE_API_BASE?.trim();
+      const url = base ? `${base.replace(/\/$/, "")}/api/recipes/parse` : "/api/recipes/parse";
+
+      const response = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${idToken}`,
+        },
         body: JSON.stringify({ text }),
       });
 
