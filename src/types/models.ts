@@ -4,8 +4,8 @@ export interface Ingredient {
   bakerPercentage: number;
   quantity: number;
   unit: string;
-  Grams: number;
-  phase: "dough" | "scald" | "soak" | "autolyse";
+  grams: number;
+  phase: string;
   densityGPerMl: number;
 }
 
@@ -13,7 +13,7 @@ export interface Meta {
   yieldGrams: number;
   createdAt: string;
   updatedAt: string;
-  tags: string[];
+  tags?: string[];
   servings?: string;
   prepTime?: string;
   cookTime?: string;
