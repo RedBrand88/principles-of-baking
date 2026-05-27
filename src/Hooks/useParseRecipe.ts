@@ -1,16 +1,16 @@
 import { useState, useCallback } from "react";
-import { Recipe } from "../types/models";
+import { RecipeDTO } from "../types/dto";
 import { auth } from "../firebase";
 
 interface ParseResult {
-  recipe: Recipe | null;
+  recipe: RecipeDTO | null;
   loading: boolean;
   error: string | null;
   parseRecipe: (text: string) => Promise<void>;
 }
 
 export function useParseRecipe(): ParseResult {
-  const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const [recipe, setRecipe] = useState<RecipeDTO | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,7 +44,7 @@ export function useParseRecipe(): ParseResult {
         throw new Error(msg || `Server returned ${response.status}`);
       }
 
-      const data: Recipe = await response.json();
+      const data: RecipeDTO = await response.json();
       setRecipe(data)
     } catch (err: any) {
       console.log("Parse failed:", err);
