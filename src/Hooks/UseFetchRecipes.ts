@@ -1,6 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Recipe } from '../types/models';
 
+// Handles documents written before the doughIngredients migration
+function normalizeRecipe(raw: any): Recipe {
+  return {
+    ...raw,
+    doughIngredients: raw.doughIngredients ?? raw.ingredients ?? [],
+    otherIngredients: raw.otherIngredients ?? [],
+  };
+}
+
 const useFetchRecipes = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -13,8 +22,8 @@ const useFetchRecipes = () => {
         if (!resp.ok) {
           throw new Error('Network response was not ok');
         }
-        const data = await resp.json();
-        setRecipes(data);
+        const data: any[] = await resp.json();
+        setRecipes(data.map(normalizeRecipe));
       } catch (error) {
         console.error('Error fetching recipes:', error);
         if (error instanceof Error) {
