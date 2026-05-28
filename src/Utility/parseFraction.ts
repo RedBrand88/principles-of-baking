@@ -10,7 +10,7 @@ export const parseFraction = (s: string): number | null => {
   if (!normalized) return null;
 
   for (const [unicode, ascii] of Object.entries(UNICODE_FRACTIONS)) {
-    normalized = normalized.replaceAll(unicode, ascii);
+    normalized = normalized.split(unicode).join(ascii);
   }
 
   // Plain integer or decimal (no negatives)
