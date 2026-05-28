@@ -86,30 +86,39 @@ const RecipePreviewModal = ({ recipe, onClose }: RecipePreviewModalProps) => {
       <ul className="ingredientEditList">
         {list.map((ing, i) => (
           <li key={i} className="ingredientRow">
-            <input
-              type="number"
-              className="editInput ingQtyInput"
-              value={ing.quantity || ""}
-              onChange={e => updateIng(list, set, i, "quantity", Number(e.target.value))}
-              aria-label="quantity"
-              min={0}
-            />
-            <input
-              type="text"
-              className="editInput ingUnitInput"
-              value={ing.unit}
-              onChange={e => updateIng(list, set, i, "unit", e.target.value)}
-              placeholder="unit"
-              aria-label="unit"
-            />
-            <input
-              type="text"
-              className="editInput ingNameInput"
-              value={ing.ingredientName}
-              onChange={e => updateIng(list, set, i, "ingredientName", e.target.value)}
-              placeholder="ingredient name"
-              aria-label="ingredient name"
-            />
+            <div>
+              <span className="fieldLabel">Qty</span>
+              <input
+                type="number"
+                className="editInput ingQtyInput"
+                value={ing.quantity || ""}
+                onChange={e => updateIng(list, set, i, "quantity", Number(e.target.value))}
+                aria-label="quantity"
+                min={0}
+              />
+            </div>
+            <div>
+              <span className="fieldLabel">Unit</span>
+              <input
+                type="text"
+                className="editInput ingUnitInput"
+                value={ing.unit}
+                onChange={e => updateIng(list, set, i, "unit", e.target.value)}
+                placeholder="unit"
+                aria-label="unit"
+              />
+            </div>
+            <div>
+              <span className="fieldLabel">Ingredient</span>
+              <input
+                type="text"
+                className="editInput ingNameInput"
+                value={ing.ingredientName}
+                onChange={e => updateIng(list, set, i, "ingredientName", e.target.value)}
+                placeholder="ingredient name"
+                aria-label="ingredient name"
+              />
+            </div>
             <button className="removeBtn" onClick={() => removeIng(set, i)} type="button" aria-label="remove">×</button>
           </li>
         ))}

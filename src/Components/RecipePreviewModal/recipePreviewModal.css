@@ -51,9 +51,13 @@
 }
 
 .parseModalContent h2 {
-  font-size: 1.25rem;
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #EEC373;
+  opacity: 0.85;
+  margin: 1.25rem 0 0.6rem;
+  font-weight: 500;
 }
 
 /* Description Text */
@@ -141,4 +145,158 @@
 }
 .parseModalContent::-webkit-scrollbar-thumb:hover {
   background-color: rgba(255, 255, 255, 0.35);
+}
+
+/* Editable inputs — base */
+.editInput {
+  width: 100%;
+  box-sizing: border-box;
+  background: white;
+  border: 1px solid #CA965C;
+  border-radius: 8px;
+  color: #876445;
+  padding: 5px 8px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.editInput:focus {
+  outline: 2px solid rgba(202, 150, 92, 0.5);
+  outline-offset: 1px;
+}
+
+/* Title input — larger variant */
+.titleInput {
+  font-size: 1.4rem;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  margin-bottom: 1rem;
+}
+
+/* Ingredient list */
+.ingredientEditList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 4px;
+}
+
+/* Ingredient card row */
+.ingredientRow {
+  background: rgba(202, 150, 92, 0.08);
+  border: 1px solid rgba(202, 150, 92, 0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  display: grid;
+  grid-template-columns: 64px 60px 1fr 28px;
+  gap: 8px;
+  align-items: end;
+}
+
+/* Small label above each field */
+.fieldLabel {
+  display: block;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(238, 195, 115, 0.65);
+  margin-bottom: 3px;
+}
+
+/* Remove (×) button */
+.removeBtn {
+  background: rgba(202, 150, 92, 0.12);
+  border: 1px solid rgba(202, 150, 92, 0.25);
+  border-radius: 6px;
+  color: rgba(244, 223, 186, 0.5);
+  width: 28px;
+  aspect-ratio: 1 / 1;
+  line-height: 1;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-family: inherit;
+  padding: 0;
+}
+
+.removeBtn:hover {
+  background: rgba(202, 150, 92, 0.22);
+  color: rgba(244, 223, 186, 0.85);
+}
+
+/* Add row / add step button */
+.addRowBtn {
+  background: transparent;
+  border: 1px dashed rgba(202, 150, 92, 0.35);
+  border-radius: 8px;
+  color: rgba(202, 150, 92, 0.8);
+  font-size: 0.82rem;
+  padding: 6px 14px;
+  margin-top: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.addRowBtn:hover {
+  background: rgba(202, 150, 92, 0.06);
+  color: #CA965C;
+}
+
+/* Instruction ordered list */
+.instructionEditList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 4px;
+  counter-reset: steps;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Instruction step row */
+.instructionRow {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  counter-increment: steps;
+}
+
+/* Step number bubble — matches recipeDetailView counter style */
+.instructionRow::before {
+  content: counter(steps);
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(202, 150, 92, 0.2);
+  border: 1px solid rgba(202, 150, 92, 0.35);
+  color: #EEC373;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+/* Instruction textarea */
+.instInput {
+  flex: 1;
+  resize: vertical;
+  min-height: 52px;
+}
+
+/* Inline error message */
+.errorText {
+  color: #e07040;
+  font-size: 0.85rem;
+  margin: 0;
 }
