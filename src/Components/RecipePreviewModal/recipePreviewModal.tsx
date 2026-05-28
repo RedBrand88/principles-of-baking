@@ -1,7 +1,6 @@
 import { useState } from "react";
 import useCreateRecipe from "../../Hooks/UseCreateRecipe";
 import { parseFraction } from "../../Utility/parseFraction";
-import { toFraction } from "../../Utility/helperFunctions";
 import { type RecipeDTO, type IngredientDTO, type Unit } from "../../types/dto";
 import "./recipePreviewModal.css";
 import Button from "../Button/button";
@@ -39,14 +38,14 @@ const RecipePreviewModal = ({ recipe, onClose }: RecipePreviewModalProps) => {
   const [doughIngredients, setDoughIngredients] = useState<EditIngredient[]>(() =>
     (recipe.doughIngredients ?? []).map(ing => ({
       ...ing,
-      quantity: toFraction(ing.quantity),
+      quantity: ing.quantity.toString(),
       ingredientName: ing.ingredientName || ing.rawLine,
     }))
   );
   const [otherIngredients, setOtherIngredients] = useState<EditIngredient[]>(
     (recipe.otherIngredients ?? []).map(ing => ({
       ...ing,
-      quantity: toFraction(ing.quantity),
+      quantity: ing.quantity.toString(),
     }))
   );
   const [instructions, setInstructions] = useState<string[]>(recipe.instructions);
