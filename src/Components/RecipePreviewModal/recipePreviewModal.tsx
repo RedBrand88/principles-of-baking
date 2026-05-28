@@ -93,13 +93,10 @@ const RecipePreviewModal = ({ recipe, onClose }: RecipePreviewModalProps) => {
   const { confidence } = recipe;
   const hasMeta = recipe.servings || recipe.prepTime || recipe.cookTime || recipe.additionalTime;
 
-  const IngredientList = ({
-    list,
-    set,
-  }: {
-    list: EditIngredient[];
-    set: React.Dispatch<React.SetStateAction<EditIngredient[]>>;
-  }) => (
+  const renderIngredientList = (
+    list: EditIngredient[],
+    set: React.Dispatch<React.SetStateAction<EditIngredient[]>>
+  ) => (
     <>
       <ul className="ingredientEditList">
         {list.map((ing, i) => (
@@ -188,12 +185,12 @@ const RecipePreviewModal = ({ recipe, onClose }: RecipePreviewModalProps) => {
         )}
 
         <h2>Ingredients</h2>
-        <IngredientList list={doughIngredients} set={setDoughIngredients} />
+        {renderIngredientList(doughIngredients, setDoughIngredients)}
 
         {otherIngredients.length > 0 && (
           <>
             <h2>Other ingredients</h2>
-            <IngredientList list={otherIngredients} set={setOtherIngredients} />
+            {renderIngredientList(otherIngredients, setOtherIngredients)}
           </>
         )}
 
