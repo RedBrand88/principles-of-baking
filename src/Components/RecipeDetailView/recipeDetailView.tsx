@@ -63,7 +63,7 @@ const RecipeDetailView = ({ recipe }: RecipeDetailViewProps) => {
         return `${tbspToFraction(tsp)} tsp: ${ing.ingredientName}`;
       }
     }
-    return `${ing.quantity} ${abbreviateUnit(ing.unit)}: ${ing.ingredientName}`;
+    return `${toFraction(ing.quantity)} ${abbreviateUnit(ing.unit)}: ${ing.ingredientName}`;
   };
 
   const baseYeastType: YeastType = recipe.yeastType ?? (recipe.doughIngredients.some(i => isStarter(i.ingredientName)) ? "sourdough" : "dry");

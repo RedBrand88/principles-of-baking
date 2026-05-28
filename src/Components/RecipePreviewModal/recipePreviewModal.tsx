@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useCreateRecipe from "../../Hooks/UseCreateRecipe";
+import { parseFraction } from "../../Utility/parseFraction";
 import { type RecipeDTO, type IngredientDTO, type Unit } from "../../types/dto";
 import "./recipePreviewModal.css";
 import Button from "../Button/button";
@@ -9,19 +10,21 @@ type RecipePreviewModalProps = {
   onClose: () => void;
 };
 
+type EditIngredient = Omit<IngredientDTO, 'quantity'> & { quantity: string };
+
 const confidenceLabel = (score: number): { label: string; color: string } => {
   if (score >= 0.8) return { label: "High", color: "#4caf50" };
   if (score >= 0.6) return { label: "Good", color: "rgba(202, 150, 92, 1)" };
   return { label: "Low — review carefully", color: "#e07040" };
 };
 
-const detectYeastType = (ings: IngredientDTO[]): "dry" | "sourdough" =>
+const detectYeastType = (ings: { ingredientName: string }[]): "dry" | "sourdough" =>
   ings.some(i => /sourdough|starter|levain|discard|biga|poolish/i.test(i.ingredientName))
     ? "sourdough"
     : "dry";
 
-const emptyIng = (): IngredientDTO => ({
-  ingredientName: "", quantity: 0, unit: "g", rawLine: "", parseOK: true,
+const emptyIng = (): EditIngredient => ({
+  ingredientName: "", quantity: "", unit: "g", rawLine: "", parseOK: true,
 });
 
 const RecipePreviewModal = ({ recipe, onClose }: RecipePreviewModalProps) => {
@@ -29,38 +32,53 @@ const RecipePreviewModal = ({ recipe, onClose }: RecipePreviewModalProps) => {
 
   const { createRecipe, loading, error } = useCreateRecipe();
   const [saved, setSaved] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
   const [title, setTitle] = useState(recipe.title || "");
-  const [doughIngredients, setDoughIngredients] = useState<IngredientDTO[]>(() =>
+  const [doughIngredients, setDoughIngredients] = useState<EditIngredient[]>(() =>
     (recipe.doughIngredients ?? []).map(ing => ({
       ...ing,
+      quantity: ing.quantity.toString(),
       ingredientName: ing.ingredientName || ing.rawLine,
     }))
   );
-  const [otherIngredients, setOtherIngredients] = useState<IngredientDTO[]>(
-    recipe.otherIngredients ?? []
+  const [otherIngredients, setOtherIngredients] = useState<EditIngredient[]>(
+    (recipe.otherIngredients ?? []).map(ing => ({
+      ...ing,
+      quantity: ing.quantity.toString(),
+    }))
   );
   const [instructions, setInstructions] = useState<string[]>(recipe.instructions);
 
   const updateIng = (
-    list: IngredientDTO[],
-    set: React.Dispatch<React.SetStateAction<IngredientDTO[]>>,
+    list: EditIngredient[],
+    set: React.Dispatch<React.SetStateAction<EditIngredient[]>>,
     i: number,
-    field: keyof IngredientDTO,
-    value: string | number
+    field: keyof EditIngredient,
+    value: string
   ) => set(list.map((ing, idx) => idx === i ? { ...ing, [field]: value } : ing));
 
   const removeIng = (
-    set: React.Dispatch<React.SetStateAction<IngredientDTO[]>>,
+    set: React.Dispatch<React.SetStateAction<EditIngredient[]>>,
     i: number
   ) => set(prev => prev.filter((_, idx) => idx !== i));
 
   const handleSave = async () => {
-    const todraft = ({ ingredientName, quantity, unit }: IngredientDTO) => ({
+    setFormError(null);
+    const allIngs = [...doughIngredients, ...otherIngredients].filter(i => i.ingredientName.trim());
+    for (const ing of allIngs) {
+      if (parseFraction(ing.quantity) === null) {
+        setFormError("One or more quantities couldn't be read. Check ingredient amounts.");
+        return;
+      }
+    }
+
+    const todraft = ({ ingredientName, quantity, unit }: EditIngredient) => ({
       ingredientName,
-      quantity,
+      quantity: parseFraction(quantity) as number,
       unit: unit as Unit,
     });
+
     const result = await createRecipe({
       title,
       description: recipe.description,
@@ -75,41 +93,47 @@ const RecipePreviewModal = ({ recipe, onClose }: RecipePreviewModalProps) => {
   const { confidence } = recipe;
   const hasMeta = recipe.servings || recipe.prepTime || recipe.cookTime || recipe.additionalTime;
 
-  const IngredientList = ({
-    list,
-    set,
-  }: {
-    list: IngredientDTO[];
-    set: React.Dispatch<React.SetStateAction<IngredientDTO[]>>;
-  }) => (
+  const renderIngredientList = (
+    list: EditIngredient[],
+    set: React.Dispatch<React.SetStateAction<EditIngredient[]>>
+  ) => (
     <>
       <ul className="ingredientEditList">
         {list.map((ing, i) => (
           <li key={i} className="ingredientRow">
-            <input
-              type="number"
-              className="editInput ingQtyInput"
-              value={ing.quantity || ""}
-              onChange={e => updateIng(list, set, i, "quantity", Number(e.target.value))}
-              aria-label="quantity"
-              min={0}
-            />
-            <input
-              type="text"
-              className="editInput ingUnitInput"
-              value={ing.unit}
-              onChange={e => updateIng(list, set, i, "unit", e.target.value)}
-              placeholder="unit"
-              aria-label="unit"
-            />
-            <input
-              type="text"
-              className="editInput ingNameInput"
-              value={ing.ingredientName}
-              onChange={e => updateIng(list, set, i, "ingredientName", e.target.value)}
-              placeholder="ingredient name"
-              aria-label="ingredient name"
-            />
+            <div>
+              <span className="fieldLabel">Qty</span>
+              <input
+                type="text"
+                className="editInput ingQtyInput"
+                value={ing.quantity}
+                onChange={e => updateIng(list, set, i, "quantity", e.target.value)}
+                placeholder="e.g. 1/2"
+                aria-label="quantity"
+              />
+            </div>
+            <div>
+              <span className="fieldLabel">Unit</span>
+              <input
+                type="text"
+                className="editInput ingUnitInput"
+                value={ing.unit}
+                onChange={e => updateIng(list, set, i, "unit", e.target.value)}
+                placeholder="unit"
+                aria-label="unit"
+              />
+            </div>
+            <div>
+              <span className="fieldLabel">Ingredient</span>
+              <input
+                type="text"
+                className="editInput ingNameInput"
+                value={ing.ingredientName}
+                onChange={e => updateIng(list, set, i, "ingredientName", e.target.value)}
+                placeholder="ingredient name"
+                aria-label="ingredient name"
+              />
+            </div>
             <button className="removeBtn" onClick={() => removeIng(set, i)} type="button" aria-label="remove">×</button>
           </li>
         ))}
@@ -161,12 +185,12 @@ const RecipePreviewModal = ({ recipe, onClose }: RecipePreviewModalProps) => {
         )}
 
         <h2>Ingredients</h2>
-        <IngredientList list={doughIngredients} set={setDoughIngredients} />
+        {renderIngredientList(doughIngredients, setDoughIngredients)}
 
         {otherIngredients.length > 0 && (
           <>
             <h2>Other ingredients</h2>
-            <IngredientList list={otherIngredients} set={setOtherIngredients} />
+            {renderIngredientList(otherIngredients, setOtherIngredients)}
           </>
         )}
 
@@ -195,7 +219,7 @@ const RecipePreviewModal = ({ recipe, onClose }: RecipePreviewModalProps) => {
         </button>
 
         <div className="modalActions">
-          {error && <p className="errorText">{error}</p>}
+          {(formError || error) && <p className="errorText">{formError ?? error}</p>}
           <Button onClick={handleSave} disabled={loading || saved}>
             {loading ? "Saving..." : saved ? "Saved" : "Save Recipe"}
           </Button>
