@@ -19,6 +19,11 @@ const RecipeDetailView = ({ recipe }: RecipeDetailViewProps) => {
 
   useEffect(() => {
     if (!recipe) return;
+    const volumeUnits = ["cups", "tbls", "tbsp", "tsp"];
+    const isVolumeBased = recipe.doughIngredients.some(i =>
+      volumeUnits.includes(i.unit.toLowerCase())
+    );
+    setUnit(isVolumeBased ? "cups" : "g");
     setYeastType(
       recipe.yeastType ?? (recipe.doughIngredients.some(i => isStarter(i.ingredientName)) ? "sourdough" : "dry")
     );
@@ -49,20 +54,27 @@ const RecipeDetailView = ({ recipe }: RecipeDetailViewProps) => {
 
   const displayIngredient = (ing: Ingredient) => {
     const isGrams = ing.unit.toLowerCase() === "grams" || ing.unit.toLowerCase() === "g";
-    if (unit === "cups" && isGrams && ing.densityGPerMl && ing.densityGPerMl > 0) {
-      const ml = ing.quantity / ing.densityGPerMl;
+    const isMl = ing.unit.toLowerCase() === "ml";
 
-      if (ml >= CONVERSION_THRESHOLD) {
-        const cups = ml / CUP_VOLUME;
-        return `${toFraction(cups)} cups: ${ing.ingredientName}`;
-      } else if (ml >= TBLS_VOLUME) {
-        const tbsp = ml / TBLS_VOLUME;
-        return `${tbspToFraction(tbsp)} tbsp: ${ing.ingredientName}`;
-      } else {
-        const tsp = ml / TSP_VOLUME;
-        return `${tbspToFraction(tsp)} tsp: ${ing.ingredientName}`;
+    if (unit === "cups") {
+      let ml: number | null = null;
+      if (isGrams && ing.densityGPerMl && ing.densityGPerMl > 0) {
+        ml = ing.quantity / ing.densityGPerMl;
+      } else if (isMl) {
+        ml = ing.quantity;
+      }
+
+      if (ml !== null) {
+        if (ml >= CONVERSION_THRESHOLD) {
+          return `${toFraction(ml / CUP_VOLUME)} cups: ${ing.ingredientName}`;
+        } else if (ml >= TBLS_VOLUME) {
+          return `${tbspToFraction(ml / TBLS_VOLUME)} tbsp: ${ing.ingredientName}`;
+        } else {
+          return `${tbspToFraction(ml / TSP_VOLUME)} tsp: ${ing.ingredientName}`;
+        }
       }
     }
+
     return `${toFraction(ing.quantity)} ${abbreviateUnit(ing.unit)}: ${ing.ingredientName}`;
   };
 
