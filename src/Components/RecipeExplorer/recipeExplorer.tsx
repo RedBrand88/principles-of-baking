@@ -13,7 +13,7 @@ const RecipeExplorer = () => {
   const { selectedId, setSelectedId } = useDrawer();
   const { filteredRecipes, searchTerm, setSearchTerm } = useRecipeFilter(recipes);
 
-  const selectedRecipe = () => filteredRecipes.find(r => r.id === selectedId) ?? null;
+  const selectedRecipe = filteredRecipes.find(r => r.id === selectedId) ?? null;
 
   const showCount = filteredRecipes.length < recipes.length;
 
@@ -57,8 +57,8 @@ const RecipeExplorer = () => {
         </div>
       </aside>
       <main className="recipeView">
-        {selectedRecipe() ? (
-          <RecipeDetailView recipe={selectedRecipe()} />
+        {selectedRecipe ? (
+          <RecipeDetailView recipe={selectedRecipe} />
         ) : (
           <div className="promptContainer">
             <p className="desktopPrompt">Select a recipe to view details</p>
