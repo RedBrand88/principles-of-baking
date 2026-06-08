@@ -135,5 +135,7 @@
 
   .mobilePrompt {
     display: block;
+    text-wrap: balance;
+    text-align: center;
   }
 }
