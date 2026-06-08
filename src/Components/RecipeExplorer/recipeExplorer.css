@@ -9,16 +9,16 @@
 
 .recipeCards {
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  padding: 8px 0 0;
+  overflow-y: auto;
   box-sizing: border-box;
 }
 
 .recipeSearchWrapper {
-  padding: 0 6px 4px;
-  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  background: #46484a;
+  z-index: 1;
+  padding: 8px 6px 4px;
 }
 
 .recipeSearchInput {
@@ -44,14 +44,11 @@
 .recipeCount {
   font-size: 0.75rem;
   color: rgba(244, 223, 186, 0.55);
-  padding: 0 12px 4px;
+  padding: 2px 12px 4px;
   margin: 0;
-  flex-shrink: 0;
 }
 
 .recipeCardsList {
-  flex: 1;
-  overflow-y: auto;
   padding: 4px 6px 12px;
 }
 

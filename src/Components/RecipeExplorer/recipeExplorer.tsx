@@ -37,10 +37,10 @@ const RecipeExplorer = () => {
             onChange={e => setSearchTerm(e.target.value)}
             aria-label="Search recipes"
           />
+          {showCount && (
+            <p className="recipeCount">{filteredRecipes.length} of {recipes.length} recipes</p>
+          )}
         </div>
-        {showCount && (
-          <p className="recipeCount">{filteredRecipes.length} of {recipes.length} recipes</p>
-        )}
         <div className="recipeCardsList">
           {filteredRecipes.length === 0 ? (
             <p className="noRecipesMessage">No recipes match your search.</p>
