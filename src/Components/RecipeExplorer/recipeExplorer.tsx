@@ -62,7 +62,7 @@ const RecipeExplorer = () => {
         ) : (
           <div className="promptContainer">
             <p className="desktopPrompt">Select a recipe to view details</p>
-            <p className="mobilePrompt">Click the <WaveText text="bread icon" /> to see a list of recipes</p>
+            <p className="mobilePrompt">Click the <WaveText text="bouncing bread icon" /> to see a list of recipes</p>
           </div>
         )}
       </main>
