@@ -6,25 +6,55 @@ import "./recipeExplorer.css";
 import RecipeDrawer from "../RecipeDrawer/recipeDrawer";
 import { useDrawer } from "../../Context/DrawerContext";
 import WaveText from "../WaveText/waveText";
+import useRecipeFilter from "../../Hooks/useRecipeFilter";
 
 const RecipeExplorer = () => {
   const recipes = useContext(RecipeContext);
   const { selectedId, setSelectedId } = useDrawer();
+  const { filteredRecipes, searchTerm, setSearchTerm } = useRecipeFilter(recipes);
 
-  const selectedRecipe = () => recipes.find(r => r.id === selectedId) ?? null;
+  const selectedRecipe = () => filteredRecipes.find(r => r.id === selectedId) ?? null;
+
+  const showCount = filteredRecipes.length < recipes.length;
 
   return (
     <div className="exploreContainer">
-      <RecipeDrawer onSelectRecipe={setSelectedId} selectedId={selectedId} />
-      <aside className={"recipeCards"}>
-        {recipes.map(recipe => (
-          <RecipeCard
-            key={recipe.id}
-            recipe={recipe}
-            isActive={recipe.id === selectedId}
-            onClick={() => setSelectedId(recipe.id)}
+      <RecipeDrawer
+        onSelectRecipe={setSelectedId}
+        selectedId={selectedId}
+        filteredRecipes={filteredRecipes}
+        totalRecipes={recipes.length}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
+      <aside className="recipeCards">
+        <div className="recipeSearchWrapper">
+          <input
+            className="recipeSearchInput"
+            type="search"
+            placeholder="Search recipes…"
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+            aria-label="Search recipes"
           />
-        ))}
+        </div>
+        {showCount && (
+          <p className="recipeCount">{filteredRecipes.length} of {recipes.length} recipes</p>
+        )}
+        <div className="recipeCardsList">
+          {filteredRecipes.length === 0 ? (
+            <p className="noRecipesMessage">No recipes match your search.</p>
+          ) : (
+            filteredRecipes.map(recipe => (
+              <RecipeCard
+                key={recipe.id}
+                recipe={recipe}
+                isActive={recipe.id === selectedId}
+                onClick={() => setSelectedId(recipe.id)}
+              />
+            ))
+          )}
+        </div>
       </aside>
       <main className="recipeView">
         {selectedRecipe() ? (
