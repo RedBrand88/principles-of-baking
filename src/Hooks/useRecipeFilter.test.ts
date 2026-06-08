@@ -67,7 +67,7 @@ describe("buildSearchableStr", () => {
 
   it("handles recipe with no tags", () => {
     const str = buildSearchableStr(makeRecipe({ meta: { yieldGrams: 800, createdAt: "", updatedAt: "" } }));
-    expect(typeof str).toBe("string");
+    expect(str).toContain("basic white bread");
   });
 
   it("does not include yieldGrams", () => {

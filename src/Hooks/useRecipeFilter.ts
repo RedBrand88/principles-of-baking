@@ -32,11 +32,11 @@ const useRecipeFilter = (recipes: Recipe[]) => {
 
   const filteredRecipes = useMemo(() => {
     const terms = parseSearchTerms(searchTerm);
-    if (!terms) return recipes;
+    if (!terms) return searchableRecipes.map(({ recipe }) => recipe);
     return searchableRecipes
       .filter(({ searchStr }) => matchesSearch(searchStr, terms))
       .map(({ recipe }) => recipe);
-  }, [searchableRecipes, searchTerm, recipes]);
+  }, [searchableRecipes, searchTerm]);
 
   return { filteredRecipes, searchTerm, setSearchTerm };
 };
