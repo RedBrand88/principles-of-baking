@@ -27,7 +27,7 @@ const RecipeDrawer = ({
     closeRecipeDrawer();
   };
 
-  const showCount = filteredRecipes.length < totalRecipes;
+  const showCount = filteredRecipes.length > 0 && filteredRecipes.length < totalRecipes;
 
   return (
     <>
