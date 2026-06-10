@@ -7,7 +7,9 @@ import Button from "../Button/button";
 
 type RecipePreviewModalProps = {
   recipe: RecipeDTO | null;
+  originalText?: string;
   onClose: () => void;
+  onSaved?: () => void;
 };
 
 type EditIngredient = Omit<IngredientDTO, 'quantity'> & { quantity: string };
@@ -27,28 +29,31 @@ const emptyIng = (): EditIngredient => ({
   ingredientName: "", quantity: "", unit: "g", rawLine: "", parseOK: true,
 });
 
-const RecipePreviewModal = ({ recipe, onClose }: RecipePreviewModalProps) => {
-  if (!recipe) return null;
-
-  const { createRecipe, loading, error } = useCreateRecipe();
-  const [saved, setSaved] = useState(false);
+const RecipePreviewModal = ({ recipe, originalText, onClose, onSaved }: RecipePreviewModalProps) => {
+  const { createRecipe, loading, error, clearError } = useCreateRecipe();
   const [formError, setFormError] = useState<string | null>(null);
 
-  const [title, setTitle] = useState(recipe.title || "");
+  const manualEntry = !recipe;
+  const lowConfidence = recipe
+    ? recipe.confidence.ingredients < 0.4 || recipe.confidence.instructions < 0.4
+    : false;
+
+  const [title, setTitle] = useState(recipe?.title ?? "");
+  const [description, setDescription] = useState(recipe?.description ?? "");
   const [doughIngredients, setDoughIngredients] = useState<EditIngredient[]>(() =>
-    (recipe.doughIngredients ?? []).map(ing => ({
+    (recipe?.doughIngredients ?? []).map(ing => ({
       ...ing,
       quantity: ing.quantity.toString(),
       ingredientName: ing.ingredientName || ing.rawLine,
     }))
   );
   const [otherIngredients, setOtherIngredients] = useState<EditIngredient[]>(
-    (recipe.otherIngredients ?? []).map(ing => ({
+    (recipe?.otherIngredients ?? []).map(ing => ({
       ...ing,
       quantity: ing.quantity.toString(),
     }))
   );
-  const [instructions, setInstructions] = useState<string[]>(recipe.instructions);
+  const [instructions, setInstructions] = useState<string[]>(recipe?.instructions ?? []);
 
   const updateIng = (
     list: EditIngredient[],
@@ -65,6 +70,7 @@ const RecipePreviewModal = ({ recipe, onClose }: RecipePreviewModalProps) => {
 
   const handleSave = async () => {
     setFormError(null);
+    clearError();
     const allIngs = [...doughIngredients, ...otherIngredients].filter(i => i.ingredientName.trim());
     for (const ing of allIngs) {
       if (parseFraction(ing.quantity) === null) {
@@ -81,17 +87,17 @@ const RecipePreviewModal = ({ recipe, onClose }: RecipePreviewModalProps) => {
 
     const result = await createRecipe({
       title,
-      description: recipe.description,
+      description,
       doughIngredients: doughIngredients.filter(i => i.ingredientName.trim()).map(todraft),
       otherIngredients: otherIngredients.filter(i => i.ingredientName.trim()).map(todraft),
       instructions: instructions.filter(s => s.trim()),
       yeastType: detectYeastType(doughIngredients),
     });
-    if (result.ok) { setSaved(true); onClose(); }
+    if (result.ok) { onClose(); onSaved?.(); }
   };
 
-  const { confidence } = recipe;
-  const hasMeta = recipe.servings || recipe.prepTime || recipe.cookTime || recipe.additionalTime;
+  const confidence = recipe?.confidence;
+  const hasMeta = recipe && (recipe.servings || recipe.prepTime || recipe.cookTime || recipe.additionalTime);
 
   const renderIngredientList = (
     list: EditIngredient[],
@@ -148,6 +154,12 @@ const RecipePreviewModal = ({ recipe, onClose }: RecipePreviewModalProps) => {
     <div className="modalOverlay">
       <div className="parseModalContent">
 
+        {manualEntry && (
+          <div className="parseBanner">
+            We couldn't parse this recipe automatically. Fill in the fields below — your original text is shown for reference.
+          </div>
+        )}
+
         <input
           className="editInput titleInput"
           value={title}
@@ -156,24 +168,45 @@ const RecipePreviewModal = ({ recipe, onClose }: RecipePreviewModalProps) => {
           aria-label="Recipe title"
         />
 
-        {recipe.description && <p className="recipeDescription">{recipe.description}</p>}
+        <input
+          className="editInput descriptionInput"
+          value={description}
+          onChange={e => setDescription(e.target.value)}
+          placeholder="Recipe description"
+          aria-label="Recipe description"
+        />
 
-        <div className="confidenceSection">
-          <div className="confidenceSectionLabel">Parse confidence</div>
-          {[
-            ["Title", confidence.title],
-            ["Ingredients", confidence.ingredients],
-            ["Instructions", confidence.instructions],
-          ].map(([label, score]) => {
-            const { label: cl, color } = confidenceLabel(score as number);
-            return (
-              <div key={label as string} className="confidenceRow">
-                <span>{label}</span>
-                <span className="confidenceBadge" style={{ color }}>{cl}</span>
-              </div>
-            );
-          })}
-        </div>
+        {confidence && (
+          <div className="confidenceSection">
+            <div className="confidenceSectionLabel">Parse confidence</div>
+            {[
+              ["Title", confidence.title],
+              ["Ingredients", confidence.ingredients],
+              ["Instructions", confidence.instructions],
+            ].map(([label, score]) => {
+              const { label: cl, color } = confidenceLabel(score as number);
+              return (
+                <div key={label as string} className="confidenceRow">
+                  <span>{label}</span>
+                  <span className="confidenceBadge" style={{ color }}>{cl}</span>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {originalText && (manualEntry || lowConfidence) && (
+          <div className="originalTextSection">
+            <div className="originalTextLabel">Original recipe text</div>
+            <textarea
+              className="originalTextArea"
+              readOnly
+              value={originalText}
+              rows={10}
+              aria-label="Original recipe text"
+            />
+          </div>
+        )}
 
         {hasMeta && (
           <div className="parsedMeta">
@@ -220,8 +253,14 @@ const RecipePreviewModal = ({ recipe, onClose }: RecipePreviewModalProps) => {
 
         <div className="modalActions">
           {(formError || error) && <p className="errorText">{formError ?? error}</p>}
-          <Button onClick={handleSave} disabled={loading || saved}>
-            {loading ? "Saving..." : saved ? "Saved" : "Save Recipe"}
+          <Button onClick={handleSave} disabled={
+            loading ||
+            !title.trim() ||
+            !description.trim() ||
+            ![...doughIngredients, ...otherIngredients].some(i => i.ingredientName.trim()) ||
+            !instructions.some(s => s.trim())
+          }>
+            {loading ? "Saving..." : "Save Recipe"}
           </Button>
           <Button onClick={onClose} type="secondary" disabled={loading}>
             Close

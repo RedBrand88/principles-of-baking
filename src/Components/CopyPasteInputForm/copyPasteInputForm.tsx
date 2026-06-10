@@ -7,20 +7,29 @@ import RecipePreviewModal from "../RecipePreviewModal/recipePreviewModal";
 const CopyPasteInputForm = () => {
   const [text, setText] = useState<string>("");
   const [showPreview, setShowPreview] = useState(false);
+  const [originalText, setOriginalText] = useState<string>("");
 
-  const { recipe, loading, parseRecipe } = useParseRecipe();
+  const { recipe, loading, error, parseFailed, parseRecipe, clearError } = useParseRecipe();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
+    if (error) clearError();
   };
 
   const handleParse = async () => {
     const ok = await parseRecipe(text);
     if (ok) {
+      setOriginalText(text);
       setText("");
       setShowPreview(true);
     }
   }
+
+  const handleManualEntry = () => {
+    setOriginalText(text);
+    clearError();
+    setShowPreview(true);
+  };
 
   const handleClose = () => setShowPreview(false);
 
@@ -40,10 +49,23 @@ const CopyPasteInputForm = () => {
         {loading ? "Parsing..." : "Parse"}
       </Button>
 
-      {showPreview && recipe && (
+      {error && (
+        <div className="parseErrorBlock">
+          <p className="parseErrorText">{error}</p>
+          {parseFailed && (
+            <button className="manualEntryBtn" onClick={handleManualEntry} type="button">
+              Enter manually
+            </button>
+          )}
+        </div>
+      )}
+
+      {showPreview && (
         <RecipePreviewModal
           recipe={recipe}
+          originalText={originalText}
           onClose={handleClose}
+          onSaved={() => setText("")}
         />
       )}
     </div>
