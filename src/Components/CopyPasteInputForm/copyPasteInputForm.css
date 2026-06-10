@@ -12,6 +12,35 @@
   box-sizing: border-box;
 }
 
+.parseErrorBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.parseErrorText {
+  color: #e07040;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.manualEntryBtn {
+  align-self: flex-start;
+  background: transparent;
+  border: 1px solid rgba(202, 150, 92, 0.5);
+  border-radius: 8px;
+  color: rgba(202, 150, 92, 0.9);
+  font-size: 0.85rem;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.manualEntryBtn:hover {
+  background: rgba(202, 150, 92, 0.08);
+  color: #CA965C;
+}
+
 @media (max-width: 480px) {
   .copyPasteForm {
     width: 100%;

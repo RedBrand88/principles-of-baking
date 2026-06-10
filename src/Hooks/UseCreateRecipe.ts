@@ -53,7 +53,9 @@ const useCreateRecipe = () => {
     }
   };
 
-  return { createRecipe, loading, error };
+  const clearError = () => setError(null);
+
+  return { createRecipe, loading, error, clearError };
 };
 
 export default useCreateRecipe;

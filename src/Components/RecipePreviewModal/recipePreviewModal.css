@@ -294,9 +294,48 @@
   min-height: 52px;
 }
 
+/* Manual entry banner */
+.parseBanner {
+  background: rgba(224, 112, 64, 0.12);
+  border: 1px solid rgba(224, 112, 64, 0.35);
+  border-radius: 8px;
+  color: #e07040;
+  font-size: 0.85rem;
+  padding: 10px 14px;
+  margin-bottom: 1.25rem;
+  line-height: 1.45;
+}
+
 /* Inline error message */
 .errorText {
   color: #e07040;
   font-size: 0.85rem;
   margin: 0;
+}
+
+/* Original recipe text */
+.originalTextSection {
+  margin-bottom: 1rem;
+}
+
+.originalTextLabel {
+  font-size: 0.85rem;
+  color: rgba(202, 150, 92, 1);
+  margin-bottom: 6px;
+}
+
+.originalTextArea {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(202, 150, 92, 0.4);
+  border-radius: 8px;
+  color: inherit;
+  font-size: 0.82rem;
+  font-family: inherit;
+  resize: vertical;
+  cursor: text;
+  user-select: text;
 }

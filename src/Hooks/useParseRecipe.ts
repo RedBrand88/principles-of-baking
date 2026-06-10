@@ -6,13 +6,16 @@ interface ParseResult {
   recipe: RecipeDTO | null;
   loading: boolean;
   error: string | null;
+  parseFailed: boolean;
   parseRecipe: (text: string) => Promise<boolean>;
+  clearError: () => void;
 }
 
 export function useParseRecipe(): ParseResult {
   const [recipe, setRecipe] = useState<RecipeDTO | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [parseFailed, setParseFailed] = useState(false);
 
   const parseRecipe = useCallback(async (text: string): Promise<boolean> => {
     if (!text.trim()) {
@@ -22,6 +25,7 @@ export function useParseRecipe(): ParseResult {
 
     setLoading(true);
     setError(null);
+    setParseFailed(false);
 
     try {
       const idToken = await auth.currentUser?.getIdToken();
@@ -40,8 +44,16 @@ export function useParseRecipe(): ParseResult {
       });
 
       if (!response.ok) {
-        const msg = await response.text();
-        throw new Error(msg || `Server returned ${response.status}`);
+        const body = await response.text();
+        let message = body || `Server returned ${response.status}`;
+        let errorCode = "";
+        try {
+          const parsed = JSON.parse(body);
+          message = parsed.message || message;
+          errorCode = parsed.error || "";
+        } catch {}
+        if (errorCode === "PARSE_FAILED") setParseFailed(true);
+        throw new Error(message);
       }
 
       const data: RecipeDTO = await response.json();
@@ -57,5 +69,10 @@ export function useParseRecipe(): ParseResult {
     }
   }, []);
 
-  return { recipe, loading, error, parseRecipe };
+  const clearError = useCallback(() => {
+    setError(null);
+    setParseFailed(false);
+  }, []);
+
+  return { recipe, loading, error, parseFailed, parseRecipe, clearError };
 }
