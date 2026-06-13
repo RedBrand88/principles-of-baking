@@ -3,13 +3,13 @@ import { auth } from "../firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 
 interface AuthContextType {
-  user: User | null;
+  user: User | null | undefined;
 }
 
-const AuthContext = createContext<AuthContextType>({ user: null });
+const AuthContext = createContext<AuthContextType>({ user: undefined });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null | undefined>(undefined);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, setUser);

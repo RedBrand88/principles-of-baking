@@ -1,61 +1,205 @@
+/* ── Empty state ────────────────────────────────────────── */
+
+.scaleEmpty {
+  padding: 2rem;
+  text-align: center;
+  opacity: 0.6;
+  font-size: 0.95rem;
+}
+
+/* ── Form phase ─────────────────────────────────────────── */
+
 .scaleContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  padding: 2rem 0;
+  gap: 24px;
+  padding: 2.5rem 1.5rem;
   width: 100%;
   box-sizing: border-box;
 }
 
-.ingredientList {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.scaleIntro {
+  text-align: center;
+  max-width: 480px;
+}
+
+.scaleTitle {
+  font-size: 2rem;
+  line-height: 1.3;
+  border-bottom: 1px solid rgba(238, 195, 115, 0.25);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.scaleSubtitle {
+  font-size: 0.9rem;
+  font-weight: 400;
+  opacity: 0.7;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.scaleForm {
+  display: flex;
+  flex-direction: column;
   gap: 16px;
   width: 100%;
-  max-width: 800px;
+  max-width: 420px;
+  background: rgba(202, 150, 92, 0.06);
+  border: 1px solid rgba(202, 150, 92, 0.2);
+  border-radius: 12px;
+  padding: 24px;
   box-sizing: border-box;
 }
 
-.ingredientList > * {
-  width: 100%;
+.scaleForm label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #EEC373;
+  opacity: 0.85;
+  margin-bottom: 4px;
 }
 
-/* --- Mobile styles --- */
+/* ── Result phase ───────────────────────────────────────── */
+
+.scaleResultContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.scaleResultHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px 16px;
+  flex-shrink: 0;
+}
+
+.scaleBackBtn .top {
+  padding: 10px 16px;
+  line-height: 0;
+}
+
+.scalePrintGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.scalePrintButton {
+  background: rgba(202, 150, 92, 0.15);
+  border: 1px solid rgba(202, 150, 92, 0.35);
+  color: #EEC373;
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-family: inherit;
+  transition: background 0.15s ease;
+}
+
+.scalePrintButton:hover {
+  background: rgba(202, 150, 92, 0.28);
+}
+
+.scalePrintButton:focus-visible {
+  outline: 2px solid #EEC373;
+  outline-offset: 2px;
+}
+
+.scalePrintHint {
+  font-size: 0.68rem;
+  opacity: 0.5;
+  text-align: right;
+}
+
+/* ── Mobile ─────────────────────────────────────────────── */
+
 @media (max-width: 768px) {
   .scaleContainer {
-    padding: 1.5rem 1rem;
-  }
-
-  .ingredientList {
-    grid-template-columns: 1fr; /* single column on tablet */
-    max-width: 500px;
+    padding: 2rem 1rem;
   }
 }
 
 @media (max-width: 480px) {
   .scaleContainer {
-    gap: 12px;
-    padding: 1rem;
+    gap: 20px;
+    padding: 1.5rem 1rem;
   }
 
-  .ingredientList {
-    grid-template-columns: 1fr; /* single column */
-    gap: 12px;
+  .scaleForm {
+    padding: 16px;
+  }
+
+  .scaleResultHeader {
+    padding: 10px 16px 0;
+  }
+}
+
+/* ── Print ──────────────────────────────────────────────── */
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .scaleResultContainer,
+  .scaleResultContainer * {
+    visibility: visible;
+  }
+
+  .scaleResultContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    max-width: 100%;
+    overflow: visible;
+    height: auto;
+    --text-color: #000;
+    color: #000;
+    background: white;
   }
 
-  .scaleContainer label,
-  .scaleContainer input,
-  .scaleContainer select,
-  .scaleContainer button {
-    font-size: 1rem;
-    width: 100%;
+  /* Fix RecipeDetailView overflow clipping */
+  .scaleResultContainer .recipeDetailView {
+    overflow: visible;
+    height: auto;
   }
 
-  /* tighten up spacing for dropdown + button */
-  .scaleContainer button {
-    align-self: stretch;
+  /* Hide UI controls that shouldn't print */
+  .scaleResultHeader,
+  .scaleResultContainer .toggleRow {
+    display: none;
+  }
+
+  /* Override hardcoded amber colors — higher specificity beats the originals */
+  .scaleResultContainer .sectionLabel {
+    color: #333;
+  }
+
+  .scaleResultContainer .recipeDetailView h2 {
+    border-bottom-color: #ccc;
+    color: #000;
+  }
+
+  .scaleResultContainer .recipeDetailView h5 {
+    color: #333;
+    opacity: 1;
+  }
+
+  .scaleResultContainer .ingredients li {
+    border-bottom-color: #ddd;
+  }
+
+  .scaleResultContainer .instructions li::before {
+    color: #333;
+    background: none;
+    border-color: #999;
   }
 }
