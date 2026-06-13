@@ -40,7 +40,10 @@ export function buildScaledRecipe(recipe: Recipe, scaled: ScaledIngredient[]): R
     .map(si => {
       const original = recipe.doughIngredients.find(i => i.ingredientName === si.ingredientName);
       if (!original) return null;
-      return { ...original, grams: si.grams, quantity: si.grams };
+      const originalGrams = getGrams(original);
+      const scaleFactor = originalGrams > 0 ? si.grams / originalGrams : 1;
+      const quantity = original.unit === "g" ? si.grams : original.quantity * scaleFactor;
+      return { ...original, grams: si.grams, quantity };
     })
     .filter((i): i is Ingredient => i !== null);
 

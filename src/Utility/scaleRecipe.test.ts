@@ -138,6 +138,25 @@ describe("buildScaledRecipe", () => {
     expect(baseRecipe.doughIngredients[0].grams).toBe(500);
   });
 
+  it("scales quantity in the original unit for non-gram ingredients", () => {
+    const recipeWithTsp: Recipe = {
+      ...baseRecipe,
+      doughIngredients: [
+        ...baseRecipe.doughIngredients,
+        makeIngredient({ ingredientName: "baking powder", grams: 24, quantity: 4.8, unit: "tsp", bakerPercentage: 5.88, densityGPerMl: 0.8 }),
+      ],
+    };
+    // scaled to half: 24g → 12g, so quantity should halve from 4.8 to 2.4 tsp
+    const result = buildScaledRecipe(recipeWithTsp, [
+      ...scaledIngredients,
+      { ingredientName: "baking powder", grams: 12 },
+    ]);
+    const bp = result.doughIngredients.find(i => i.ingredientName === "baking powder")!;
+    expect(bp.grams).toBe(12);
+    expect(bp.unit).toBe("tsp");
+    expect(bp.quantity).toBeCloseTo(2.4);
+  });
+
   it("maps scald-phase ingredients back to originals by name", () => {
     const recipeWithScald: Recipe = {
       ...baseRecipe,
