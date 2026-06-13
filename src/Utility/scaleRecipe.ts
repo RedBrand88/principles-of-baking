@@ -1,94 +1,48 @@
 import type { Ingredient, Recipe } from "../types/models";
 
-/**
- * ScaledIngredient is the output type: each ingredient's name and its computed gram amount.
- */
 export interface ScaledIngredient {
   ingredientName: string;
   grams: number;
 }
 
-/**
- * scaleRecipe takes your ingredients (with bakerPercentage and phase), a target total dough weight,
- * and returns an array of ScaledIngredient with rounded gram values. If there's a scalded flour phase,
- * it also computes the boiling liquid needed for scald at the specified scaldRatio (default 1.4).
- */
-export function scaleRecipe(
-  ingredients: Ingredient[],
-  totalDough: number,
-  scaldRatio = 1.4
-): ScaledIngredient[] {
-  // Sum all non-scald, non-liquid-of-scald percentages for dough base
+export function getGrams(i: Ingredient): number {
+  if (i.grams > 0) return i.grams;
+  if (i.unit === "g") return i.quantity;
+  return i.quantity * i.densityGPerMl;
+}
+
+export function scaleRecipe(ingredients: Ingredient[], totalDough: number): ScaledIngredient[] {
   const totalBasePct = ingredients
-    .filter((i) => i.phase !== "scald")
+    .filter(i => i.bakerPercentage > 0)
     .reduce((sum, i) => sum + i.bakerPercentage, 0);
 
-  // One percent of dough mass
+  if (totalBasePct === 0) return [];
+
   const onePctMass = totalDough / totalBasePct;
 
+  const originalDoughWeight = ingredients
+    .filter(i => i.bakerPercentage > 0)
+    .reduce((sum, i) => sum + getGrams(i), 0);
+  const yieldRatio = originalDoughWeight > 0 ? totalDough / originalDoughWeight : 1;
 
-  // 4) Scale non‑scald ingredients (including dough‑phase flour & liquid)
-  const scaled: ScaledIngredient[] = ingredients
-    .filter(i => i.phase !== "scald")
-    .map(i => ({
-      ingredientName: i.ingredientName,
-      grams: Math.round(i.bakerPercentage * onePctMass),
-    }));
-
-  // 5) Find and scale the scald‑flour
-  const scaldFlourPct = ingredients
-    .find(i => i.phase === "scald" && /flour/i.test(i.ingredientName))
-    ?.bakerPercentage || 0;
-
-  let scaldFlourGrams = 0;
-  if (scaldFlourPct > 0) {
-    scaldFlourGrams = Math.round(scaldFlourPct * onePctMass);
-    scaled.push({ ingredientName: "Scalded Flour", grams: scaldFlourGrams });
-  }
-
-  // 6) Compute and append scald liquid
-  if (scaldFlourGrams > 0) {
-    const scaldLiquidGrams = Math.round(scaldFlourGrams * scaldRatio);
-    scaled.push({ ingredientName: "Scald Liquid", grams: scaldLiquidGrams });
-
-    // 7) Subtract scalded flour from the dough‑flour line
-    const flourLine = scaled.find(si =>
-      /flour/i.test(si.ingredientName) &&
-      !/scald/i.test(si.ingredientName)
-    );
-    if (flourLine) {
-      flourLine.grams = Math.max(0, flourLine.grams - scaldFlourGrams);
-    }
-
-    // 8) Subtract scald liquid from the dough‑liquid (water/milk) line
-    const liquidLine = scaled.find(si =>
-      /water|milk/i.test(si.ingredientName)
-    );
-    if (liquidLine) {
-      liquidLine.grams = Math.max(0, liquidLine.grams - scaldLiquidGrams);
-    }
-  }
-
-  return scaled;
+  return ingredients.map(i => ({
+    ingredientName: i.ingredientName,
+    grams: Math.round(
+      i.bakerPercentage > 0
+        ? i.bakerPercentage * onePctMass
+        : getGrams(i) * yieldRatio
+    ),
+  }));
 }
 
 export function buildScaledRecipe(recipe: Recipe, scaled: ScaledIngredient[]): Recipe {
-  const scaledDoughIngredients = scaled.map(si => {
-    const original = recipe.doughIngredients.find(i => i.ingredientName === si.ingredientName);
-    if (original) {
+  const scaledDoughIngredients = scaled
+    .map(si => {
+      const original = recipe.doughIngredients.find(i => i.ingredientName === si.ingredientName);
+      if (!original) return null;
       return { ...original, grams: si.grams, quantity: si.grams };
-    }
-    return {
-      id: si.ingredientName,
-      ingredientName: si.ingredientName,
-      bakerPercentage: 0,
-      quantity: si.grams,
-      unit: "grams",
-      grams: si.grams,
-      phase: "scald",
-      densityGPerMl: 0,
-    };
-  });
+    })
+    .filter((i): i is Ingredient => i !== null);
 
   return { ...recipe, doughIngredients: scaledDoughIngredients };
 }
