@@ -1,4 +1,4 @@
-import type { Ingredient } from "../types/models";
+import type { Ingredient, Recipe } from "../types/models";
 
 /**
  * ScaledIngredient is the output type: each ingredient's name and its computed gram amount.
@@ -70,4 +70,25 @@ export function scaleRecipe(
   }
 
   return scaled;
+}
+
+export function buildScaledRecipe(recipe: Recipe, scaled: ScaledIngredient[]): Recipe {
+  const scaledDoughIngredients = scaled.map(si => {
+    const original = recipe.doughIngredients.find(i => i.ingredientName === si.ingredientName);
+    if (original) {
+      return { ...original, grams: si.grams, quantity: si.grams };
+    }
+    return {
+      id: si.ingredientName,
+      ingredientName: si.ingredientName,
+      bakerPercentage: 0,
+      quantity: si.grams,
+      unit: "grams",
+      grams: si.grams,
+      phase: "scald",
+      densityGPerMl: 0,
+    };
+  });
+
+  return { ...recipe, doughIngredients: scaledDoughIngredients };
 }

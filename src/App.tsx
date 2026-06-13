@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useRef } from 'react';
 import './App.css'
 import Tab from './Components/TabComponents/tab';
 import useFetchRecipes from './Hooks/UseFetchRecipes';
@@ -23,14 +23,17 @@ function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const { user } = useAuth();
   const { toasts, addToast, removeToast } = useToast();
+  const prevUser = useRef(user);
 
   useEffect(() => {
+    if (user === undefined) return;
     if (user) {
       addToast(`Welcome, ${user.displayName || "friend"}!`);
       setIsLoginOpen(false);
-    } else {
+    } else if (prevUser.current) {
       addToast("You have logged out.");
     }
+    prevUser.current = user;
   }, [user]);
 
   useEffect(() => {

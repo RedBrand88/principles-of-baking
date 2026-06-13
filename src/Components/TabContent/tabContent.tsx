@@ -7,11 +7,9 @@ interface tabContentProps {
 
 const TabContent = ({ id, activeTab, children }: PropsWithChildren<tabContentProps>) => {
   return (
-    activeTab === id ?
-      <>
-        {children}
-      </>
-      : null
+    <div style={{ display: activeTab === id ? "contents" : "none" }}>
+      {children}
+    </div>
   );
 };
 
